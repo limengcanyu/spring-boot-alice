@@ -3,7 +3,7 @@ package com.spring.boot.mybatisplus.druid.multidatasource.config;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
- * <p>Description: </p>
+ * <p>Description: 动态数据源类</p>
  *
  * @author Rock Jiang
  * @version 1.0

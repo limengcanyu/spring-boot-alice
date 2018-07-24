@@ -4,6 +4,7 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.baomidou.mybatisplus.MybatisConfiguration;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
 import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
+import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
@@ -16,13 +17,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p>Description: </p>
+ * <p>Description: Mybatis-Plus配置类</p>
  *
  * @author Rock Jiang
  * @version 1.0
@@ -43,7 +45,7 @@ public class MybatisPlusConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        //paginationInterceptor.setLocalPage(true); // 开启 PageHelper 的支持
+//        paginationInterceptor.setLocalPage(true); // 开启 PageHelper localPage 模式
         return paginationInterceptor;
     }
 
@@ -51,8 +53,17 @@ public class MybatisPlusConfig {
      * mybatis-plus SQL执行效率插件【生产环境可以关闭】
      */
     @Bean
+    @Profile({"dev", "test"})// 设置 dev test 环境开启
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
+    }
+
+    /**
+     * mybatis-plus 乐观锁拦截器
+     */
+    @Bean
+    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
+        return new OptimisticLockerInterceptor();
     }
 
     @Bean(name = "dbArtanis")
@@ -110,13 +121,19 @@ public class MybatisPlusConfig {
         configuration.setCacheEnabled(false);
         sqlSessionFactory.setConfiguration(configuration);
         sqlSessionFactory.setPlugins(new Interceptor[]{
-                //PerformanceInterceptor(),OptimisticLockerInterceptor()
-                paginationInterceptor() //添加分页功能
+                performanceInterceptor(), //Mybatis-Plus SQL执行效率插件拦截器
+                // OptimisticLockerInterceptor(), //Mybatis-Plus 乐观锁拦截器
+                paginationInterceptor() //Mybatis-Plus 分页拦截器
         });
-        sqlSessionFactory.setGlobalConfig(globalConfiguration());
+//        sqlSessionFactory.setGlobalConfig(globalConfiguration()); //关闭Mybatis-Plus逻辑删除配置
         return sqlSessionFactory.getObject();
     }
 
+    /**
+     * Mybatis-Plus逻辑删除配置
+     *
+     * @return
+     */
     @Bean
     public GlobalConfiguration globalConfiguration() {
         GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
