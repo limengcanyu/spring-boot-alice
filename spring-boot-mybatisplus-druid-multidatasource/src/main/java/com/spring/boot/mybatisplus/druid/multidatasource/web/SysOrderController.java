@@ -7,15 +7,15 @@ import org.springframework.stereotype.Controller;
 
 /**
  * <p>
- * 系统公司表 前端控制器
+ * 系统订单表 前端控制器
  * </p>
  *
  * @author Rock.Jiang
  * @since 2018-07-24
  */
 @Controller
-@RequestMapping("/sysCompany")
-public class SysCompanyController {
+@RequestMapping("/sysOrder")
+public class SysOrderController {
 
 }
 

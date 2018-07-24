@@ -11,7 +11,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {
     /**
-     * 取得当前使用哪个数据源
+     * 决定当前使用哪个数据源
      * @return
      */
     @Override

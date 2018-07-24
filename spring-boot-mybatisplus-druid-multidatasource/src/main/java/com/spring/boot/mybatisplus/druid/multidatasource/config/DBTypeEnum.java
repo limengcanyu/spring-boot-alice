@@ -1,14 +1,14 @@
 package com.spring.boot.mybatisplus.druid.multidatasource.config;
 
 /**
- * <p>Description: </p>
+ * <p>Description: 数据源枚举类</p>
  *
  * @author Rock Jiang
  * @version 1.0
  * @date 2018/5/24 0024
  */
 public enum DBTypeEnum {
-    dbArtanis("dbArtanis"), dbSamuro("dbSamuro"), dbGt1("dbGt1");
+    dbArtanis("dbArtanis"), dbSamuro("dbSamuro"), dbValeera("dbValeera");
 
     private String value;
 

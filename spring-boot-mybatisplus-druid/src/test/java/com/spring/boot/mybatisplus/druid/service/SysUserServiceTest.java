@@ -1,5 +1,6 @@
 package com.spring.boot.mybatisplus.druid.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.spring.boot.mybatisplus.druid.DruidApplication;
 import com.spring.boot.mybatisplus.druid.dao.entity.SysUser;
@@ -28,6 +29,6 @@ public class SysUserServiceTest {
     public void select() {
         EntityWrapper<SysUser> entityWrapper = new EntityWrapper<>();
         List<SysUser> sysUserList = sysUserService.selectList(entityWrapper);
-        System.out.println("-------------");
+        System.out.println("sysUserList: " + JSONObject.toJSONString(sysUserList));
     }
 }

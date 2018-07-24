@@ -9,7 +9,7 @@ import com.spring.boot.mybatisplus.druid.multidatasource.samuro.dao.entity.SysCo
  * </p>
  *
  * @author Rock.Jiang
- * @since 2018-05-24
+ * @since 2018-07-24
  */
 public interface SysCompanyMapper extends BaseMapper<SysCompany> {
 

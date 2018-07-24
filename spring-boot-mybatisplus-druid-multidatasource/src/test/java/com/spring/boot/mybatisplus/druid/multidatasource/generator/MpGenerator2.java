@@ -69,7 +69,7 @@ public class MpGenerator2 {
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword(".Gaohang,321");
-        dsc.setUrl("jdbc:mysql://localhost:3306/samuro?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://localhost:3306/valeera?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf8");
         mpg.setDataSource(dsc);
 
         // 策略配置
@@ -77,7 +77,7 @@ public class MpGenerator2 {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         strategy.setTablePrefix(new String[]{"tlog_", "tsys_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[]{"sys_company"}); // 需要生成的表
+        strategy.setInclude(new String[]{"sys_order"}); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         // strategy.setSuperEntityClass("com.baomidou.demo.TestEntity");
@@ -102,7 +102,7 @@ public class MpGenerator2 {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.spring.boot.druid.multidatasource.samuro");
+        pc.setParent("com.spring.boot.mybatisplus.druid.multidatasource.valeera");
         pc.setEntity("dao.entity"); //Entity包名
         pc.setMapper("dao.mapper"); //Mapper包名
         pc.setXml("dao.xml"); //Mapper XML包名

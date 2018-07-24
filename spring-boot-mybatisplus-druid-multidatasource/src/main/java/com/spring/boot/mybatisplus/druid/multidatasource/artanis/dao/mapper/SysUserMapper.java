@@ -1,8 +1,7 @@
 package com.spring.boot.mybatisplus.druid.multidatasource.artanis.dao.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.spring.boot.mybatisplus.druid.multidatasource.artanis.dao.entity.SysUser;
-import org.springframework.stereotype.Repository;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
  * <p>
@@ -10,9 +9,8 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author Rock.Jiang
- * @since 2018-05-23
+ * @since 2018-07-24
  */
-@Repository
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
 }

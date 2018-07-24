@@ -1,7 +1,7 @@
 package com.spring.boot.mybatisplus.druid.multidatasource.artanis.service;
 
-import com.baomidou.mybatisplus.service.IService;
 import com.spring.boot.mybatisplus.druid.multidatasource.artanis.dao.entity.SysUser;
+import com.baomidou.mybatisplus.service.IService;
 
 /**
  * <p>
@@ -9,7 +9,7 @@ import com.spring.boot.mybatisplus.druid.multidatasource.artanis.dao.entity.SysU
  * </p>
  *
  * @author Rock.Jiang
- * @since 2018-05-23
+ * @since 2018-07-24
  */
 public interface SysUserService extends IService<SysUser> {
 

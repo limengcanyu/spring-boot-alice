@@ -1,8 +1,9 @@
 package com.spring.boot.mybatisplus.druid.multidatasource.web;
 
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * </p>
  *
  * @author Rock.Jiang
- * @since 2018-05-23
+ * @since 2018-07-24
  */
 @Controller
 @RequestMapping("/sysUser")

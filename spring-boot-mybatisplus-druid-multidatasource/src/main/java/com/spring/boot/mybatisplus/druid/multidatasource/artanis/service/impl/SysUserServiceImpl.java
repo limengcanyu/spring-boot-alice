@@ -1,9 +1,9 @@
 package com.spring.boot.mybatisplus.druid.multidatasource.artanis.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.spring.boot.mybatisplus.druid.multidatasource.artanis.dao.entity.SysUser;
 import com.spring.boot.mybatisplus.druid.multidatasource.artanis.dao.mapper.SysUserMapper;
 import com.spring.boot.mybatisplus.druid.multidatasource.artanis.service.SysUserService;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Rock.Jiang
- * @since 2018-05-23
+ * @since 2018-07-24
  */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {

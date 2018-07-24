@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Rock.Jiang
- * @since 2018-05-24
+ * @since 2018-07-24
  */
 @Service
 public class SysCompanyServiceImpl extends ServiceImpl<SysCompanyMapper, SysCompany> implements SysCompanyService {

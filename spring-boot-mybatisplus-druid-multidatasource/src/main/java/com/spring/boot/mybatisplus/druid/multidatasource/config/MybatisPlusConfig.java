@@ -30,9 +30,9 @@ import java.util.Map;
  */
 @Configuration
 @MapperScan({
-        "com.spring.boot.druid.multidatasource.artanis.dao.mapper",
-        "com.spring.boot.druid.multidatasource.samuro.dao.mapper",
-        "com.spring.boot.druid.multidatasource.gt1.dao.mapper"
+        "com.spring.boot.mybatisplus.druid.multidatasource.artanis.dao.mapper",
+        "com.spring.boot.mybatisplus.druid.multidatasource.samuro.dao.mapper",
+        "com.spring.boot.mybatisplus.druid.multidatasource.valeera.dao.mapper"
 })
 public class MybatisPlusConfig {
 
@@ -67,9 +67,9 @@ public class MybatisPlusConfig {
         return DruidDataSourceBuilder.create().build();
     }
 
-    @Bean(name = "dbGt1")
-    @ConfigurationProperties(prefix = "spring.datasource.druid.gt1")
-    public DataSource dbGt1() {
+    @Bean(name = "dbValeera")
+    @ConfigurationProperties(prefix = "spring.datasource.druid.valeera")
+    public DataSource dbValeera() {
         return DruidDataSourceBuilder.create().build();
     }
 
@@ -82,12 +82,12 @@ public class MybatisPlusConfig {
     @Primary
     public DataSource multipleDataSource(@Qualifier("dbArtanis") DataSource dbArtanis,
                                          @Qualifier("dbSamuro") DataSource dbSamuro,
-                                         @Qualifier("dbGt1") DataSource dbGt1) {
+                                         @Qualifier("dbValeera") DataSource dbValeera) {
         //数据源Map
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put(DBTypeEnum.dbArtanis.getValue(), dbArtanis);
         targetDataSources.put(DBTypeEnum.dbSamuro.getValue(), dbSamuro);
-        targetDataSources.put(DBTypeEnum.dbGt1.getValue(), dbGt1);
+        targetDataSources.put(DBTypeEnum.dbValeera.getValue(), dbValeera);
 
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         //目标数据源
@@ -100,7 +100,7 @@ public class MybatisPlusConfig {
     @Bean("sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(multipleDataSource(dbArtanis(), dbSamuro(), dbGt1()));
+        sqlSessionFactory.setDataSource(multipleDataSource(dbArtanis(), dbSamuro(), dbValeera()));
         //sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/*/*Mapper.xml"));
 
         MybatisConfiguration configuration = new MybatisConfiguration();

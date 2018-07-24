@@ -1,6 +1,7 @@
-package com.spring.boot.mybatisplus.druid.multidatasource.artanis.dao.entity;
+package com.spring.boot.mybatisplus.druid.multidatasource.valeera.dao.entity;
 
 import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
@@ -15,7 +16,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 系统用户表
+ * 系统订单表
  * </p>
  *
  * @author Rock.Jiang
@@ -23,38 +24,31 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@TableName("sys_user")
-public class SysUser extends Model<SysUser> {
+@TableName("sys_order")
+public class SysOrder extends Model<SysOrder> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户ID
+     * 订单ID
      */
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Integer userId;
+    @TableId(value = "order_id", type = IdType.AUTO)
+    private Integer orderId;
     /**
-     * 用户名
+     * 订单编号
      */
-    private String username;
+    @TableField("order_no")
+    private String orderNo;
     /**
-     * 密码
+     * 下单时间
      */
-    private String password;
-    /**
-     * 中文名称
-     */
-    @TableField("chinese_name")
-    private String chineseName;
-    /**
-     * 性别：1-男，2-女
-     */
-    private Integer sex;
+    @TableField("order_time")
+    private Date orderTime;
 
 
     @Override
     protected Serializable pkVal() {
-        return this.userId;
+        return this.orderId;
     }
 
 }
