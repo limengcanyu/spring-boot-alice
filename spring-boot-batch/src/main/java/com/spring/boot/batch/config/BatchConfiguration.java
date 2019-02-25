@@ -3,6 +3,7 @@ package com.spring.boot.batch.config;
 import com.spring.boot.batch.entity.Person;
 import com.spring.boot.batch.listener.JobCompletionNotificationListener;
 import com.spring.boot.batch.processor.PersonItemProcessor;
+import com.spring.boot.batch.tasklet.FileDeletingTasklet;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 
 import javax.sql.DataSource;
 
@@ -67,6 +69,17 @@ public class BatchConfiguration {
     }
     // end::readerwriterprocessor[]
 
+    // tag::Tasklet
+    @Bean
+    public FileDeletingTasklet fileDeletingTasklet() {
+        FileDeletingTasklet tasklet = new FileDeletingTasklet();
+
+        tasklet.setDirectoryResource(new FileSystemResource("spring-boot-batch/target/test-outputs/test-dir"));
+
+        return tasklet;
+    }
+    // end::Tasklet
+
     // tag::jobstep[] job设置
     @Bean
     public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
@@ -79,12 +92,37 @@ public class BatchConfiguration {
     }
 
     @Bean
+    public Job taskletJob() {
+        return this.jobBuilderFactory.get("taskletJob")
+                .start(deleteFilesInDir())
+                .build();
+    }
+
+    /**
+     * Chunk-oriented Processing
+     *
+     * @param writer
+     * @return
+     */
+    @Bean
     public Step step1(JdbcBatchItemWriter<Person> writer) {
         return stepBuilderFactory.get("step1")
-                .<Person, Person> chunk(10)
+                .<Person, Person>chunk(10)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer)
+                .build();
+    }
+
+    /**
+     * TaskletStep
+     *
+     * @return
+     */
+    @Bean
+    public Step deleteFilesInDir() {
+        return this.stepBuilderFactory.get("deleteFilesInDir")
+                .tasklet(fileDeletingTasklet())
                 .build();
     }
     // end::jobstep[]
