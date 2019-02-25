@@ -29,6 +29,8 @@ public class FileDeletingTasklet implements Tasklet, InitializingBean {
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+        logger.debug("==========FileDeletingTasklet execute==========");
+
         File dir = directory.getFile();
 //        Assert.state(dir.isDirectory());
 

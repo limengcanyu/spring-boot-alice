@@ -4,6 +4,9 @@ import com.spring.boot.batch.entity.Person;
 import com.spring.boot.batch.listener.JobCompletionNotificationListener;
 import com.spring.boot.batch.processor.PersonItemProcessor;
 import com.spring.boot.batch.tasklet.FileDeletingTasklet;
+import com.spring.boot.batch.tasklet.TaskletStep1;
+import com.spring.boot.batch.tasklet.TaskletStep2;
+import com.spring.boot.batch.tasklet.TaskletStep3;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -78,6 +81,21 @@ public class BatchConfiguration {
 
         return tasklet;
     }
+
+    @Bean
+    public TaskletStep1 taskletStep1() {
+        return new TaskletStep1();
+    }
+
+    @Bean
+    public TaskletStep2 taskletStep2() {
+        return new TaskletStep2();
+    }
+
+    @Bean
+    public TaskletStep3 taskletStep3() {
+        return new TaskletStep3();
+    }
     // end::Tasklet
 
     // tag::jobstep[] job设置
@@ -95,6 +113,20 @@ public class BatchConfiguration {
     public Job taskletJob() {
         return this.jobBuilderFactory.get("taskletJob")
                 .start(deleteFilesInDir())
+                .build();
+    }
+
+    /**
+     * Sequential Flow
+     *
+     * @return
+     */
+    @Bean
+    public Job taskletStepJob() {
+        return this.jobBuilderFactory.get("taskletStepJob")
+                .start(taskletStep1Step())
+                .next(taskletStep2Step())
+                .next(taskletStep3Step())
                 .build();
     }
 
@@ -123,6 +155,27 @@ public class BatchConfiguration {
     public Step deleteFilesInDir() {
         return this.stepBuilderFactory.get("deleteFilesInDir")
                 .tasklet(fileDeletingTasklet())
+                .build();
+    }
+
+    @Bean
+    public Step taskletStep1Step(){
+        return this.stepBuilderFactory.get("taskletStep1")
+                .tasklet(taskletStep1())
+                .build();
+    }
+
+    @Bean
+    public Step taskletStep2Step(){
+        return this.stepBuilderFactory.get("taskletStep2")
+                .tasklet(taskletStep2())
+                .build();
+    }
+
+    @Bean
+    public Step taskletStep3Step(){
+        return this.stepBuilderFactory.get("taskletStep3")
+                .tasklet(taskletStep3())
                 .build();
     }
     // end::jobstep[]
