@@ -1,6 +1,7 @@
 package com.spring.boot.mongo;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mongodb.BasicDBObject;
 import com.spring.boot.mongo.dao.entity.PayrollCalcResult;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -125,5 +126,25 @@ public class MongoTemplateTest {
         if (!CollectionUtils.isEmpty(collectionNames)) {
             collectionNames.stream().forEach(collectionName -> System.out.println("collectionName: " + collectionName));
         }
+    }
+
+    @Test
+    public void insertBasicDBObject() {
+        BasicDBObject basicDBObject = new BasicDBObject();
+        basicDBObject.put("employee_id", "GY00001");
+        basicDBObject.put("company_id", "GS00001");
+
+        mongoTemplate.insert(basicDBObject, "pr_new_compute_table");
+    }
+
+    @Test
+    public void findBasicDBObject() {
+        BasicDBObject basicDBObject = new BasicDBObject();
+        basicDBObject.put("employee_id", "GY00001");
+        basicDBObject.put("company_id", "GS00001");
+
+        Query query = new Query();
+
+        mongoTemplate.insert(basicDBObject, "pr_new_compute_table");
     }
 }
