@@ -1,6 +1,10 @@
 package com.spring.boot.mybatisplus.druid.dynamic.datasource.interceptor;
 
-import com.spring.boot.mybatisplus.druid.dynamic.datasource.config.DynamicDataSourceContextHolder;
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.fastjson.JSONObject;
+import com.spring.boot.mybatisplus.druid.dynamic.datasource.configuration.TargetDataSourcesMap;
+import com.spring.boot.mybatisplus.druid.dynamic.datasource.service.DynamicDataSourceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -11,12 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class DynamicDatasourceHandlerInterceptor extends HandlerInterceptorAdapter {
 
+    @Autowired
+    private DynamicDataSourceService dynamicDataSourceService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("DynamicDatasourceHandlerInterceptor preHandle");
 
-        DynamicDataSourceContextHolder.setDataSourceKey("alita");
-        System.out.println("当前租户ID: alita");
+        DruidDataSource newTenantDataSource = dynamicDataSourceService.getTenantDataSource("alita");
+
+        System.out.println("TargetDataSourcesMap.targetDataSources: " + TargetDataSourcesMap.targetDataSources);
+
+        // 获取当前租户的数据源，若不存在，则从后台获取租户的数据源，然后放在TargetDataSourcesMap中
+
+        TargetDataSourcesMap.targetDataSources.put("alita", newTenantDataSource);
+        System.out.println("TargetDataSourcesMap.targetDataSources: " + TargetDataSourcesMap.targetDataSources);
 
         return true;
     }
