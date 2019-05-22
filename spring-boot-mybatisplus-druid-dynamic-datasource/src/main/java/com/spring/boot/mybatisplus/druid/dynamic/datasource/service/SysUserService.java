@@ -12,7 +12,7 @@ import com.spring.boot.mybatisplus.druid.dynamic.datasource.entity.SysUser;
  * @since 2019-05-19
  */
 public interface SysUserService extends IService<SysUser> {
-    SysUser selectSysUserFromArtanis(Integer id);
-
-    SysUser selectSysUserFromAlita(Integer id);
+//    SysUser selectSysUserFromArtanis(Integer id);
+//
+//    SysUser selectSysUserFromAlita(Integer id);
 }
