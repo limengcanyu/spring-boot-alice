@@ -1,11 +1,11 @@
-package com.spring.boot.nacos.discovery.provider;
+package com.spring.boot.nacos.discovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NacosDiscoveryProviderApplication {
+public class NacosDiscoveryApplication {
     public static void main(String[] args) {
-        SpringApplication.run(NacosDiscoveryProviderApplication.class, args);
+        SpringApplication.run(NacosDiscoveryApplication.class, args);
     }
 }
