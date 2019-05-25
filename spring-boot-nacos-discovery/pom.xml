@@ -9,17 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.spring.boot.nacos.discovery.provider</groupId>
-    <artifactId>spring-boot-nacos-discovery-provider</artifactId>
+    <groupId>com.spring.boot.nacos.discovery</groupId>
+    <artifactId>spring-boot-nacos-discovery</artifactId>
 
-    <name>spring-boot-nacos-discovery-provider</name>
+    <name>spring-boot-nacos-discovery</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -56,6 +54,4 @@
             <version>0.2.1</version>
         </dependency>
     </dependencies>
-
-
 </project>
