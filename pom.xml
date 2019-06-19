@@ -29,6 +29,7 @@
         <module>spring-boot-actuator</module>
         <module>spring-boot-batch</module>
         <module>spring-boot-jdbctemplate</module>
+        <module>spring-boot-nacos-discovery</module>
     </modules>
 
     <properties>
