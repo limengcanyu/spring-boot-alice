@@ -1,4 +1,4 @@
-package com.spring.boot.data.redis.entity;
+package com.spring.boot.redis.entity;
 
 import lombok.Data;
 
@@ -10,15 +10,15 @@ import lombok.Data;
  * @date 2018/4/12 0012
  */
 @Data
-public class UserInfo {
-    private Integer userId;
+public class User {
+    private String userId;
     private String username;
     private String password;
 
-    public UserInfo() {
+    public User() {
     }
 
-    public UserInfo(Integer userId, String username, String password) {
+    public User(String userId, String username, String password) {
         this.userId = userId;
         this.username = username;
         this.password = password;

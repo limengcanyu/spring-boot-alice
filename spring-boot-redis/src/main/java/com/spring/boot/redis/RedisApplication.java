@@ -1,4 +1,4 @@
-package com.spring.boot.data.redis;
+package com.spring.boot.redis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
