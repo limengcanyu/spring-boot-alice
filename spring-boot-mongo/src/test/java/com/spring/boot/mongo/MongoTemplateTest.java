@@ -2,7 +2,6 @@ package com.spring.boot.mongo;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.BasicDBObject;
-import com.spring.boot.mongo.dao.entity.PayrollCalcResult;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.junit.Test;
@@ -27,7 +26,7 @@ import java.util.Set;
  * @date 2018/5/21 0021
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = MongoApplication.class)
+@SpringBootTest
 public class MongoTemplateTest {
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -74,22 +73,22 @@ public class MongoTemplateTest {
         }
     }
 
-    /**
-     * 根据条件查询，返回封装实体对象
-     */
-    @Test
-    public void find2() {
-        String batchCode = "GL000007_201801_0000000179";
-        int grantType = 1;
-        Query query = new Query(Criteria.where("batch_id").is(batchCode).and("batch_type").is(grantType));
-        List<PayrollCalcResult> payrollCalcResultList = mongoTemplate.find(query, PayrollCalcResult.class, "fc_payroll_calc_result_table");
-        System.out.println("dbObjectList： " + JSONObject.toJSONString(payrollCalcResultList));
-        if (!CollectionUtils.isEmpty(payrollCalcResultList)) {
-            payrollCalcResultList.stream().forEach(payrollCalcResult ->
-                    System.out.println(payrollCalcResult)
-            );
-        }
-    }
+//    /**
+//     * 根据条件查询，返回封装实体对象
+//     */
+//    @Test
+//    public void find2() {
+//        String batchCode = "GL000007_201801_0000000179";
+//        int grantType = 1;
+//        Query query = new Query(Criteria.where("batch_id").is(batchCode).and("batch_type").is(grantType));
+//        List<PayrollCalcResult> payrollCalcResultList = mongoTemplate.find(query, PayrollCalcResult.class, "fc_payroll_calc_result_table");
+//        System.out.println("dbObjectList： " + JSONObject.toJSONString(payrollCalcResultList));
+//        if (!CollectionUtils.isEmpty(payrollCalcResultList)) {
+//            payrollCalcResultList.stream().forEach(payrollCalcResult ->
+//                    System.out.println(payrollCalcResult)
+//            );
+//        }
+//    }
 
     /**
      * 根据ID查询

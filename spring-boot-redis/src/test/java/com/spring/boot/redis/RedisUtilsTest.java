@@ -28,6 +28,15 @@ public class RedisUtilsTest {
 
         key = "key002";
         User user = new User("user001", "墨月", "1234567890");
-        redisUtils.set(key, value);
+        redisUtils.set(key, user);
+    }
+
+    @Test
+    public void get() {
+        String value = (String) redisUtils.get("key001");
+        System.out.println("value: " + value);
+
+        User user = (User) redisUtils.get("key002");
+        System.out.println("user: " + user);
     }
 }
