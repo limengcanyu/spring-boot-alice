@@ -37,6 +37,8 @@
         <module>spring-boot-sharding-jdbc</module>
         <module>spring-boot-jwt</module>
         <module>spring-boot-mycat</module>
+        <module>spring-boot-elasticsearch</module>
+        <module>spring-boot-docker</module>
     </modules>
 
     <properties>
