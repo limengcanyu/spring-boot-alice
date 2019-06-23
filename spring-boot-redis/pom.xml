@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.spring.boot.data.redis</groupId>
-    <artifactId>spring-boot-data-redis</artifactId>
+    <groupId>com.spring.boot.redis</groupId>
+    <artifactId>spring-boot-redis</artifactId>
     <packaging>jar</packaging>
 
-    <name>spring-boot-data-redis</name>
+    <name>spring-boot-redis</name>
     <url>http://maven.apache.org</url>
 
     <properties>
