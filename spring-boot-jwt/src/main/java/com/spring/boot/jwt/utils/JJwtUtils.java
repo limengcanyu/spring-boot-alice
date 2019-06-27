@@ -1,9 +1,13 @@
 package com.spring.boot.jwt.utils;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
 
 /**
@@ -74,9 +78,9 @@ public class JJwtUtils {
      * @return
      */
     public static String createRSToken(String tenantId, String userId, String loginToken, String requestToken) {
-//        KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256); //or RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512
+        KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256); //or RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512
 
-//        PrivateKey privateKey = keyPair.getPrivate();
+        PrivateKey privateKey = keyPair.getPrivate();
 
         Claims claims = Jwts.claims();
         claims.put("tenantId", tenantId);
@@ -99,9 +103,10 @@ public class JJwtUtils {
      * @return
      */
     public static Claims parseRSToken(String token) {
-//        KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256); //or RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512
-//
-//        PublicKey publicKey = keyPair.getPublic();
+        KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256); //or RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512
+
+        PublicKey publicKey = keyPair.getPublic();
+
         try {
             Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(publicKey) // <---- publicKey, not privateKey
