@@ -226,11 +226,6 @@ public class RedisUtils {
      * @return {@literal null} when used in pipeline / transaction.
      */
     public Long valueOpsIncrement(String key) {
-//        Long result = valueOps.increment(key);
-//        return result == null ? 0 : result;
-
-//        return Optional.ofNullable(valueOps.increment(key)).orElse(0L);
-
         return valueOps.increment(key);
     }
 
@@ -242,11 +237,6 @@ public class RedisUtils {
      * @return {@literal null} when used in pipeline / transaction.
      */
     public Long valueOpsIncrement(String key, long delta) {
-//        Long result = valueOps.increment(key, delta);
-//        return result == null ? 0 : result;
-
-//        return Optional.ofNullable(valueOps.increment(key, delta)).orElse(0L);
-
         return valueOps.increment(key, delta);
     }
 
@@ -259,11 +249,6 @@ public class RedisUtils {
      * @see <a href="http://redis.io/commands/incrbyfloat">Redis Documentation: INCRBYFLOAT</a>
      */
     public Double valueOpsIncrement(String key, double delta) {
-//        Double result = valueOps.increment(key, delta);
-//        return result == null ? 0.0 : result;
-
-//        return Optional.ofNullable(valueOps.increment(key, delta)).orElse(0.0);
-
         return valueOps.increment(key, delta);
     }
 
@@ -274,11 +259,6 @@ public class RedisUtils {
      * @return {@literal null} when used in pipeline / transaction.
      */
     public Long valueOpsDecrement(String key) {
-//        Long result = valueOps.decrement(key);
-//        return result == null ? 0 : result;
-
-//        return Optional.ofNullable(valueOps.decrement(key)).orElse(0L);
-
         return valueOps.decrement(key);
     }
 
@@ -290,11 +270,6 @@ public class RedisUtils {
      * @return {@literal null} when used in pipeline / transaction.
      */
     public Long valueOpsDecrement(String key, long delta) {
-//        Long result = valueOps.decrement(key, delta);
-//        return result == null ? 0 : result;
-
-//        return Optional.ofNullable(valueOps.decrement(key, delta)).orElse(0L);
-
         return valueOps.decrement(key, delta);
     }
 
@@ -306,11 +281,6 @@ public class RedisUtils {
      * @return {@literal null} when used in pipeline / transaction.
      */
     public Integer valueOpsAppend(String key, String value) {
-//        Integer result = valueOps.append(key, value);
-//        return result == null ? 0 : result;
-
-//        return Optional.ofNullable(valueOps.append(key, value)).orElse(0);
-
         return valueOps.append(key, value);
     }
 
@@ -343,11 +313,8 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    public long valueOpsSize(String key) {
-//        Long result = valueOps.size(key);
-//        return result == null ? 0 : result;
-
-        return Optional.ofNullable(valueOps.size(key)).orElse(0L);
+    public Long valueOpsSize(String key) {
+        return valueOps.size(key);
     }
 
     /**
@@ -358,11 +325,8 @@ public class RedisUtils {
      * @param value
      * @return {@literal null} when used in pipeline / transaction.
      */
-    public boolean valueOpsSetBit(String key, long offset, boolean value) {
-//        Boolean result = valueOps.setBit(key, offset, value);
-//        return result == null ? false : result;
-
-        return Optional.ofNullable(valueOps.setBit(key, offset, value)).orElse(false);
+    public Boolean valueOpsSetBit(String key, long offset, boolean value) {
+        return valueOps.setBit(key, offset, value);
     }
 
     /**
@@ -372,11 +336,8 @@ public class RedisUtils {
      * @param offset
      * @return {@literal null} when used in pipeline / transaction.
      */
-    public boolean valueOpsGetBit(String key, long offset) {
-//        Boolean result = valueOps.getBit(key, offset);
-//        return result == null ? false : result;
-
-        return Optional.ofNullable(valueOps.getBit(key, offset)).orElse(false);
+    public Boolean valueOpsGetBit(String key, long offset) {
+        return valueOps.getBit(key, offset);
     }
 
     /**
