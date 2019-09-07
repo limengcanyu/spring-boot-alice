@@ -10,6 +10,7 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.*;
 
 import java.net.UnknownHostException;
@@ -43,33 +44,32 @@ public class RedisConfig {
 //     */
 //    @Bean
 //    public JedisConnectionFactory redisConnectionFactory() {
-//
 //        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration("server", 6379);
 //        return new JedisConnectionFactory(config);
 //    }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
 
         // 字符串序列化
         RedisSerializer<String> stringRedisSerializer = new StringRedisSerializer();
+
         // 对象序列化
 //        RedisSerializer<Object> objectRedisSerializer = new GenericJackson2JsonRedisSerializer();
-        RedisSerializer<Object> objectRedisSerializer = new GenericFastJsonRedisSerializer();
+        RedisSerializer<Object> fastJsonRedisSerializer = new GenericFastJsonRedisSerializer();
 //        RedisSerializer<Object> objectRedisSerializer = new JdkSerializationRedisSerializer();
 
-        template.setHashKeySerializer(stringRedisSerializer);
-        template.setHashValueSerializer(objectRedisSerializer);
-
         template.setKeySerializer(stringRedisSerializer);
-        template.setValueSerializer(objectRedisSerializer);
+        template.setValueSerializer(stringRedisSerializer); // 使用StringRedisSerializer才能进行valueOpsIncrement操作
+
+        template.setHashKeySerializer(stringRedisSerializer);
+        template.setHashValueSerializer(fastJsonRedisSerializer);
 
         template.afterPropertiesSet();
 
         return template;
     }
-
 
 }

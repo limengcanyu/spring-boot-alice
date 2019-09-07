@@ -43,7 +43,7 @@ public class RedisUtils {
 
     /**
      * 设置 key 的 value
-     *
+     * <p>
      * Set {@code value} for {@code key}.
      *
      * @param key   must not be {@literal null}.
@@ -55,7 +55,7 @@ public class RedisUtils {
 
     /**
      * 设置 key 的 value 和 有效时间
-     *
+     * <p>
      * Set the {@code value} and expiration {@code timeout} for {@code key}.
      *
      * @param key     must not be {@literal null}.
@@ -69,7 +69,7 @@ public class RedisUtils {
 
     /**
      * 设置 key 的 value 和 期间
-     *
+     * <p>
      * Set the {@code value} and expiration {@code timeout} for {@code key}.
      *
      * @param key     must not be {@literal null}.
@@ -403,7 +403,7 @@ public class RedisUtils {
      * @param end
      * @return {@literal null} when used in pipeline / transaction.
      */
-    List<Object> listOpsListRange(String key, long start, long end) {
+    public List<Object> listOpsListRange(String key, long start, long end) {
         return listOps.range(key, start, end);
     }
 
@@ -414,7 +414,7 @@ public class RedisUtils {
      * @param start
      * @param end
      */
-    void listOpsTrim(String key, long start, long end) {
+    public void listOpsTrim(String key, long start, long end) {
         listOps.trim(key, start, end);
     }
 
@@ -424,7 +424,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsSize(String key) {
+    public Long listOpsSize(String key) {
         return listOps.size(key);
     }
 
@@ -435,7 +435,7 @@ public class RedisUtils {
      * @param value
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsLeftPush(String key, Object value) {
+    public Long listOpsLeftPush(String key, Object value) {
         return listOps.leftPush(key, value);
     }
 
@@ -446,7 +446,7 @@ public class RedisUtils {
      * @param values
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsLeftPushAll(String key, Object... values) {
+    public Long listOpsLeftPushAll(String key, Object... values) {
         return listOps.leftPushAll(key, values);
     }
 
@@ -457,7 +457,7 @@ public class RedisUtils {
      * @param values must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsLeftPushAll(String key, Collection<Object> values) {
+    public Long listOpsLeftPushAll(String key, Collection<Object> values) {
         return listOps.leftPushAll(key, values);
     }
 
@@ -468,7 +468,7 @@ public class RedisUtils {
      * @param value
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsLeftPushIfPresent(String key, Object value) {
+    public Long listOpsLeftPushIfPresent(String key, Object value) {
         return listOps.leftPushIfPresent(key, value);
     }
 
@@ -479,7 +479,7 @@ public class RedisUtils {
      * @param value
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsLeftPush(String key, Object pivot, Object value) {
+    public Long listOpsLeftPush(String key, Object pivot, Object value) {
         return listOps.leftPush(key, pivot, value);
     }
 
@@ -490,7 +490,7 @@ public class RedisUtils {
      * @param value
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsRightPush(String key, Object value) {
+    public Long listOpsRightPush(String key, Object value) {
         return listOps.rightPush(key, value);
     }
 
@@ -501,7 +501,7 @@ public class RedisUtils {
      * @param values
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsRightPushAll(String key, Object... values) {
+    public Long listOpsRightPushAll(String key, Object... values) {
         return listOps.rightPushAll(key, values);
     }
 
@@ -512,7 +512,7 @@ public class RedisUtils {
      * @param values
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsRightPushAll(String key, Collection<Object> values) {
+    public Long listOpsRightPushAll(String key, Collection<Object> values) {
         return listOps.rightPushAll(key, values);
     }
 
@@ -523,7 +523,7 @@ public class RedisUtils {
      * @param value
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsRightPushIfPresent(String key, Object value) {
+    public Long listOpsRightPushIfPresent(String key, Object value) {
         return listOps.rightPushIfPresent(key, value);
     }
 
@@ -534,7 +534,7 @@ public class RedisUtils {
      * @param value
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsRightPush(String key, Object pivot, Object value) {
+    public Long listOpsRightPush(String key, Object pivot, Object value) {
         return listOps.rightPush(key, pivot, value);
     }
 
@@ -545,7 +545,7 @@ public class RedisUtils {
      * @param index
      * @param value
      */
-    void listOpsSet(String key, long index, Object value) {
+    public void listOpsSet(String key, long index, Object value) {
         listOps.set(key, index, value);
     }
 
@@ -557,7 +557,7 @@ public class RedisUtils {
      * @param value
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long listOpsRemove(String key, long count, Object value) {
+    public Long listOpsRemove(String key, long count, Object value) {
         return listOps.remove(key, count, value);
     }
 
@@ -568,7 +568,7 @@ public class RedisUtils {
      * @param index
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Object listOpsIndex(String key, long index) {
+    public Object listOpsIndex(String key, long index) {
         return listOps.index(key, index);
     }
 
@@ -578,7 +578,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return can be {@literal null}.
      */
-    Object listOpsLeftPop(String key) {
+    public Object listOpsLeftPop(String key) {
         return listOps.leftPop(key);
     }
 
@@ -591,7 +591,7 @@ public class RedisUtils {
      * @param unit    must not be {@literal null}.
      * @return can be {@literal null}.
      */
-    Object listOpsLeftPop(String key, long timeout, TimeUnit unit) {
+    public Object listOpsLeftPop(String key, long timeout, TimeUnit unit) {
         return listOps.leftPop(key, timeout, unit);
     }
 
@@ -601,7 +601,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return can be {@literal null}.
      */
-    Object listOpsRightPop(String key) {
+    public Object listOpsRightPop(String key) {
         return listOps.rightPop(key);
     }
 
@@ -614,7 +614,7 @@ public class RedisUtils {
      * @param unit    must not be {@literal null}.
      * @return can be {@literal null}.
      */
-    Object listOpsRightPop(String key, long timeout, TimeUnit unit) {
+    public Object listOpsRightPop(String key, long timeout, TimeUnit unit) {
         return listOps.rightPop(key, timeout, unit);
     }
 
@@ -625,7 +625,7 @@ public class RedisUtils {
      * @param destinationKey must not be {@literal null}.
      * @return can be {@literal null}.
      */
-    Object listOpsRightPopAndLeftPush(String sourceKey, String destinationKey) {
+    public Object listOpsRightPopAndLeftPush(String sourceKey, String destinationKey) {
         return listOps.rightPopAndLeftPush(sourceKey, destinationKey);
     }
 
@@ -639,7 +639,7 @@ public class RedisUtils {
      * @param unit           must not be {@literal null}.
      * @return can be {@literal null}.
      */
-    Object listOpsRightPopAndLeftPush(String sourceKey, String destinationKey, long timeout, TimeUnit unit) {
+    public Object listOpsRightPopAndLeftPush(String sourceKey, String destinationKey, long timeout, TimeUnit unit) {
         return listOps.rightPopAndLeftPush(sourceKey, destinationKey, timeout, unit);
     }
 
@@ -654,7 +654,7 @@ public class RedisUtils {
      * @param values
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long setOpsAdd(String key, Object... values) {
+    public Long setOpsAdd(String key, Object... values) {
         return setOps.add(key, values);
     }
 
@@ -665,7 +665,7 @@ public class RedisUtils {
      * @param values
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long setOpsSetRemove(String key, Object... values) {
+    public Long setOpsSetRemove(String key, Object... values) {
         return setOps.remove(key, values);
     }
 
@@ -675,7 +675,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Object setOpsPop(String key) {
+    public Object setOpsPop(String key) {
         return setOps.pop(key);
     }
 
@@ -687,7 +687,7 @@ public class RedisUtils {
      * @return {@literal null} when used in pipeline / transaction.
      * @since 2.0
      */
-    List<Object> setOpsPop(String key, long count) {
+    public List<Object> setOpsPop(String key, long count) {
         return setOps.pop(key, count);
     }
 
@@ -699,7 +699,7 @@ public class RedisUtils {
      * @param destKey must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Boolean setOpsMove(String key, Object value, String destKey) {
+    public Boolean setOpsMove(String key, Object value, String destKey) {
         return setOps.move(key, value, destKey);
     }
 
@@ -709,7 +709,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long setOpsSize(String key) {
+    public Long setOpsSize(String key) {
         return setOps.size(key);
     }
 
@@ -720,7 +720,7 @@ public class RedisUtils {
      * @param o
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Boolean setOpsIsMember(String key, Object o) {
+    public Boolean setOpsIsMember(String key, Object o) {
         return setOps.isMember(key, o);
     }
 
@@ -731,7 +731,7 @@ public class RedisUtils {
      * @param otherKey must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> setOpsIntersect(String key, String otherKey) {
+    public Set<Object> setOpsIntersect(String key, String otherKey) {
         return setOps.intersect(key, otherKey);
     }
 
@@ -742,7 +742,7 @@ public class RedisUtils {
      * @param otherKeys must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> setOpsIntersect(String key, Collection<String> otherKeys) {
+    public Set<Object> setOpsIntersect(String key, Collection<String> otherKeys) {
         return setOps.intersect(key, otherKeys);
     }
 
@@ -754,7 +754,7 @@ public class RedisUtils {
      * @param destKey  must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long setOpsIntersectAndStore(String key, String otherKey, String destKey) {
+    public Long setOpsIntersectAndStore(String key, String otherKey, String destKey) {
         return setOps.intersectAndStore(key, otherKey, destKey);
     }
 
@@ -766,7 +766,7 @@ public class RedisUtils {
      * @param destKey   must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long setOpsIntersectAndStore(String key, Collection<String> otherKeys, String destKey) {
+    public Long setOpsIntersectAndStore(String key, Collection<String> otherKeys, String destKey) {
         return setOps.intersectAndStore(key, otherKeys, destKey);
     }
 
@@ -777,7 +777,7 @@ public class RedisUtils {
      * @param otherKey must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> setOpsUnion(String key, String otherKey) {
+    public Set<Object> setOpsUnion(String key, String otherKey) {
         return setOps.union(key, otherKey);
     }
 
@@ -788,7 +788,7 @@ public class RedisUtils {
      * @param otherKeys must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> setOpsUnion(String key, Collection<String> otherKeys) {
+    public Set<Object> setOpsUnion(String key, Collection<String> otherKeys) {
         return setOps.union(key, otherKeys);
     }
 
@@ -800,7 +800,7 @@ public class RedisUtils {
      * @param destKey  must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long setOpsUnionAndStore(String key, String otherKey, String destKey) {
+    public Long setOpsUnionAndStore(String key, String otherKey, String destKey) {
         return setOps.unionAndStore(key, otherKey, destKey);
     }
 
@@ -812,7 +812,7 @@ public class RedisUtils {
      * @param destKey   must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long setOpsUnionAndStore(String key, Collection<String> otherKeys, String destKey) {
+    public Long setOpsUnionAndStore(String key, Collection<String> otherKeys, String destKey) {
         return setOps.unionAndStore(key, otherKeys, destKey);
     }
 
@@ -823,7 +823,7 @@ public class RedisUtils {
      * @param otherKey must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> setOpsDifference(String key, String otherKey) {
+    public Set<Object> setOpsDifference(String key, String otherKey) {
         return setOps.difference(key, otherKey);
     }
 
@@ -834,7 +834,7 @@ public class RedisUtils {
      * @param otherKeys must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> setOpsDifference(String key, Collection<String> otherKeys) {
+    public Set<Object> setOpsDifference(String key, Collection<String> otherKeys) {
         return setOps.difference(key, otherKeys);
     }
 
@@ -846,7 +846,7 @@ public class RedisUtils {
      * @param destKey  must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long setOpsDifferenceAndStore(String key, String otherKey, String destKey) {
+    public Long setOpsDifferenceAndStore(String key, String otherKey, String destKey) {
         return setOps.differenceAndStore(key, otherKey, destKey);
     }
 
@@ -858,7 +858,7 @@ public class RedisUtils {
      * @param destKey   must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long setOpsDifferenceAndStore(String key, Collection<String> otherKeys, String destKey) {
+    public Long setOpsDifferenceAndStore(String key, Collection<String> otherKeys, String destKey) {
         return setOps.differenceAndStore(key, otherKeys, destKey);
     }
 
@@ -868,7 +868,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> setOpsMembers(String key) {
+    public Set<Object> setOpsMembers(String key) {
         return setOps.members(key);
     }
 
@@ -878,7 +878,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Object setOpsRandomMember(String key) {
+    public Object setOpsRandomMember(String key) {
         return setOps.randomMember(key);
     }
 
@@ -890,7 +890,7 @@ public class RedisUtils {
      * @return empty {@link Set} if {@code key} does not exist.
      * @throws IllegalArgumentException if count is negative.
      */
-    Set<Object> setOpsDistinctRandomMembers(String key, long count) {
+    public Set<Object> setOpsDistinctRandomMembers(String key, long count) {
         return setOps.distinctRandomMembers(key, count);
     }
 
@@ -902,7 +902,7 @@ public class RedisUtils {
      * @return empty {@link List} if {@code key} does not exist or {@literal null} when used in pipeline / transaction.
      * @throws IllegalArgumentException if count is negative.
      */
-    List<Object> setOpsRandomMembers(String key, long count) {
+    public List<Object> setOpsRandomMembers(String key, long count) {
         return setOps.randomMembers(key, count);
     }
 
@@ -915,7 +915,7 @@ public class RedisUtils {
      * @return
      * @since 1.4
      */
-    Cursor<Object> setOpsScan(String key, ScanOptions options) {
+    public Cursor<Object> setOpsScan(String key, ScanOptions options) {
         return setOps.scan(key, options);
     }
 
@@ -931,7 +931,7 @@ public class RedisUtils {
      * @param value the value.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Boolean zSetOpsAdd(String key, Object value, double score) {
+    public Boolean zSetOpsAdd(String key, Object value, double score) {
         return zSetOps.add(key, value, score);
     }
 
@@ -942,7 +942,7 @@ public class RedisUtils {
      * @param tuples must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsAdd(String key, Set<ZSetOperations.TypedTuple<Object>> tuples) {
+    public Long zSetOpsAdd(String key, Set<ZSetOperations.TypedTuple<Object>> tuples) {
         return zSetOps.add(key, tuples);
     }
 
@@ -953,7 +953,7 @@ public class RedisUtils {
      * @param values must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsRemove(String key, Object... values) {
+    public Long zSetOpsRemove(String key, Object... values) {
         return zSetOps.remove(key, values);
     }
 
@@ -965,7 +965,7 @@ public class RedisUtils {
      * @param value the value.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Double zSetOpsIncrementScore(String key, Object value, double delta) {
+    public Double zSetOpsIncrementScore(String key, Object value, double delta) {
         return zSetOps.incrementScore(key, value, delta);
     }
 
@@ -976,7 +976,7 @@ public class RedisUtils {
      * @param o   the value.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsRank(String key, Object o) {
+    public Long zSetOpsRank(String key, Object o) {
         return zSetOps.rank(key, o);
     }
 
@@ -987,7 +987,7 @@ public class RedisUtils {
      * @param o   the value.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsReverseRank(String key, Object o) {
+    public Long zSetOpsReverseRank(String key, Object o) {
         return zSetOps.reverseRank(key, o);
     }
 
@@ -999,7 +999,7 @@ public class RedisUtils {
      * @param end
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> zSetOpsRange(String key, long start, long end) {
+    public Set<Object> zSetOpsRange(String key, long start, long end) {
         return zSetOps.range(key, start, end);
     }
 
@@ -1011,7 +1011,7 @@ public class RedisUtils {
      * @param end
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<ZSetOperations.TypedTuple<Object>> zSetOpsRangeWithScores(String key, long start, long end) {
+    public Set<ZSetOperations.TypedTuple<Object>> zSetOpsRangeWithScores(String key, long start, long end) {
         return zSetOps.rangeWithScores(key, start, end);
     }
 
@@ -1023,7 +1023,7 @@ public class RedisUtils {
      * @param max
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> zSetOpsRangeByScore(String key, double min, double max) {
+    public Set<Object> zSetOpsRangeByScore(String key, double min, double max) {
         return zSetOps.rangeByScore(key, min, max);
     }
 
@@ -1035,7 +1035,7 @@ public class RedisUtils {
      * @param max
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<ZSetOperations.TypedTuple<Object>> zSetOpsRangeByScoreWithScores(String key, double min, double max) {
+    public Set<ZSetOperations.TypedTuple<Object>> zSetOpsRangeByScoreWithScores(String key, double min, double max) {
         return zSetOps.rangeByScoreWithScores(key, min, max);
     }
 
@@ -1050,7 +1050,7 @@ public class RedisUtils {
      * @param count
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> zSetOpsRangeByScore(String key, double min, double max, long offset, long count) {
+    public Set<Object> zSetOpsRangeByScore(String key, double min, double max, long offset, long count) {
         return zSetOps.rangeByScore(key, min, max, offset, count);
     }
 
@@ -1065,7 +1065,7 @@ public class RedisUtils {
      * @param count
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<ZSetOperations.TypedTuple<Object>> zSetOpsRangeByScoreWithScores(String key, double min, double max, long offset, long count) {
+    public Set<ZSetOperations.TypedTuple<Object>> zSetOpsRangeByScoreWithScores(String key, double min, double max, long offset, long count) {
         return zSetOps.rangeByScoreWithScores(key, min, max, offset, count);
     }
 
@@ -1077,7 +1077,7 @@ public class RedisUtils {
      * @param end
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> zSetOpsReverseRange(String key, long start, long end) {
+    public Set<Object> zSetOpsReverseRange(String key, long start, long end) {
         return zSetOps.reverseRange(key, start, end);
     }
 
@@ -1089,7 +1089,7 @@ public class RedisUtils {
      * @param end
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<ZSetOperations.TypedTuple<Object>> zSetOpsReverseRangeWithScores(String key, long start, long end) {
+    public Set<ZSetOperations.TypedTuple<Object>> zSetOpsReverseRangeWithScores(String key, long start, long end) {
         return zSetOps.reverseRangeWithScores(key, start, end);
     }
 
@@ -1101,7 +1101,7 @@ public class RedisUtils {
      * @param max
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> zSetOpsReverseRangeByScore(String key, double min, double max) {
+    public Set<Object> zSetOpsReverseRangeByScore(String key, double min, double max) {
         return zSetOps.reverseRangeByScore(key, min, max);
     }
 
@@ -1114,7 +1114,7 @@ public class RedisUtils {
      * @param max
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<ZSetOperations.TypedTuple<Object>> zSetOpsReverseRangeByScoreWithScores(String key, double min, double max) {
+    public Set<ZSetOperations.TypedTuple<Object>> zSetOpsReverseRangeByScoreWithScores(String key, double min, double max) {
         return zSetOps.reverseRangeByScoreWithScores(key, min, max);
     }
 
@@ -1129,7 +1129,7 @@ public class RedisUtils {
      * @param count
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> zSetOpsReverseRangeByScore(String key, double min, double max, long offset, long count) {
+    public Set<Object> zSetOpsReverseRangeByScore(String key, double min, double max, long offset, long count) {
         return zSetOps.reverseRangeByScore(key, min, max, offset, count);
     }
 
@@ -1144,7 +1144,7 @@ public class RedisUtils {
      * @param count
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<ZSetOperations.TypedTuple<Object>> zSetOpsReverseRangeByScoreWithScores(String key, double min, double max, long offset, long count) {
+    public Set<ZSetOperations.TypedTuple<Object>> zSetOpsReverseRangeByScoreWithScores(String key, double min, double max, long offset, long count) {
         return zSetOps.reverseRangeByScoreWithScores(key, min, max, offset, count);
     }
 
@@ -1156,7 +1156,7 @@ public class RedisUtils {
      * @param max
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsCount(String key, double min, double max) {
+    public Long zSetOpsCount(String key, double min, double max) {
         return zSetOps.count(key, min, max);
     }
 
@@ -1166,7 +1166,7 @@ public class RedisUtils {
      * @param key
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsSize(String key) {
+    public Long zSetOpsSize(String key) {
         return zSetOps.size(key);
     }
 
@@ -1176,7 +1176,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsZCard(String key) {
+    public Long zSetOpsZCard(String key) {
         return zSetOps.zCard(key);
     }
 
@@ -1187,7 +1187,7 @@ public class RedisUtils {
      * @param o   the value.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Double zSetOpsScore(String key, Object o) {
+    public Double zSetOpsScore(String key, Object o) {
         return zSetOps.score(key, o);
     }
 
@@ -1199,7 +1199,7 @@ public class RedisUtils {
      * @param end
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsRemoveRange(String key, long start, long end) {
+    public Long zSetOpsRemoveRange(String key, long start, long end) {
         return zSetOps.removeRange(key, start, end);
     }
 
@@ -1211,7 +1211,7 @@ public class RedisUtils {
      * @param max
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsRemoveRangeByScore(String key, double min, double max) {
+    public Long zSetOpsRemoveRangeByScore(String key, double min, double max) {
         return zSetOps.removeRangeByScore(key, min, max);
     }
 
@@ -1223,7 +1223,7 @@ public class RedisUtils {
      * @param destKey  must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsUnionAndStore(String key, String otherKey, String destKey) {
+    public Long zSetOpsUnionAndStore(String key, String otherKey, String destKey) {
         return zSetOps.unionAndStore(key, otherKey, destKey);
     }
 
@@ -1235,7 +1235,7 @@ public class RedisUtils {
      * @param destKey   must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsUnionAndStore(String key, Collection<String> otherKeys, String destKey) {
+    public Long zSetOpsUnionAndStore(String key, Collection<String> otherKeys, String destKey) {
         return zSetOps.unionAndStore(key, otherKeys, destKey);
     }
 
@@ -1248,7 +1248,7 @@ public class RedisUtils {
      * @param aggregate must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsUnionAndStore(String key, Collection<String> otherKeys, String destKey, RedisZSetCommands.Aggregate aggregate) {
+    public Long zSetOpsUnionAndStore(String key, Collection<String> otherKeys, String destKey, RedisZSetCommands.Aggregate aggregate) {
         return zSetOpsUnionAndStore(key, otherKeys, destKey, aggregate, RedisZSetCommands.Weights.fromSetCount(1 + otherKeys.size()));
     }
 
@@ -1262,7 +1262,7 @@ public class RedisUtils {
      * @param weights   must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsUnionAndStore(String key, Collection<String> otherKeys, String destKey, RedisZSetCommands.Aggregate aggregate, RedisZSetCommands.Weights weights) {
+    public Long zSetOpsUnionAndStore(String key, Collection<String> otherKeys, String destKey, RedisZSetCommands.Aggregate aggregate, RedisZSetCommands.Weights weights) {
         return zSetOps.unionAndStore(key, otherKeys, destKey, aggregate, weights);
     }
 
@@ -1274,7 +1274,7 @@ public class RedisUtils {
      * @param destKey  must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsIntersectAndStore(String key, String otherKey, String destKey) {
+    public Long zSetOpsIntersectAndStore(String key, String otherKey, String destKey) {
         return zSetOps.intersectAndStore(key, otherKey, destKey);
     }
 
@@ -1286,7 +1286,7 @@ public class RedisUtils {
      * @param destKey   must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsIntersectAndStore(String key, Collection<String> otherKeys, String destKey) {
+    public Long zSetOpsIntersectAndStore(String key, Collection<String> otherKeys, String destKey) {
         return zSetOps.intersectAndStore(key, otherKeys, destKey);
     }
 
@@ -1299,7 +1299,7 @@ public class RedisUtils {
      * @param aggregate must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsIntersectAndStore(String key, Collection<String> otherKeys, String destKey, RedisZSetCommands.Aggregate aggregate) {
+    public Long zSetOpsIntersectAndStore(String key, Collection<String> otherKeys, String destKey, RedisZSetCommands.Aggregate aggregate) {
         return zSetOpsIntersectAndStore(key, otherKeys, destKey, aggregate, RedisZSetCommands.Weights.fromSetCount(1 + otherKeys.size()));
     }
 
@@ -1313,7 +1313,7 @@ public class RedisUtils {
      * @param weights   must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long zSetOpsIntersectAndStore(String key, Collection<String> otherKeys, String destKey, RedisZSetCommands.Aggregate aggregate, RedisZSetCommands.Weights weights) {
+    public Long zSetOpsIntersectAndStore(String key, Collection<String> otherKeys, String destKey, RedisZSetCommands.Aggregate aggregate, RedisZSetCommands.Weights weights) {
         return zSetOps.intersectAndStore(key, otherKeys, destKey, aggregate, weights);
     }
 
@@ -1325,7 +1325,7 @@ public class RedisUtils {
      * @param options
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Cursor<ZSetOperations.TypedTuple<Object>> zSetOpsScan(String key, ScanOptions options) {
+    public Cursor<ZSetOperations.TypedTuple<Object>> zSetOpsScan(String key, ScanOptions options) {
         return zSetOps.scan(key, options);
     }
 
@@ -1337,7 +1337,7 @@ public class RedisUtils {
      * @param range must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> zSetOpsRangeByLex(String key, RedisZSetCommands.Range range) {
+    public Set<Object> zSetOpsRangeByLex(String key, RedisZSetCommands.Range range) {
         return zSetOps.rangeByLex(key, range);
     }
 
@@ -1351,7 +1351,7 @@ public class RedisUtils {
      * @param limit can be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<Object> zSetOpsRangeByLex(String key, RedisZSetCommands.Range range, RedisZSetCommands.Limit limit) {
+    public Set<Object> zSetOpsRangeByLex(String key, RedisZSetCommands.Range range, RedisZSetCommands.Limit limit) {
         return zSetOps.rangeByLex(key, range, limit);
     }
 
@@ -1366,7 +1366,7 @@ public class RedisUtils {
      * @param hashKeys must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long hashOpsDelete(String key, Object... hashKeys) {
+    public Long hashOpsDelete(String key, Object... hashKeys) {
         return hashOps.delete(key, hashKeys);
     }
 
@@ -1377,7 +1377,7 @@ public class RedisUtils {
      * @param hashKey must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Boolean hashOpsHasKey(String key, Object hashKey) {
+    public Boolean hashOpsHasKey(String key, Object hashKey) {
         return hashOps.hasKey(key, hashKey);
     }
 
@@ -1388,7 +1388,7 @@ public class RedisUtils {
      * @param hashKey must not be {@literal null}.
      * @return {@literal null} when key or hashKey does not exist or used in pipeline / transaction.
      */
-    Object hashOpsGet(String key, Object hashKey) {
+    public Object hashOpsGet(String key, Object hashKey) {
         return hashOps.get(key, hashKey);
     }
 
@@ -1399,7 +1399,7 @@ public class RedisUtils {
      * @param hashKeys must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    List<?> hashOpsMultiGet(String key, Collection<String> hashKeys) {
+    public List<?> hashOpsMultiGet(String key, Collection<String> hashKeys) {
         return hashOps.multiGet(key, hashKeys);
     }
 
@@ -1411,7 +1411,7 @@ public class RedisUtils {
      * @param delta
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long hashOpsIncrement(String key, String hashKey, long delta) {
+    public Long hashOpsIncrement(String key, String hashKey, long delta) {
         return hashOps.increment(key, hashKey, delta);
     }
 
@@ -1423,7 +1423,7 @@ public class RedisUtils {
      * @param delta
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Double hashOpsIncrement(String key, String hashKey, double delta) {
+    public Double hashOpsIncrement(String key, String hashKey, double delta) {
         return hashOps.increment(key, hashKey, delta);
     }
 
@@ -1433,7 +1433,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Set<String> hashOpsKeys(String key) {
+    public Set<String> hashOpsKeys(String key) {
         return hashOps.keys(key);
     }
 
@@ -1446,7 +1446,7 @@ public class RedisUtils {
      * @return {@literal null} when used in pipeline / transaction.
      * @since 2.1
      */
-    Long hashOpsLengthOfValue(String key, String hashKey) {
+    public Long hashOpsLengthOfValue(String key, String hashKey) {
         return hashOps.lengthOfValue(key, hashKey);
     }
 
@@ -1456,7 +1456,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Long hashOpsSize(String key) {
+    public Long hashOpsSize(String key) {
         return hashOps.size(key);
     }
 
@@ -1466,7 +1466,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @param m   must not be {@literal null}.
      */
-    void hashOpsPutAll(String key, Map<String, ?> m) {
+    public void hashOpsPutAll(String key, Map<String, ?> m) {
         hashOps.putAll(key, m);
     }
 
@@ -1477,7 +1477,7 @@ public class RedisUtils {
      * @param hashKey must not be {@literal null}.
      * @param value
      */
-    void hashOpsPut(String key, String hashKey, Object value) {
+    public void hashOpsPut(String key, String hashKey, Object value) {
         hashOps.put(key, hashKey, value);
         ;
     }
@@ -1490,7 +1490,7 @@ public class RedisUtils {
      * @param value
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Boolean hashOpsPutIfAbsent(String key, String hashKey, Object value) {
+    public Boolean hashOpsPutIfAbsent(String key, String hashKey, Object value) {
         return hashOps.putIfAbsent(key, hashKey, value);
     }
 
@@ -1500,7 +1500,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    List<?> hashOpsValues(String key) {
+    public List<?> hashOpsValues(String key) {
         return hashOps.values(key);
     }
 
@@ -1510,7 +1510,7 @@ public class RedisUtils {
      * @param key must not be {@literal null}.
      * @return {@literal null} when used in pipeline / transaction.
      */
-    Map<String, ?> hashOpsEntries(String key) {
+    public Map<String, ?> hashOpsEntries(String key) {
         return hashOps.entries(key);
     }
 
@@ -1523,7 +1523,7 @@ public class RedisUtils {
      * @return {@literal null} when used in pipeline / transaction.
      * @since 1.4
      */
-    Cursor<Map.Entry<String, Object>> hashOpsScan(String key, ScanOptions options) {
+    public Cursor<Map.Entry<String, Object>> hashOpsScan(String key, ScanOptions options) {
         return hashOps.scan(key, options);
     }
 
