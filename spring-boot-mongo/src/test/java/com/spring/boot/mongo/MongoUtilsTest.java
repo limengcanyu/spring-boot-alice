@@ -1,20 +1,21 @@
 package com.spring.boot.mongo;
 
-import com.mongodb.bulk.BulkWriteResult;
-import com.spring.boot.mongo.entity.User;
+import com.spring.boot.mongo.utils.DocumentUtils;
 import com.spring.boot.mongo.utils.MongoUtils;
 import org.bson.Document;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.mapreduce.GroupBy;
+import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>Description: </p>
@@ -30,68 +31,33 @@ public class MongoUtilsTest {
     private MongoUtils mongoUtils;
 
     @Test
-    public void insert() {
-        String collectionName = "user_collection";
+    public void group() {
+        String tenantId = "tenant_000001";
+        String companyId = "company_000001";
+        String salaryMonth = "2019-12";
+        String minus11Month = "2018-12";
+        Set<String> employeeIdSet = new HashSet<>();
+        employeeIdSet.add("employee_000002");
+        employeeIdSet.add("employee_000003");
+        employeeIdSet.add("employee_000004");
 
-        User user = new User("userId_000001", "userName_000001", "1234567890", null);
-        user = mongoUtils.insert(user, collectionName);
-        System.out.println("inserted user: " + user);
-    }
+        Criteria criteria = Criteria.where("tenant_id").is(tenantId).and("company_id").is(companyId)
+                .and("salary_month").gte(minus11Month).lte(salaryMonth)
+                .and("employee_id").in(employeeIdSet)
+                .and("item_020").gt(0.00);
 
-    @Test
-    public void find() {
-        String collectionName = "user_collection";
+        GroupBy groupBy = GroupBy.key("employee_id").initialDocument("{ count: 0 }").reduceFunction("function(doc, prev) { prev.count += 1 }");
 
-        Criteria criteria = Criteria.where("userId").is("userId_000001").and("userName").is("userName_000001").and("password").is("1234567890");
-        Query query = new Query(criteria);
-        List<User> userList = mongoUtils.find(query, User.class, collectionName);
-        System.out.println("userList: " + userList);
-    }
+        GroupByResults<Document> results = mongoUtils.group(criteria, "salary_template_data", groupBy, Document.class);
 
-    @Test
-    public void insertBasicDBObject() {
-        String collectionName = "user_collection";
+        Map<String, Integer> map = new HashMap<>();
+        for (Document result : results) {
+            String employeeId = DocumentUtils.getFieldString(result, "employee_id");
+            double count = DocumentUtils.getFieldDouble(result, "count");
 
-        Document document = new Document();
-        document.put("userId", "userId_000002");
-        document.put("userName", "userName_000002");
-        document.put("password", "1234567890");
-        document = mongoUtils.insert(document, collectionName);
-        System.out.println("inserted document: " + document);
-    }
-
-    @Test
-    public void findBasicDBObject() {
-        String collectionName = "user_collection";
-
-        Criteria criteria = Criteria.where("userId").is("userId_000002").and("userName").is("userName_000002").and("password").is("1234567890");
-        Query query = new Query(criteria);
-        List<User> userList = mongoUtils.find(query, User.class, collectionName);
-        System.out.println("userList: " + userList);
-
-        List<Document> documentList = mongoUtils.find(query, Document.class, collectionName);
-        System.out.println("documentList: " + documentList);
-        if (!CollectionUtils.isEmpty(documentList)) {
-            System.out.println("-------------------");
-            documentList.forEach(System.out::println);
+            map.put(employeeId, (int) count);
         }
-    }
 
-    @Test
-    public void bulkInsert() {
-        String collectionName = "user_collection";
-
-        List<User> userList = new ArrayList<>();
-        userList.add(new User("userId_000003", "userName_000003", "1234567890", null));
-        userList.add(new User("userId_000004", "userName_000004", "1234567890", null));
-        userList.add(new User("userId_000005", "userName_000005", "1234567890", null));
-
-        // 返回批量操作写入结果，
-//        BulkWriteResult writeResult = mongoUtils.bulkInsert(userList, collectionName);
-
-        // 返回批量新增对象，每个对象都包含新增id
-        userList = (List<User>) mongoUtils.insert(userList, collectionName);
-
-        System.out.println();
+        System.out.println(map);
     }
 }
