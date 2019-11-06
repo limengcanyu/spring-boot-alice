@@ -8,12 +8,13 @@ package com.spring.boot.mybatisplus.druid.multi.datasource.config;
  * @date 2018/5/24 0024
  */
 public class DBContextHolder {
-    private static final ThreadLocal contextHolder = new ThreadLocal<>();
+    private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();
     /**
      * 设置数据源
      * @param dbTypeEnum
      */
     public static void setDbType(DBTypeEnum dbTypeEnum) {
+        clearDbType();
         contextHolder.set(dbTypeEnum.getValue());
     }
 
@@ -22,7 +23,7 @@ public class DBContextHolder {
      * @return
      */
     public static String getDbType() {
-        return (String) contextHolder.get();
+        return contextHolder.get();
     }
 
     /**
