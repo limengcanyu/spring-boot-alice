@@ -1,6 +1,5 @@
 package com.spring.boot.jdbctemplate;
 
-import com.spring.boot.jdbctemplate.entity.SysUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
