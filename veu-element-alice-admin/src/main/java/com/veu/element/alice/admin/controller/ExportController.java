@@ -4,10 +4,7 @@ import com.veu.element.alice.admin.service.ExportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -21,6 +18,7 @@ public class ExportController {
     private ExportService exportService;
 
     @RequestMapping("/getExportSpecialDeduction/{version}/{tenantId}/{companyId}/{salaryMonth}")
+//    @RequestMapping(value = "/getExportSpecialDeduction/{version}/{tenantId}/{companyId}/{salaryMonth}", produces = "application/octet-stream;charset=UTF-8")
     public void getExportSpecialDeduction(@PathVariable("version") String version,
                                           @PathVariable("tenantId") String tenantId, @PathVariable("companyId") String companyId,
                                           @PathVariable("salaryMonth") String salaryMonth, HttpServletResponse response) {
