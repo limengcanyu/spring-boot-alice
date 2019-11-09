@@ -24,13 +24,13 @@ public class ExportController {
     @Autowired
     private ExportDataService exportDataService;
 
-    @RequestMapping("/getPathVariableExport/{version}/{tenantId}/{companyId}/{salaryMonth}")
-    public void getPathVariableExport(@PathVariable("version") String version,
-                                      @PathVariable("tenantId") String tenantId,
-                                      @PathVariable("companyId") String companyId,
-                                      @PathVariable("salaryMonth") String salaryMonth,
-                                      HttpServletResponse response) {
-        logger.debug("getPathVariableExport version: {} tenantId: {} companyId: {} salaryMonth: {}", version, tenantId, companyId, salaryMonth);
+    @RequestMapping("/exportExcelByPathVariable/{version}/{tenantId}/{companyId}/{salaryMonth}")
+    public void exportExcelByPathVariable(@PathVariable("version") String version,
+                                          @PathVariable("tenantId") String tenantId,
+                                          @PathVariable("companyId") String companyId,
+                                          @PathVariable("salaryMonth") String salaryMonth,
+                                          HttpServletResponse response) {
+        logger.debug("exportExcelByPathVariable version: {} tenantId: {} companyId: {} salaryMonth: {}", version, tenantId, companyId, salaryMonth);
 
         List<String> columnList = exportDataService.getColumnList();
         List<List<Object>> dataList = exportDataService.getDataList();
@@ -48,13 +48,13 @@ public class ExportController {
         }
     }
 
-    @RequestMapping("/postRequestParamExport")
-    public void postRequestParamExport(@RequestParam("version") String version,
-                                       @RequestParam("tenantId") String tenantId,
-                                       @RequestParam("companyId") String companyId,
-                                       @RequestParam("salaryMonth") String salaryMonth,
-                                       HttpServletResponse response) {
-        logger.debug("postRequestParamExport version: {} tenantId: {} companyId: {} salaryMonth: {}", version, tenantId, companyId, salaryMonth);
+    @RequestMapping("/exportExcelByRequestParam")
+    public void exportExcelByRequestParam(@RequestParam("version") String version,
+                                          @RequestParam("tenantId") String tenantId,
+                                          @RequestParam("companyId") String companyId,
+                                          @RequestParam("salaryMonth") String salaryMonth,
+                                          HttpServletResponse response) {
+        logger.debug("exportExcelByRequestParam version: {} tenantId: {} companyId: {} salaryMonth: {}", version, tenantId, companyId, salaryMonth);
 
         List<String> columnList = exportDataService.getColumnList();
         List<List<Object>> dataList = exportDataService.getDataList();
@@ -72,14 +72,14 @@ public class ExportController {
         }
     }
 
-    @RequestMapping("/postRequestBodyExport")
-    public void postRequestBodyExport(@RequestBody ExportParamBodyDTO exportParamBody, HttpServletResponse response) {
+    @RequestMapping("/exportExcelByRequestBody")
+    public void exportExcelByRequestBody(@RequestBody ExportParamBodyDTO exportParamBody, HttpServletResponse response) {
         String version = exportParamBody.getVersion();
         String tenantId = exportParamBody.getTenantId();
         String companyId = exportParamBody.getCompanyId();
         String salaryMonth = exportParamBody.getSalaryMonth();
 
-        logger.debug("postRequestBodyExport version: {} tenantId: {} companyId: {} salaryMonth: {}", version, tenantId, companyId, salaryMonth);
+        logger.debug("exportExcelByRequestBody exportParamBody: {}", exportParamBody);
 
         List<String> columnList = exportDataService.getColumnList();
         List<List<Object>> dataList = exportDataService.getDataList();
@@ -97,17 +97,16 @@ public class ExportController {
         }
     }
 
-    @RequestMapping("/postRequestBodyExportEmptyFile")
-    public void postRequestBodyExportEmptyDataFile(@RequestBody ExportParamBodyDTO exportParamBody, HttpServletResponse response) {
-        String version = exportParamBody.getVersion();
+    @RequestMapping("/exportExcelByRequestParamBody")
+    public void exportExcelByRequestParamBody(@RequestParam("version") String version, @RequestBody ExportParamBodyDTO exportParamBody, HttpServletResponse response) {
         String tenantId = exportParamBody.getTenantId();
         String companyId = exportParamBody.getCompanyId();
         String salaryMonth = exportParamBody.getSalaryMonth();
 
-        logger.debug("postRequestBodyExport version: {} tenantId: {} companyId: {} salaryMonth: {}", version, tenantId, companyId, salaryMonth);
+        logger.debug("exportExcelByRequestParamBody version: {} exportParamBody: {}", version, exportParamBody);
 
-        List<String> columnList = exportDataService.getEmptyColumnList();
-        List<List<Object>> dataList = exportDataService.getEmptyDataList();
+        List<String> columnList = exportDataService.getColumnList();
+        List<List<Object>> dataList = exportDataService.getDataList();
 
         if (version.equals("2003")) {
             String fileName = salaryMonth + "-数据.xls";
@@ -121,4 +120,5 @@ public class ExportController {
             exportUtilsService.export(response, fileName, workbook);
         }
     }
+
 }
