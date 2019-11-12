@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +22,15 @@ public class UploadController {
 
     @RequestMapping("/elUpload")
     public String elUpload(@RequestParam("file") MultipartFile uploadFile, HttpServletRequest request) {
-        String filename = uploadFile.getOriginalFilename();
-        logger.debug("filename: {}", filename);
-
         if (uploadFile.isEmpty()) {
             return "file is empty.";
         }
+
+        String filename = uploadFile.getOriginalFilename();
+        if (StringUtils.isEmpty(filename)) {
+            return "上传文件名为空！";
+        }
+        logger.debug("filename: {}", filename);
 
         try {
             File file = new File(filename);
@@ -35,6 +39,6 @@ public class UploadController {
             e.printStackTrace();
         }
 
-        return "upload ok";
+        return "上传文件成功！";
     }
 }
