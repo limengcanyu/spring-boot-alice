@@ -2,6 +2,11 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-boot-alice</artifactId>
+        <groupId>com.spring.boot.alice</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.spring.boot.mybatisplus.druid.dynamic.datasource</groupId>
@@ -9,16 +14,6 @@
 
     <name>spring-boot-mybatisplus-druid-dynamic-datasource</name>
     <url>http://www.example.com</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-    <parent>
-        <artifactId>spring-boot-alice</artifactId>
-        <groupId>com.spring.boot.alice</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
 
     <dependencies>
         <dependency>

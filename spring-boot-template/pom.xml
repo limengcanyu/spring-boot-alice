@@ -14,10 +14,6 @@
     <name>spring-boot-template</name>
     <description>Template Demo project for Spring Boot</description>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -36,5 +32,4 @@
             </exclusions>
         </dependency>
     </dependencies>
-
 </project>
