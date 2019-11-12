@@ -1,0 +1,24 @@
+package com.spring.boot.jwt;
+
+import com.spring.boot.jwt.utils.JJwtHsAlgorithmsUtils;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import org.junit.Test;
+
+public class JJwtHsAlgorithmsUtilsTest {
+    @Test
+    public void creatJWS() {
+        Claims claims = Jwts.claims();
+        claims.put("hello", "world");
+
+        String jwsString = JJwtHsAlgorithmsUtils.creatJWS(claims);
+        System.out.println("jwsString: " + jwsString);
+    }
+
+    @Test
+    public void readJWS() {
+        String jwsString = "eyJhbGciOiJIUzI1NiJ9.eyJoZWxsbyI6IndvcmxkIn0.Rellwe3UMg5UohoGjKix_senmWGAVnCYsr0EhfxPCH0";
+        Claims claims = JJwtHsAlgorithmsUtils.readJWS(jwsString);
+        System.out.println("claims: " + claims);
+    }
+}
