@@ -10,12 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.mapreduce.GroupBy;
 import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>Description: </p>
@@ -59,5 +57,20 @@ public class MongoUtilsTest {
         }
 
         System.out.println(map);
+    }
+
+    @Test
+    public void distinct() {
+        String tenantId = "tenant_000001";
+        String companyId = "company_000001";
+        String salaryMonth = "2020-01";
+
+        Query query = Query.query(
+                Criteria.where("tenant_id").is(tenantId).and("company_id").is(companyId).and("salary_month").is(salaryMonth)
+        );
+
+        // 根据Query对salary_batch字段distinct
+        List<Integer> salaryBatchList = mongoUtils.findDistinct(query, "salary_batch", "salary_template_data", Document.class, Integer.class);
+        System.out.println(salaryBatchList);
     }
 }
