@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.*;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>Description: RedisTemplate Test</p>
@@ -64,5 +66,17 @@ public class RedisTemplateTest {
         stringRedisTemplate.opsForValue().set(key, requestId);
         key = stringRedisTemplate.opsForValue().get(key);
         System.out.println(key);
+    }
+
+    @Test
+    public void test1() {
+        String key = "ComputeStatus:" + "tenant_000002" + "_" + "company_000001" + "_" + "2019-11".replace("-", "_") + "_" + 1;
+        String value = "1";
+        stringRedisTemplate.opsForValue().set(key, value, 3, TimeUnit.MINUTES);
+        value = stringRedisTemplate.opsForValue().get(key);
+        if (ObjectUtils.nullSafeEquals(value, "1")) {
+            System.out.println("薪资计算正在进行，请等待计算完成！");
+        }
+
     }
 }
