@@ -13,10 +13,8 @@
         <module>spring-boot-redis</module>
         <module>spring-boot-jetty</module>
         <module>spring-boot-mongo</module>
-        <module>spring-boot-mybatisplus-druid</module>
         <module>spring-boot-mybatisplus-druid-multi-datasource</module>
         <module>spring-boot-mybatisplus-druid-dynamic-datasource</module>
-        <module>spring-boot-mybatisplus-hikaricp</module>
         <module>spring-boot-mybatisplus-sharding-jdbc</module>
         <module>spring-boot-security</module>
         <module>spring-boot-security-custom</module>
