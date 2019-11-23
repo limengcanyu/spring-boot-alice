@@ -13,27 +13,36 @@ public class AsyncTaskWithoutResultServiceImpl implements AsyncTaskWithoutResult
     @Async
     @Override
     public void task1() throws InterruptedException {
-        logger.debug("service 任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行无返回任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
+
         Thread.sleep(3000);
-        logger.debug("service 任务 结束 线程 id: {} name: {} 耗时: {}", Thread.currentThread().getId(), Thread.currentThread().getName(), (System.currentTimeMillis() - currentTimeMillis) + "ms");
+
+        String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
+        logger.debug("service 执行无返回任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
     }
 
     @Async
     @Override
     public void task2() throws InterruptedException {
-        logger.debug("service 任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行无返回任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
+
         Thread.sleep(3000);
-        logger.debug("service 任务 结束 线程 id: {} name: {} 耗时: {}", Thread.currentThread().getId(), Thread.currentThread().getName(), (System.currentTimeMillis() - currentTimeMillis) + "ms");
+
+        String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
+        logger.debug("service 执行无返回任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
     }
 
     @Async
     @Override
     public void task3() throws InterruptedException {
-        logger.debug("service 任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行无返回任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
+
         Thread.sleep(3000);
-        logger.debug("service 任务 结束 线程 id: {} name: {} 耗时: {}", Thread.currentThread().getId(), Thread.currentThread().getName(), (System.currentTimeMillis() - currentTimeMillis) + "ms");
+
+        String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
+        logger.debug("service 执行无返回任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
     }
 }

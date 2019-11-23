@@ -17,17 +17,21 @@ public class SyncTaskController {
     private SyncTaskService syncTaskService;
 
     /**
-     * 执行无返回任务
+     * 执行同步任务
      *
      * @return
      * @throws InterruptedException
      */
     @RequestMapping("/doSyncTask")
     public String doSyncTask() throws InterruptedException {
-        logger.debug("controller 任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("controller 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
+
         syncTaskService.task1();
-        logger.debug("controller 任务 结束 线程 id: {} name: {} 耗时: {}", Thread.currentThread().getId(), Thread.currentThread().getName(), (System.currentTimeMillis() - currentTimeMillis) + "ms");
-        return "操作开始，请等候完成！";
+
+        String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
+        logger.debug("controller 执行同步任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
+
+        return "执行同步任务 " + result;
     }
 }
