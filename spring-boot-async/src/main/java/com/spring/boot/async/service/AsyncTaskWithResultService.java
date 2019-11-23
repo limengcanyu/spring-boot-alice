@@ -3,6 +3,7 @@ package com.spring.boot.async.service;
 import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public interface AsyncTaskWithResultService {
@@ -16,7 +17,7 @@ public interface AsyncTaskWithResultService {
     ListenableFuture<String> task6() throws InterruptedException;
 
     // 返回 CompletableFuture 类型可以对结果进行更多操作
-    CompletableFuture<String> task7() throws InterruptedException;
+    CompletableFuture<String> task7() throws InterruptedException, ExecutionException;
     CompletableFuture<String> task8() throws InterruptedException;
     CompletableFuture<String> task9() throws InterruptedException;
 }

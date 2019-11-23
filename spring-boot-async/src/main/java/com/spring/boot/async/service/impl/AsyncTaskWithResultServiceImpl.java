@@ -1,24 +1,30 @@
 package com.spring.boot.async.service.impl;
 
+import com.spring.boot.async.service.AsyncTaskWithResultOtherService;
 import com.spring.boot.async.service.AsyncTaskWithResultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 @Service
 public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultService {
     private static final Logger logger = LoggerFactory.getLogger(AsyncTaskWithResultServiceImpl.class);
 
+    @Autowired
+    private AsyncTaskWithResultOtherService asyncTaskWithResultOtherService;
+
     @Async
     @Override
     public Future<String> task1() throws InterruptedException {
-        logger.debug("service 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行返回Future任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
         Thread.sleep(3000);
@@ -32,7 +38,7 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
     @Async
     @Override
     public Future<String> task2() throws InterruptedException {
-        logger.debug("service 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行返回Future任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
         Thread.sleep(3000);
@@ -46,7 +52,7 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
     @Async
     @Override
     public Future<String> task3() throws InterruptedException {
-        logger.debug("service 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行返回Future任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
         Thread.sleep(3000);
@@ -60,7 +66,7 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
     @Async
     @Override
     public ListenableFuture<String> task4() throws InterruptedException {
-        logger.debug("service 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行返回ListenableFuture任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
         Thread.sleep(3000);
@@ -74,7 +80,7 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
     @Async
     @Override
     public ListenableFuture<String> task5() throws InterruptedException {
-        logger.debug("service 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行返回ListenableFuture任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
         Thread.sleep(3000);
@@ -88,7 +94,7 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
     @Async
     @Override
     public ListenableFuture<String> task6() throws InterruptedException {
-        logger.debug("service 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行返回ListenableFuture任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
         Thread.sleep(3000);
@@ -101,13 +107,26 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
 
     @Async
     @Override
-    public CompletableFuture<String> task7() throws InterruptedException {
-        logger.debug("service 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+    public CompletableFuture<String> task7() throws InterruptedException, ExecutionException {
+        logger.debug("service 执行返回CompletableFuture任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
         Thread.sleep(3000);
 
-        String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
+        long currentTimeMillis2 = System.currentTimeMillis();
+
+        CompletableFuture<String> task7 = asyncTaskWithResultOtherService.task7();
+        CompletableFuture<String> task8 = asyncTaskWithResultOtherService.task8();
+        CompletableFuture<String> task9 = asyncTaskWithResultOtherService.task9();
+
+        // 等待每个异步调用都完成
+        CompletableFuture.allOf(task7, task8, task9).join();
+        logger.debug("service 执行其它任务 结果 task7: {} task8: {} task9: {}", task7.get(), task8.get(), task9.get());
+
+        String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis2) + "ms";
+        logger.debug("service 执行其它任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
+
+        result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
         logger.debug("service 执行返回CompletableFuture任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
 
         // 使用结果返回一个已完成的CompletableFuture
@@ -117,7 +136,7 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
     @Async
     @Override
     public CompletableFuture<String> task8() throws InterruptedException {
-        logger.debug("service 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行返回CompletableFuture任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
         Thread.sleep(4000);
@@ -131,7 +150,7 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
     @Async
     @Override
     public CompletableFuture<String> task9() throws InterruptedException {
-        logger.debug("service 执行同步任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        logger.debug("service 执行返回CompletableFuture任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
         Thread.sleep(4500);
