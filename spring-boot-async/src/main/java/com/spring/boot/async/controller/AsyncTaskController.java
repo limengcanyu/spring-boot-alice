@@ -10,6 +10,7 @@ import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.WebAsyncTask;
 
 import java.util.concurrent.*;
 
@@ -214,5 +215,26 @@ public class AsyncTaskController {
         String result = "执行任务耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
         logger.debug("controller 任务 结束 线程 id: {} name: {} 耗时: {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
         return result;
+    }
+
+    @RequestMapping("/doWebAsyncTask")
+    public WebAsyncTask<String> doWebAsyncTask() throws InterruptedException, ExecutionException {
+        logger.debug("controller 任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        long currentTimeMillis = System.currentTimeMillis();
+
+        Callable<String> callable = () -> {
+            logger.debug("Service 任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+            long currentTimeMillis2 = System.currentTimeMillis();
+
+            Thread.sleep(3000); // 模拟长时间任务
+
+            String result2 = "执行任务耗时: " + (System.currentTimeMillis() - currentTimeMillis2) + "ms";
+            logger.debug("Service 任务 结束 线程 id: {} name: {} 耗时: {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result2);
+            return "Service " + result2;
+        };
+
+        String result = "执行任务耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
+        logger.debug("controller 任务 结束 线程 id: {} name: {} 耗时: {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
+        return new WebAsyncTask<>(callable);
     }
 }

@@ -10,6 +10,7 @@ http://localhost:8080/doReturnListenableFutureResultTask
 http://localhost:8080/doReturnListenableFutureResultTask2
 http://localhost:8080/doReturnCompletableFutureResultTask
 http://localhost:8080/doReturnCompletableFutureResultTask2
+http://localhost:8080/doWebAsyncTask
 
 1. 启用异步支持注解 @EnableAsync
 2. 定义Bean，类中的方法使用 @Async 注解，Spring 会为该 Bean 使用 advice ，从而进行异步支持
