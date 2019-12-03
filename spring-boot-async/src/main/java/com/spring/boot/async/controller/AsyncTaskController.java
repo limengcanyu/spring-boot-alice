@@ -204,7 +204,12 @@ public class AsyncTaskController {
         CompletableFuture<String> task9 = asyncTaskWithResultService.task9();
 
         // 等待每个异步调用都完成
+        // 方式1
         CompletableFuture.allOf(task7, task8, task9).join();
+
+//        // 方式2
+//        // 将任务放进数组
+//        CompletableFuture.allOf(new CompletableFuture[]{task7, task8, task9}).join();
         logger.debug("controller 执行返回CompletableFuture任务 结果 task7: {} task8: {} task9: {}", task7.get(), task8.get(), task9.get());
 
         String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";

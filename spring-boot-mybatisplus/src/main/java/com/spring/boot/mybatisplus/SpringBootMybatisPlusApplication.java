@@ -2,7 +2,9 @@ package com.spring.boot.mybatisplus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@EnableTransactionManagement
 @SpringBootApplication
 public class SpringBootMybatisPlusApplication {
     public static void main(String[] args) {
