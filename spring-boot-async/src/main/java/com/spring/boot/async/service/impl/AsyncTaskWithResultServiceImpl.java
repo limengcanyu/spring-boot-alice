@@ -115,13 +115,16 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
 
         long currentTimeMillis2 = System.currentTimeMillis();
 
-        CompletableFuture<String> task7 = asyncTaskWithResultOtherService.task7();
-        CompletableFuture<String> task8 = asyncTaskWithResultOtherService.task8();
-        CompletableFuture<String> task9 = asyncTaskWithResultOtherService.task9();
+        CompletableFuture<String> otherTask7 = asyncTaskWithResultOtherService.task7();
+        CompletableFuture<String> otherTask8 = asyncTaskWithResultOtherService.task8();
+        CompletableFuture<String> otherTask9 = asyncTaskWithResultOtherService.task9();
+
+        // 本类中其它异步方法，不会异步执行
+//        CompletableFuture<String> task8 = task8();
 
         // 等待每个异步调用都完成
-        CompletableFuture.allOf(task7, task8, task9).join();
-        logger.debug("service 执行其它任务 结果 task7: {} task8: {} task9: {}", task7.get(), task8.get(), task9.get());
+        CompletableFuture.allOf(otherTask7, otherTask8, otherTask9).join();
+        logger.debug("service 执行其它任务 结果 task7: {} task8: {} task9: {}", otherTask7.get(), otherTask8.get(), otherTask9.get());
 
         String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis2) + "ms";
         logger.debug("service 执行其它任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
@@ -139,7 +142,7 @@ public class AsyncTaskWithResultServiceImpl implements AsyncTaskWithResultServic
         logger.debug("service 执行返回CompletableFuture任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
-        Thread.sleep(4000);
+        Thread.sleep(5000);
 
         String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
         logger.debug("service 执行返回CompletableFuture任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
