@@ -26,21 +26,25 @@ public class SignatureController {
     private static final Logger logger = LoggerFactory.getLogger(SignatureController.class);
 
     @RequestMapping("/sample")
-    public Map<String, Object> sample(HttpServletRequest request, HttpServletResponse response, @RequestBody SortedMap<String, Object> paramMap) {
+    public Map<String, Object> sample(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> paramMap) {
         int level = request.getIntHeader("level");
         long timestamp = Long.parseLong(request.getHeader("timestamp"));
         String signStr = request.getHeader("signStr");
-        logger.debug("level: {} timestamp: {} signStr: {}", level, timestamp, signStr);
+        logger.debug("token: token timestamp: {} signStr: {}", timestamp, signStr);
 
-        String md5SignStr = SignatureUtils.getMd5SignString(timestamp, "token", signStr, paramMap);
+        String md5SignStr = SignatureUtils.getMd5SignString(timestamp, "token", paramMap);
 
         Map<String, Object> retMap = new HashMap<>();
 
         if (ObjectUtils.nullSafeEquals(signStr, md5SignStr)){
-            response.setStatus(1000);
+            logger.debug("签名验证成功 ==================================================================");
+
+//            response.setStatus(1000); // 设置响应状态码，非HTTP 200 则HTTP返回错误
             retMap.put("code", 1000);
             retMap.put("msg", "签名验证成功!");
         } else {
+            logger.debug("签名验证失败 ==================================================================");
+
             retMap.put("code", 1);
             retMap.put("msg", "签名验证失败!");
         }
