@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 
 /**
  * <p>Description: Signature Utils </p>
@@ -19,21 +21,48 @@ import java.util.Map;
 public class SignatureUtils {
     private static final Logger logger = LoggerFactory.getLogger(SignatureUtils.class);
 
-    public static String getMd5SignString(long timestamp, String token, Map<String, Object> paramMap) {
-        String pramsString = String.join("", getPramsStringList(paramMap)).replaceAll(",", "");
-        logger.debug("参数字符串： {}", pramsString);
+    /**
+     * 验证签名
+     * 根据前端请求Header中的时间戳、token、请求参数，在后端再生成签名字符串，然后比较前端传入的签名字符串和后端生成的签名字符串，
+     * 若两者一致，则表示请求参数未被篡改。
+     *
+     * @param timestamp
+     * @param token
+     * @param signStringOfRequest
+     * @param paramMap
+     * @return
+     */
+    public static boolean verifySignature(long timestamp, String token, String signStringOfRequest, SortedMap<String, Object> paramMap) {
+        String signString = generateSignString(timestamp, token, paramMap);
 
-        String signStr = timestamp + token + pramsString;
-        logger.debug("签名字符串： {}", signStr);
-
-        String md5Str = DigestUtils.md5DigestAsHex(signStr.getBytes(StandardCharsets.UTF_8));
-        logger.debug("md5摘要字符串： {}", md5Str);
-
-        return md5Str;
+        return ObjectUtils.nullSafeEquals(signStringOfRequest, signString);
     }
 
-    public static List<String> getPramsStringList(Object params) {
-        logger.debug("获取参数字符串数组2 开始 ======================================================================");
+    public static String generateSignString(long timestamp, String token, SortedMap<String, Object> paramMap) {
+        String pramsString = getSortedParamsString(paramMap);
+        logger.debug("参数字符串： {}", pramsString);
+
+        String signString = token + timestamp + pramsString;
+        logger.debug("签名字符串： {}", signString);
+
+        String md5String = DigestUtils.md5DigestAsHex(signString.getBytes(StandardCharsets.UTF_8));
+        logger.debug("md5字符串： {}", md5String);
+
+        return md5String;
+    }
+
+    /**
+     * 获取有序参数字符串
+     *
+     * @param paramMap
+     * @return
+     */
+    public static String getSortedParamsString(SortedMap<String, Object> paramMap) {
+        return String.join("", getParamsStringList(paramMap)).replaceAll(",", "");
+    }
+
+    public static List<String> getParamsStringList(Object params) {
+        logger.debug("获取参数字符串数组 开始 ======================================================================");
         logger.debug("参数: {}", JSONObject.toJSONString(params));
 
         List<String> paramsList = new ArrayList<>();
@@ -47,7 +76,7 @@ public class SignatureUtils {
                     paramsList.add(element.toString());
                 } else {
                     logger.debug("元素非字符串或者数字 元素: " + JSONObject.toJSONString(element));
-                    paramsList.add(String.join("", getPramsStringList(element)));
+                    paramsList.add(String.join("", getParamsStringList(element)));
                 }
             }
         } else {
@@ -60,7 +89,7 @@ public class SignatureUtils {
                     paramsList.add(field + value);
                 } else {
                     logger.debug("字段非字符串或者数字 名称: {} 值: {}", field, value);
-                    paramsList.addAll(getPramsStringList(value));
+                    paramsList.addAll(getParamsStringList(value));
                 }
             });
         }
@@ -68,7 +97,7 @@ public class SignatureUtils {
         paramsList.sort(String::compareTo);
 
         logger.debug("函数返回结果: {}", JSONObject.toJSONString(paramsList));
-        logger.debug("获取参数字符串数组2 结束 ======================================================================");
+        logger.debug("获取参数字符串数组 结束 ======================================================================\n");
         return paramsList;
     }
 }

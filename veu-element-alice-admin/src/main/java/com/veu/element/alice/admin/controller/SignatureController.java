@@ -1,5 +1,6 @@
 package com.veu.element.alice.admin.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.veu.element.alice.admin.utils.SignatureUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,25 +27,24 @@ public class SignatureController {
     private static final Logger logger = LoggerFactory.getLogger(SignatureController.class);
 
     @RequestMapping("/sample")
-    public Map<String, Object> sample(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> paramMap) {
+    public Map<String, Object> sample(HttpServletRequest request, HttpServletResponse response, @RequestBody SortedMap<String, Object> paramMap) {
+        // 从请求Header中获取签名用的时间戳、请求中签名字符串、token
         int level = request.getIntHeader("level");
-        long timestamp = Long.parseLong(request.getHeader("timestamp"));
-        String signStr = request.getHeader("signStr");
-        logger.debug("token: token timestamp: {} signStr: {}", timestamp, signStr);
+        logger.debug("加密级别: {}", level);
 
-        String md5SignStr = SignatureUtils.getMd5SignString(timestamp, "token", paramMap);
+        String token = request.getHeader("token");
+        long timestamp = Long.parseLong(request.getHeader("timestamp"));
+        String signStringOfRequest = request.getHeader("signStr");
+        logger.debug("token: {} timestamp: {} signStr: {}", token, timestamp, signStringOfRequest);
 
         Map<String, Object> retMap = new HashMap<>();
 
-        if (ObjectUtils.nullSafeEquals(signStr, md5SignStr)){
+        if (SignatureUtils.verifySignature(timestamp, token, signStringOfRequest, paramMap)){
             logger.debug("签名验证成功 ==================================================================");
-
-//            response.setStatus(1000); // 设置响应状态码，非HTTP 200 则HTTP返回错误
-            retMap.put("code", 1000);
+            retMap.put("code", 0);
             retMap.put("msg", "签名验证成功!");
         } else {
             logger.debug("签名验证失败 ==================================================================");
-
             retMap.put("code", 1);
             retMap.put("msg", "签名验证失败!");
         }
