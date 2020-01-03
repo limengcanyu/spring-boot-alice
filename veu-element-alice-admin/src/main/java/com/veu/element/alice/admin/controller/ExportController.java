@@ -1,6 +1,6 @@
 package com.veu.element.alice.admin.controller;
 
-import com.veu.element.alice.admin.dto.ExportParamBodyDTO;
+import com.veu.element.alice.admin.dto.ExportParamBodyDto;
 import com.veu.element.alice.admin.service.ExportDataService;
 import com.veu.element.alice.admin.service.ExportUtilsService;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -73,7 +73,7 @@ public class ExportController {
     }
 
     @RequestMapping("/exportExcelByRequestBody")
-    public void exportExcelByRequestBody(@RequestBody ExportParamBodyDTO exportParamBody, HttpServletResponse response) {
+    public void exportExcelByRequestBody(@RequestBody ExportParamBodyDto exportParamBody, HttpServletResponse response) {
         String version = exportParamBody.getVersion();
         String tenantId = exportParamBody.getTenantId();
         String companyId = exportParamBody.getCompanyId();
@@ -98,7 +98,7 @@ public class ExportController {
     }
 
     @RequestMapping("/exportExcelByRequestParamBody")
-    public void exportExcelByRequestParamBody(@RequestParam("version") String version, @RequestBody ExportParamBodyDTO exportParamBody, HttpServletResponse response) {
+    public void exportExcelByRequestParamBody(@RequestParam("version") String version, @RequestBody ExportParamBodyDto exportParamBody, HttpServletResponse response) {
         String tenantId = exportParamBody.getTenantId();
         String companyId = exportParamBody.getCompanyId();
         String salaryMonth = exportParamBody.getSalaryMonth();

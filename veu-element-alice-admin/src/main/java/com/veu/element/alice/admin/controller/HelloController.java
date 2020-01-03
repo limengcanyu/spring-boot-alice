@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@RequestMapping("/hello")
 @RestController
 public class HelloController {
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);

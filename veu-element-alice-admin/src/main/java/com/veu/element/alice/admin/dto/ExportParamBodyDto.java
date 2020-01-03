@@ -3,7 +3,7 @@ package com.veu.element.alice.admin.dto;
 import lombok.Data;
 
 @Data
-public class ExportParamBodyDTO {
+public class ExportParamBodyDto {
     private String version;
     private String tenantId;
     private String companyId;
