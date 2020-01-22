@@ -37,6 +37,8 @@
         <module>spring-boot-elasticsearch</module>
         <module>spring-boot-docker</module>
         <module>spring-boot-ssl</module>
+        <module>spring-boot-custom-starter</module>
+        <module>spring-boot-custom-starter-test</module>
     </modules>
 
     <properties>
