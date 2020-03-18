@@ -39,6 +39,11 @@
         <module>spring-boot-ssl</module>
         <module>spring-boot-custom-starter</module>
         <module>spring-boot-custom-starter-test</module>
+        <module>spring-boot-async</module>
+        <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-template</module>
+        <module>spring-boot-webflux</module>
+        <module>veu-element-alice-admin</module>
     </modules>
 
     <properties>
