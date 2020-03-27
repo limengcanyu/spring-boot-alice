@@ -1,11 +1,11 @@
-package com.spring.boot.redis;
+package com.spring.boot.actuator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RedisApplication {
+public class SpringBootActuatorApplication {
     public static void main(String[] args) {
-        SpringApplication.run(RedisApplication.class);
+        SpringApplication.run(SpringBootActuatorApplication.class, args);
     }
 }
