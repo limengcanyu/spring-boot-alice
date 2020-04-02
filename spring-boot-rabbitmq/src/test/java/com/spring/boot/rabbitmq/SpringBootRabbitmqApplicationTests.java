@@ -73,8 +73,8 @@ public class SpringBootRabbitmqApplicationTests {
         log.debug("send message successful");
 
         // receive 1 message
-//        String foo = (String) amqpTemplate.receiveAndConvert("myqueue");
-//        log.debug("receive message: " + foo);
+        String foo = (String) amqpTemplate.receiveAndConvert("myqueue");
+        log.debug("receive message: " + foo);
 
     }
 
