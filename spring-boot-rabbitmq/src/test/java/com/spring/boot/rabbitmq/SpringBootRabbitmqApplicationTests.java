@@ -1,16 +1,21 @@
 package com.spring.boot.rabbitmq;
 
 import com.spring.boot.rabbitmq.entity.User;
+import com.spring.boot.rabbitmq.listener.RabbitConnectionListener;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.ReceiveAndReplyCallback;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringBootRabbitmqApplicationTests {
@@ -24,13 +29,22 @@ public class SpringBootRabbitmqApplicationTests {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+//    @Autowired
+//    private TestRabbitTemplate testRabbitTemplate;
+
+    @Autowired
+    private ConnectionFactory connectionFactory;
+
+    @Autowired
+    private RabbitConnectionListener rabbitConnectionListener;
+
     @Test
     public void getDefaultInfo() {
-        System.out.println("getExchange: " + rabbitTemplate.getExchange());
-        System.out.println("getRoutingKey: " + rabbitTemplate.getRoutingKey());
+        log.debug("getExchange: " + rabbitTemplate.getExchange());
+        log.debug("getRoutingKey: " + rabbitTemplate.getRoutingKey());
 
         // org.springframework.amqp.support.converter.SimpleMessageConverter
-        System.out.println("getMessageConverter: " + rabbitTemplate.getMessageConverter());
+        log.debug("getMessageConverter: " + rabbitTemplate.getMessageConverter());
 
     }
 
@@ -56,12 +70,21 @@ public class SpringBootRabbitmqApplicationTests {
         amqpTemplate.convertAndSend("myqueue", "foo1");
         amqpTemplate.convertAndSend("myqueue", "foo2");
         amqpTemplate.convertAndSend("myqueue", "foo3");
-        System.out.println("send message successful");
+        log.debug("send message successful");
 
         // receive 1 message
 //        String foo = (String) amqpTemplate.receiveAndConvert("myqueue");
-//        System.out.println("receive message: " + foo);
+//        log.debug("receive message: " + foo);
 
+    }
+
+    @Test
+    public void receiveAndConvert() {
+        rabbitTemplate.convertAndSend("myqueue", "foo1");
+        rabbitTemplate.convertAndSend("myqueue", "foo2");
+
+        Object message = rabbitTemplate.receiveAndConvert("myqueue", 5000);
+        log.debug("receive message: {}", message);
     }
 
     @Test
@@ -69,18 +92,69 @@ public class SpringBootRabbitmqApplicationTests {
         // send 2 message, message must implements Serializable
         amqpTemplate.convertAndSend("userQueue", new User(1, "rock", 1));
         amqpTemplate.convertAndSend("userQueue", new User(2, "blue", 2));
-        System.out.println("send message successful");
+        log.debug("send message successful");
 
-        // receive 1 message
-        User user1 = (User) amqpTemplate.receiveAndConvert("userQueue");
-        System.out.println("receive message: " + user1);
+//        // receive 1 message
+//        User user1 = (User) amqpTemplate.receiveAndConvert("userQueue");
+//        log.debug("receive message: " + user1);
 
     }
 
     @Test
     public void sendAndReceive() {
-//        Object response = amqpTemplate.convertSendAndReceive("sendAndReceiveQueue", "foo1");
-//        System.out.println("send message successful, response is: " + response);
+        Object response = amqpTemplate.convertSendAndReceive("sendAndReceiveQueue", "foo1");
+        log.debug("send message successful, response is: " + response);
+    }
+
+    /**
+     * 生产者确认
+     */
+    @Test
+    public void publisherConfirmsAndReturns() {
+        // 临时设置，起作用
+        rabbitTemplate.setMandatory(true);
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            log.debug("ConfirmCallback correlationData: {} ack: {} cause: {}", correlationData, ack, cause);
+        });
+        rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
+            log.debug("ReturnCallback message: {} replyCode: {} replyText: {} exchange: {} routingKey: {}", message, replyCode, replyText, exchange, routingKey);
+        });
+        rabbitTemplate.setUsePublisherConnection(true);
+
+        // add Connection Listener
+//        connectionFactory.addConnectionListener(rabbitConnectionListener);
+
+
+        rabbitTemplate.convertAndSend("myqueue", "foo1");
+        // 没有该routingKey输出:
+        // ReturnCallback message: (Body:'foo1' MessageProperties [headers={}, contentType=text/plain, contentEncoding=UTF-8, contentLength=0, receivedDeliveryMode=PERSISTENT, priority=0, deliveryTag=0]) replyCode: 312 replyText: NO_ROUTE exchange:  routingKey: myqueue2
+        // ConfirmCallback correlationData: null ack: true cause: null
+
+        // 存在该routingKey输出：
+        // ConfirmCallback correlationData: null ack: true cause: null
+
+        String foo = (String) amqpTemplate.receiveAndConvert("myqueue");
+        log.debug("receive message: " + foo);
+    }
+
+    @Test
+    public void consumerReceiveAndReply() {
+        rabbitTemplate.convertAndSend("myqueue", "foo1");
+        rabbitTemplate.convertAndSend("myqueue", "foo2");
+
+        // 消费1条消息，然后将相应消息发送到 sendAndReceiveQueue
+        boolean received = rabbitTemplate.receiveAndReply("myqueue", (ReceiveAndReplyCallback<String, String>) payload -> {
+            log.debug("payload： {}", payload);
+            return "replay message";
+        }, rabbitTemplate.getExchange(), "sendAndReceiveQueue");
+        if (received) {
+            log.info("We received an order!");
+        }
+    }
+
+    @Test
+    public void sendingOrder() {
+        rabbitTemplate.convertAndSend("orderQueue", "order1");
     }
 
 }
