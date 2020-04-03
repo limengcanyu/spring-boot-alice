@@ -27,7 +27,6 @@
         <module>spring-boot-actuator</module>
         <module>spring-boot-batch</module>
         <module>spring-boot-jdbctemplate</module>
-        <module>spring-boot-kafka</module>
         <module>spring-boot-mybatisplus</module>
         <module>spring-boot-druid</module>
         <module>spring-boot-hikaricp</module>
@@ -44,6 +43,8 @@
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-webflux</module>
         <module>veu-element-alice-admin</module>
+        <module>spring-boot-kafka</module>
+        <module>spring-boot-kafka-streams</module>
     </modules>
 
     <properties>

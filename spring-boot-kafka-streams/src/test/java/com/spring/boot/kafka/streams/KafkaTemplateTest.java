@@ -1,6 +1,5 @@
-package com.spring.boot.kafka;
+package com.spring.boot.kafka.streams;
 
-import com.spring.boot.kafka.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,9 @@ public class KafkaTemplateTest {
 
     @Test
     public void sendStringMessage() {
-        kafkaTemplate.send("my-replicated-topic", "my-replicated-topic message 000001");
-        kafkaTemplate.send("my-replicated-topic", "my-replicated-topic message 000002");
+        kafkaTemplate.send("ks1In", "ks1In-topic message 000001");
+        kafkaTemplate.send("ks1In", "ks1In-topic message 000002");
 
     }
 
-    @Test
-    public void sendPOJOMessage() {
-        kafkaTemplate.send("userTopic", new User("userId_003", "userName", "1234567890"));
-        kafkaTemplate.send("userTopic", new User("userId_004", "userName", "1234567890"));
-    }
 }
