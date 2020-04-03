@@ -1,11 +1,12 @@
-package com.spring.boot.redis;
+package com.spring.boot.kafka.streams;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RedisApplication {
+public class SpringBootKafkaStreamsApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(RedisApplication.class);
+        SpringApplication.run(SpringBootKafkaStreamsApplication.class, args);
     }
 }

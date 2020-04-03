@@ -19,18 +19,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class KafkaTemplateTest {
 
     @Autowired
-    private KafkaTemplate<String, Object> kafkaTemplate;
+    private KafkaTemplate kafkaTemplate;
 
     @Test
-    public void send() {
-//        kafkaTemplate.send("myTopic", "foo1");
-//        kafkaTemplate.send("myTopic", "foo2");
-//        kafkaTemplate.send("myTopic", "foo3");
-//
-//        kafkaTemplate.send("sinkTopic", "foo");
+    public void sendStringMessage() {
+        kafkaTemplate.send("my-replicated-topic", "my-replicated-topic message 000001");
+        kafkaTemplate.send("my-replicated-topic", "my-replicated-topic message 000002");
 
-        kafkaTemplate.send("stringTopic", "123456");
+    }
 
-        kafkaTemplate.send("userTopic", new User("userId_001", "userName_001", "1234567890", null));
+    @Test
+    public void sendPOJOMessage() {
+        kafkaTemplate.send("userTopic", new User("userId_003", "userName", "1234567890"));
+        kafkaTemplate.send("userTopic", new User("userId_004", "userName", "1234567890"));
     }
 }

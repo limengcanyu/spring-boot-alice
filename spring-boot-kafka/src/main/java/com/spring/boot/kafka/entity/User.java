@@ -16,15 +16,13 @@ public class User {
     private String userId;
     private String userName;
     private String password;
-    private List<Role> roleList;
 
     public User() {
     }
 
-    public User(String userId, String userName, String password, List<Role> roleList) {
+    public User(String userId, String userName, String password) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
-        this.roleList = roleList;
     }
 }
