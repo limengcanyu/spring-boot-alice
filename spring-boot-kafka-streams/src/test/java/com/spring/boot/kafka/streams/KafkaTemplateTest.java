@@ -22,8 +22,8 @@ public class KafkaTemplateTest {
 
     @Test
     public void sendStringMessage() {
-        kafkaTemplate.send("ks1In", "ks1In-topic message 000001");
-        kafkaTemplate.send("ks1In", "ks1In-topic message 000002");
+        kafkaTemplate.send("ks1In", "ks1In message 000001");
+        kafkaTemplate.send("ks1In", "ks1In message 000002");
 
     }
 
