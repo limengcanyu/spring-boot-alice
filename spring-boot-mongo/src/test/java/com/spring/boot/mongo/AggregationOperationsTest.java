@@ -36,9 +36,6 @@ public class AggregationOperationsTest {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    @Autowired
-    private MongoOperations mongoOps;
-
     @Test
     public void groupTest() {
         List<Document> documentList = new ArrayList<>();

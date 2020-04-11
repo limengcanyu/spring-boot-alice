@@ -1,5 +1,8 @@
 package com.spring.boot.mongo;
 
+import com.mongodb.ClientSessionOptions;
+import com.mongodb.MongoClient;
+import com.mongodb.client.ClientSession;
 import org.bson.Document;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +28,11 @@ public class MongoTemplateTest {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private MongoClient client;
+
     @Test
-    public void createTestData() {
+    public void createTestData() throws Exception {
         List<Document> insertList = new ArrayList<>();
 
         Document employee = new Document();
@@ -39,35 +45,11 @@ public class MongoTemplateTest {
         employee.put("department_name", "部门000001");
         insertList.add(employee);
 
-        employee = new Document();
-        employee.put("tenant_id", "tenant_000001");
-        employee.put("company_id", "company_000001");
-        employee.put("salary_month", "2019-01");
-        employee.put("employee_id", "employee_000002");
-        employee.put("employee_name", "王二");
-        employee.put("department_id", "department_000002");
-        employee.put("department_name", "部门000002");
-        insertList.add(employee);
+        mongoTemplate.dropCollection("artanis");
 
-        employee = new Document();
-        employee.put("tenant_id", "tenant_000001");
-        employee.put("company_id", "company_000001");
-        employee.put("salary_month", "2019-02");
-        employee.put("employee_id", "employee_000001");
-        employee.put("employee_name", "王一");
-        employee.put("department_id", "department_000001");
-        employee.put("department_name", "部门000001");
-        insertList.add(employee);
+        mongoTemplate.insert(insertList, "artanis");
 
-        employee = new Document();
-        employee.put("tenant_id", "tenant_000001");
-        employee.put("company_id", "company_000001");
-        employee.put("salary_month", "2019-02");
-        employee.put("employee_id", "employee_000003");
-        employee.put("employee_name", "王三");
-        employee.put("department_id", "department_000002");
-        employee.put("department_name", "部门000002");
-        insertList.add(employee);
+        insertList.clear();
 
         employee = new Document();
         employee.put("tenant_id", "tenant_000001");
@@ -79,8 +61,7 @@ public class MongoTemplateTest {
         employee.put("department_name", "部门01");
         insertList.add(employee);
 
-        mongoTemplate.insert(insertList, "mongo_template_test");
-
+        mongoTemplate.insert(insertList, "artanis");
     }
 
     @Test
@@ -93,7 +74,7 @@ public class MongoTemplateTest {
                 .and("salary_month").gte(salary_month_start).lte(salary_month_end));
         query.fields().include("department_id").include("department_name");
 
-        List<Document> departmentList = mongoTemplate.find(query, Document.class, "mongo_template_test");
+        List<Document> departmentList = mongoTemplate.find(query, Document.class, "artanis");
         System.out.println();
     }
 }
