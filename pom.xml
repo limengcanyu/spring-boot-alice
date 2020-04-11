@@ -42,12 +42,7 @@
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-template</module>
         <module>spring-boot-webflux</module>
-        <module>veu-element-alice-admin</module>
-        <module>spring-boot-async</module>
-        <module>spring-boot-template</module>
-        <module>spring-boot-rabbitmq</module>
-        <module>spring-boot-webflux</module>
-        <module>veu-element-alice-admin</module>
+        <module>spring-boot-vue-element-alice-admin</module>
         <module>spring-boot-kafka</module>
         <module>spring-boot-kafka-streams</module>
     </modules>
@@ -82,7 +77,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.67</version>
+            <version>1.2.68</version>
         </dependency>
     </dependencies>
 
@@ -91,7 +86,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -101,7 +96,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.1</version>
+                <version>2.22.2</version>
                 <configuration>
                     <!-- Skipping Tests -->
                     <skipTests>true</skipTests>
@@ -111,7 +106,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.2.5.RELEASE</version>
+                <version>2.2.6.RELEASE</version>
                 <executions>
                     <execution>
                         <goals>
