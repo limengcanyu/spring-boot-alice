@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -18,11 +19,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TransactionServiceTest {
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Test
     public void test() {
+        mongoTemplate.dropCollection("artanis");
+        mongoTemplate.createCollection("artanis");
+
         try {
-            transactionService.insert();
+//            transactionService.transactionMethod1();
+            transactionService.transactionMethod2();
         } catch (Exception e) {
             e.printStackTrace();
         }

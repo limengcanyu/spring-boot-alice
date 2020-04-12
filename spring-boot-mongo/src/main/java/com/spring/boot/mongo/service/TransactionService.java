@@ -8,7 +8,9 @@ package com.spring.boot.mongo.service;
  */
 public interface TransactionService {
 
-    void insert() throws Exception;
+    void transactionMethod1() throws Exception;
+
+    void transactionMethod2() throws Exception;
 
     void select();
 }
