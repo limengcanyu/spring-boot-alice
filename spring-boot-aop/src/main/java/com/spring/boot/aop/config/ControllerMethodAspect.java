@@ -1,9 +1,13 @@
 package com.spring.boot.aop.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Component
@@ -12,22 +16,42 @@ import org.springframework.stereotype.Component;
 public class ControllerMethodAspect {
 
     @Pointcut("execution(* com.spring.boot.aop.controller.SampleController.compute(..))")
-    private void doComputeAspect() {
+    private void doComputePointcut() {
     }
 
-    @Before("doComputeAspect()")
-    public void doComputeBefore() {
-        log.debug("=== ControllerMethodAspect do Compute Before");
+    @Before(value = "doComputePointcut() && args(tenantId, companyId, salaryMonth)", argNames = "tenantId,companyId,salaryMonth")
+    public String doComputeBeforeAdvice(String tenantId, String companyId, String salaryMonth) {
+        log.debug("=== ControllerMethodAspect do Compute Before tenantId: {} companyId: {} salaryMonth: {}", tenantId, companyId, salaryMonth);
+        return "doComputeBeforeAdvice return";
     }
 
-    @AfterReturning("doComputeAspect()")
-    public void doComputeAfterReturning() {
-        log.debug("=== ControllerMethodAspect do Compute After Returning");
+    @AfterReturning(value = "doComputePointcut() && args(tenantId, companyId, salaryMonth)", argNames = "tenantId,companyId,salaryMonth")
+    public void doComputeAfterReturningAdvice(String tenantId, String companyId, String salaryMonth) {
+        log.debug("=== ControllerMethodAspect do Compute After Returning tenantId: {} companyId: {} salaryMonth: {}", tenantId, companyId, salaryMonth);
     }
 
-    @AfterThrowing("doComputeAspect()")
-    public void doComputeAfterThrowing() {
-        log.debug("=== ControllerMethodAspect do Compute After Throwing");
+    @AfterThrowing(value = "doComputePointcut() && args(tenantId, companyId, salaryMonth)", argNames = "tenantId,companyId,salaryMonth")
+    public void doComputeAfterThrowingAdvice(String tenantId, String companyId, String salaryMonth) {
+        log.debug("=== ControllerMethodAspect do Compute After Throwing tenantId: {} companyId: {} salaryMonth: {}", tenantId, companyId, salaryMonth);
+    }
+
+    @Around(value = "doComputePointcut() && args(tenantId, companyId, salaryMonth)", argNames = "pjp,tenantId,companyId,salaryMonth")
+    public Object doComputeAroundAdvice(ProceedingJoinPoint pjp, String tenantId, String companyId, String salaryMonth) throws Throwable {
+        log.debug("=== ControllerMethodAspect doComputeAroundAdvice tenantId: {} companyId: {} salaryMonth: {}", tenantId, companyId, salaryMonth);
+
+        // 从Redis中获取操作状态，若该参数指定的方法正在执行，则返回，不再执行
+
+        if (ObjectUtils.nullSafeEquals(tenantId, "tenant_001")) {
+            return "操作正在进行，请稍后！";
+        }
+
+        // start stopwatch
+        Object retVal = pjp.proceed();
+
+        log.debug("=== ControllerMethodAspect doComputeAroundAdvice return value: {}", retVal);
+
+        // stop stopwatch
+        return retVal;
     }
 
 }
