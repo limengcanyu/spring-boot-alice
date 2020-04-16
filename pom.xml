@@ -45,6 +45,7 @@
         <module>spring-boot-vue-element-alice-admin</module>
         <module>spring-boot-kafka</module>
         <module>spring-boot-kafka-streams</module>
+        <module>spring-boot-aop</module>
     </modules>
 
     <properties>
