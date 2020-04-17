@@ -28,8 +28,8 @@ public class TransactionServiceTest {
         mongoTemplate.createCollection("artanis");
 
         try {
-//            transactionService.transactionMethod1();
-            transactionService.transactionMethod2();
+            transactionService.transactionMethod1();
+//            transactionService.transactionMethod2();
         } catch (Exception e) {
             e.printStackTrace();
         }
