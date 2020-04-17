@@ -41,9 +41,9 @@ public class ControllerMethodAspect {
 
         // 从Redis中获取操作状态，若该参数指定的方法正在执行，则返回，不再执行
 
-        if (ObjectUtils.nullSafeEquals(tenantId, "tenant_001")) {
-            return "操作正在进行，请稍后！";
-        }
+//        if (ObjectUtils.nullSafeEquals(tenantId, "tenant_001")) {
+//            return "操作正在进行，请稍后！";
+//        }
 
         // start stopwatch
         Object retVal = pjp.proceed();

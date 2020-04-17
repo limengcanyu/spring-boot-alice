@@ -19,7 +19,7 @@ public class SampleController {
      */
     @RequestMapping("/compute")
     public String compute(@RequestParam String tenantId, @RequestParam String companyId, @RequestParam String salaryMonth) throws Exception {
-        return sampleService.compute();
-//        throw new Exception();
+//        return sampleService.compute();
+        throw new Exception();
     }
 }

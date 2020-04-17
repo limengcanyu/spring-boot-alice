@@ -12,21 +12,21 @@ import org.springframework.stereotype.Component;
 public class ServiceMethodAspect {
 
     @Pointcut("execution(* com.spring.boot.aop.service.SampleService.compute(..))")
-    private void doComputeAspect() {
+    private void doComputeAspectPointcut() {
     }
 
-    @Before("doComputeAspect()")
-    public void doComputeBefore() {
+    @Before("doComputeAspectPointcut()")
+    public void doComputeBeforeAdvice() {
         log.debug("=== ServiceMethodAspect do Compute Before");
     }
 
-    @AfterReturning("doComputeAspect()")
-    public void doComputeAfterReturning() {
+    @AfterReturning("doComputeAspectPointcut()")
+    public void doComputeAfterReturningAdvice() {
         log.debug("=== ServiceMethodAspect do Compute After Returning");
     }
 
-    @AfterThrowing("doComputeAspect()")
-    public void doComputeAfterThrowing() {
+    @AfterThrowing("doComputeAspectPointcut()")
+    public void doComputeAfterThrowingAdvice() {
         log.debug("=== ServiceMethodAspect do Compute After Throwing");
     }
 
