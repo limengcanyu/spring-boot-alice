@@ -13,32 +13,32 @@ import org.springframework.stereotype.Component;
 public class ControllerAspect {
 
     @Pointcut("execution(* com.spring.boot.aop.controller.SampleController.*(..))")
-    private void doComputeAspect() {
+    private void doComputeAspectPointcut() {
     }
 
-    @Before("doComputeAspect()")
-    public void doComputeBefore() {
+    @Before("doComputeAspectPointcut()")
+    public void doComputeBeforeAdvice() {
         log.debug("=== ControllerAspect do Compute Before");
     }
 
-    @AfterReturning("doComputeAspect()")
-    public void doComputeAfterReturning() {
+    @AfterReturning("doComputeAspectPointcut()")
+    public void doComputeAfterReturningAdvice() {
         log.debug("=== ControllerAspect do Compute After Returning");
     }
 
-    @AfterThrowing("doComputeAspect()")
-    public void doComputeAfterThrowing() {
+    @AfterThrowing("doComputeAspectPointcut()")
+    public void doComputeAfterThrowingAdvice() {
         log.debug("=== ControllerAspect do Compute After Throwing");
     }
 
-    @Around("doComputeAspect()")
-    public Object doComputeAround(ProceedingJoinPoint pjp) throws Throwable {
+    @Around("doComputeAspectPointcut()")
+    public Object doComputeAroundAdvice(ProceedingJoinPoint pjp) throws Throwable {
         log.debug("=== ControllerAspect do Compute Around");
 
         // start stopwatch
         Object retVal = pjp.proceed();
 
-        // 遇到异常不会执行以下语句
+        // 遇到异常不会执行以下语句，可以通过添加 AfterThrowing 处理异常情况
         log.debug("=== ControllerAspect do Compute Around return value: {}", retVal);
 
         // stop stopwatch
