@@ -2,6 +2,7 @@ package com.spring.boot.mongo;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.spring.boot.mongo.utils.DocumentUtils;
 import lombok.Data;
 import org.bson.Document;
 import org.junit.Test;
@@ -17,11 +18,17 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapreduce.GroupBy;
+import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
@@ -37,31 +44,29 @@ public class AggregationOperationsTest {
     private MongoTemplate mongoTemplate;
 
     @Test
-    public void groupTest() {
+    public void createData() {
         List<Document> documentList = new ArrayList<>();
 
-        for (int t = 1; t <= 5; t++) {
-            for (int k = 1; k <= 3; k++) {
-                for (int i = 1; i <= 5; i++) {
-                    Document document = new Document();
-                    document.put("tenant_id", "tenant_00000" + t);
-                    document.put("company_id", "company_000001");
-                    document.put("salary_month", "2019-11");
-                    document.put("salary_batch", k);
-                    document.put("employee_id", "employee_00000" + i);
+        for (int i = 1; i <= 5; i++) {
+            Document document = new Document();
+            document.put("tenant_id", "tenant_000001");
+            document.put("company_id", "company_000001");
+            document.put("salary_month", "2019-12");
+            document.put("salary_batch", 1);
 
-                    for (int j = 1; j <= 100; j++) {
-                        document.put("item_00" + j, 1.0 + j);
-                    }
-                    documentList.add(document);
-                }
-            }
+            document.put("employee_id", "employee_00000" + i);
+
+            document.put("item_020", 0.00);
+
+            documentList.add(document);
         }
-
-        logger.debug("documentList: {}", JSONObject.toJSONString(documentList));
 
         mongoTemplate.insert(documentList, "group_test");
 
+    }
+
+    @Test
+    public void groupSort() {
         Aggregation aggregation = newAggregation(
                 group("tenant_id", "company_id", "salary_month").sum("item_001").as("item001"),
                 sort(ASC, "tenant_id", "company_id", "salary_month", "item001")
@@ -71,7 +76,35 @@ public class AggregationOperationsTest {
         List<Document> mappedResults = result.getMappedResults();
         logger.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
 
-        mongoTemplate.dropCollection("group_test");
+//        mongoTemplate.dropCollection("group_test");
+    }
+
+    @Test
+    public void groupCount() {
+        Set<String> employeeIdSet = new HashSet<>();
+        employeeIdSet.add("employee_000001");
+        employeeIdSet.add("employee_000002");
+        employeeIdSet.add("employee_000003");
+        employeeIdSet.add("employee_000004");
+        employeeIdSet.add("employee_000005");
+
+        Criteria criteria = Criteria.where("tenant_id").is("tenant_000001").and("company_id").is("company_000001")
+                .and("salary_month").gte("2019-05").lt("2020-04")
+                .and("employee_id").in(employeeIdSet)
+                .and("item_020").gt(0.00);
+
+        List<Document> employeeList = mongoTemplate.find(Query.query(criteria), Document.class, "group_test");
+        System.out.println(employeeList);
+
+        Aggregation aggregation = newAggregation(
+                match(criteria),
+                group("employee_id").count().as("count")
+        );
+
+        AggregationResults<Document> result = mongoTemplate.aggregate(aggregation, "group_test", Document.class);
+        List<Document> mappedResults = result.getMappedResults();
+        logger.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
+
     }
 
     @Data
