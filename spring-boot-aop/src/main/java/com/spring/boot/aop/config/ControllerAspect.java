@@ -38,7 +38,7 @@ public class ControllerAspect {
         // start stopwatch
         Object retVal = pjp.proceed();
 
-        // 遇到异常不会执行以下语句，可以通过添加 AfterThrowing 处理异常情况
+        // 遇到异常不会执行以下语句，可以通过添加 AfterThrowing 处理异常情况，或者在 Controller 中捕获异常，就无需再加 AfterThrowing
         log.debug("=== ControllerAspect do Compute Around return value: {}", retVal);
 
         // stop stopwatch
