@@ -48,6 +48,7 @@ public class ControllerMethodAspect {
         // start stopwatch
         Object retVal = pjp.proceed();
 
+        // 出现异常，此次不再正常返回，需配合 AfterThrowing 使用，或者在 Controller 中捕获异常
         log.debug("=== ControllerMethodAspect doComputeAroundAdvice return value: {}", retVal);
 
         // stop stopwatch
