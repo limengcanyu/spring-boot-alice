@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @SpringBootApplication
-public class MongoApplication {
+public class SpringBootMongoApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MongoApplication.class);
+        SpringApplication.run(SpringBootMongoApplication.class);
     }
 }
