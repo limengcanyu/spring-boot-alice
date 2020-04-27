@@ -3,6 +3,8 @@ package com.spring.boot.mongo.utils;
 import org.bson.Document;
 import org.springframework.util.ObjectUtils;
 
+import java.math.BigDecimal;
+
 /**
  * <p>Description: </p>
  *
@@ -20,5 +22,9 @@ public class DocumentUtils {
 
     public static double getFieldDouble(Document record, String fieldName) {
         return ObjectUtils.isEmpty(record) ? 0.00 : (ObjectUtils.isEmpty(record.get(fieldName)) ? 0.00 : Double.parseDouble(record.get(fieldName).toString()));
+    }
+
+    public static BigDecimal getFieldBigDecimal(Document record, String fieldName) {
+        return ObjectUtils.isEmpty(record) ? BigDecimal.ZERO : (ObjectUtils.isEmpty(record.get(fieldName)) ? BigDecimal.ZERO : new BigDecimal(record.get(fieldName).toString()));
     }
 }
