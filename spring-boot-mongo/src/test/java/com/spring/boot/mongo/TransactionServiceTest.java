@@ -24,6 +24,7 @@ public class TransactionServiceTest {
 
     @Test
     public void test() {
+        // 在 mongo replicaSet 中，事务操作中不支持 createCollection，dropCollection，createIndex，dropIndex
         mongoTemplate.dropCollection("artanis");
         mongoTemplate.createCollection("artanis");
 

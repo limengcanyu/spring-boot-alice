@@ -52,7 +52,7 @@ public class TransactionServiceImpl implements TransactionService {
         long count = mongoTemplate.count(new Query(criteria), "artanis");
         log.debug("count: {}", count);
 
-        throw new Exception();
+//        throw new Exception();
     }
 
 
