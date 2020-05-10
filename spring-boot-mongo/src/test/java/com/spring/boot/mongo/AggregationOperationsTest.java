@@ -2,7 +2,9 @@ package com.spring.boot.mongo;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.spring.boot.mongo.utils.DocumentUtils;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,51 +19,55 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapreduce.GroupBy;
+import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AggregationOperationsTest {
-    private static final Logger logger = LoggerFactory.getLogger(AggregationOperationsTest.class);
 
     @Autowired
     private MongoTemplate mongoTemplate;
 
     @Test
-    public void groupTest() {
+    public void createData() {
         List<Document> documentList = new ArrayList<>();
 
-        for (int t = 1; t <= 5; t++) {
-            for (int k = 1; k <= 3; k++) {
-                for (int i = 1; i <= 5; i++) {
-                    Document document = new Document();
-                    document.put("tenant_id", "tenant_00000" + t);
-                    document.put("company_id", "company_000001");
-                    document.put("salary_month", "2019-11");
-                    document.put("salary_batch", k);
-                    document.put("employee_id", "employee_00000" + i);
+        for (int i = 1; i <= 5; i++) {
+            Document document = new Document();
+            document.put("tenant_id", "tenant_000001");
+            document.put("company_id", "company_000001");
+            document.put("salary_month", "2019-12");
+            document.put("salary_batch", 1);
 
-                    for (int j = 1; j <= 100; j++) {
-                        document.put("item_00" + j, 1.0 + j);
-                    }
-                    documentList.add(document);
-                }
-            }
+            document.put("employee_id", "employee_00000" + i);
+
+            document.put("item_020", 0.00);
+
+            documentList.add(document);
         }
-
-        logger.debug("documentList: {}", JSONObject.toJSONString(documentList));
 
         mongoTemplate.insert(documentList, "group_test");
 
+    }
+
+    @Test
+    public void groupSort() {
         Aggregation aggregation = newAggregation(
                 group("tenant_id", "company_id", "salary_month").sum("item_001").as("item001"),
                 sort(ASC, "tenant_id", "company_id", "salary_month", "item001")
@@ -69,9 +75,37 @@ public class AggregationOperationsTest {
 
         AggregationResults<Document> result = mongoTemplate.aggregate(aggregation, "group_test", Document.class);
         List<Document> mappedResults = result.getMappedResults();
-        logger.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
+        log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
 
-        mongoTemplate.dropCollection("group_test");
+//        mongoTemplate.dropCollection("group_test");
+    }
+
+    @Test
+    public void groupCount() {
+        Set<String> employeeIdSet = new HashSet<>();
+        employeeIdSet.add("employee_000001");
+        employeeIdSet.add("employee_000002");
+        employeeIdSet.add("employee_000003");
+        employeeIdSet.add("employee_000004");
+        employeeIdSet.add("employee_000005");
+
+        Criteria criteria = Criteria.where("tenant_id").is("tenant_000001").and("company_id").is("company_000001")
+                .and("salary_month").gte("2019-05").lt("2020-04")
+                .and("employee_id").in(employeeIdSet)
+                .and("item_020").gt(0.00);
+
+        List<Document> employeeList = mongoTemplate.find(Query.query(criteria), Document.class, "group_test");
+        System.out.println(employeeList);
+
+        Aggregation aggregation = newAggregation(
+                match(criteria),
+                group("employee_id").count().as("count")
+        );
+
+        AggregationResults<Document> result = mongoTemplate.aggregate(aggregation, "group_test", Document.class);
+        List<Document> mappedResults = result.getMappedResults();
+        log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
+
     }
 
     @Data
@@ -112,7 +146,7 @@ public class AggregationOperationsTest {
 
         AggregationResults<TagCount> results = mongoTemplate.aggregate(agg, "tags", TagCount.class);
         List<TagCount> tagCount = results.getMappedResults();
-        logger.debug("tagCount: {}", tagCount);
+        log.debug("tagCount: {}", tagCount);
 
         mongoTemplate.dropCollection("tags");
     }
@@ -151,7 +185,7 @@ public class AggregationOperationsTest {
         zipInfo.setPopulation(1000);
         zipInfo.setLocation(new double[]{100.00, 200.00});
         zipInfo = mongoTemplate.save(zipInfo);
-        logger.debug("save: {}", zipInfo);
+        log.debug("save: {}", zipInfo);
 
         zipInfo = new ZipInfo();
         zipInfo.setId("2");
@@ -160,7 +194,7 @@ public class AggregationOperationsTest {
         zipInfo.setPopulation(2000); // 人口
         zipInfo.setLocation(new double[]{101.00, 201.00});
         zipInfo = mongoTemplate.save(zipInfo);
-        logger.debug("save: {}", zipInfo);
+        log.debug("save: {}", zipInfo);
 
         zipInfo = new ZipInfo();
         zipInfo.setId("3");
@@ -169,7 +203,7 @@ public class AggregationOperationsTest {
         zipInfo.setPopulation(1000); // 人口
         zipInfo.setLocation(new double[]{103.00, 203.00});
         zipInfo = mongoTemplate.save(zipInfo);
-        logger.debug("save: {}", zipInfo);
+        log.debug("save: {}", zipInfo);
 
         zipInfo = new ZipInfo();
         zipInfo.setId("4");
@@ -178,7 +212,7 @@ public class AggregationOperationsTest {
         zipInfo.setPopulation(1000); // 人口
         zipInfo.setLocation(new double[]{103.00, 203.00});
         zipInfo = mongoTemplate.save(zipInfo);
-        logger.debug("save: {}", zipInfo);
+        log.debug("save: {}", zipInfo);
 
         zipInfo = new ZipInfo();
         zipInfo.setId("5");
@@ -187,7 +221,7 @@ public class AggregationOperationsTest {
         zipInfo.setPopulation(1200); // 人口
         zipInfo.setLocation(new double[]{123.00, 223.00});
         zipInfo = mongoTemplate.save(zipInfo);
-        logger.debug("save: {}", zipInfo);
+        log.debug("save: {}", zipInfo);
 
         zipInfo = new ZipInfo();
         zipInfo.setId("6");
@@ -196,7 +230,7 @@ public class AggregationOperationsTest {
         zipInfo.setPopulation(1300); // 人口
         zipInfo.setLocation(new double[]{133.00, 233.00});
         zipInfo = mongoTemplate.save(zipInfo);
-        logger.debug("save: {}", zipInfo);
+        log.debug("save: {}", zipInfo);
 
         // (id=1, city=上海, state=中国, population=1000, location=[100.0, 200.0])
         // (id=2, city=北京, state=中国, population=2000, location=[101.0, 201.0])
@@ -266,7 +300,7 @@ public class AggregationOperationsTest {
 
         AggregationResults<Document> result = mongoTemplate.aggregate(aggregation, Document.class);
         List<Document> zipInfoStatsList = result.getMappedResults();
-        logger.debug("zipInfoStatsList: {}", JSONObject.toJSONString(zipInfoStatsList));
+        log.debug("zipInfoStatsList: {}", JSONObject.toJSONString(zipInfoStatsList));
 
 //        AggregationResults<ZipInfoStats> result = mongoTemplate.aggregate(aggregation, ZipInfoStats.class);
 //        List<ZipInfoStats> zipInfoStatsList = result.getMappedResults();

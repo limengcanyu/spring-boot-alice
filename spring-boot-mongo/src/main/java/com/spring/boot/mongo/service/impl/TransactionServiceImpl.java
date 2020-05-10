@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.mongodb.ClientSessionOptions;
 import com.mongodb.MongoClient;
 import com.mongodb.client.ClientSession;
-import com.spring.boot.mongo.entity.Person;
 import com.spring.boot.mongo.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
@@ -53,7 +52,7 @@ public class TransactionServiceImpl implements TransactionService {
         long count = mongoTemplate.count(new Query(criteria), "artanis");
         log.debug("count: {}", count);
 
-//        throw new Exception();
+        throw new Exception();
     }
 
 
