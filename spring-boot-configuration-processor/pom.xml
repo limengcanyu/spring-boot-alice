@@ -9,11 +9,11 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.spring.boot.async</groupId>
-	<artifactId>spring-boot-async</artifactId>
+	<groupId>com.spring.boot.configuration.processor</groupId>
+	<artifactId>spring-boot-configuration-processor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-async</name>
-	<description>Async Demo project for Spring Boot</description>
+	<name>spring-boot-configuration-processor</name>
+	<description>spring boot configuration processor project</description>
 
 	<dependencies>
 		<dependency>
@@ -23,8 +23,20 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

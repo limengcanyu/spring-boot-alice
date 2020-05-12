@@ -42,10 +42,10 @@
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-template</module>
         <module>spring-boot-webflux</module>
-        <module>spring-boot-vue-element-alice-admin</module>
         <module>spring-boot-kafka</module>
         <module>spring-boot-kafka-streams</module>
         <module>spring-boot-aop</module>
+        <module>spring-boot-configuration-processor</module>
     </modules>
 
     <properties>
