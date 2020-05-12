@@ -1,13 +1,21 @@
 package com.spring.boot.redis.config;
 
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
+import com.spring.boot.redis.utils.RedisUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.time.Duration;
 
 /**
  * <p>Description: Redis Config</p>
@@ -19,33 +27,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
-//    /**
-//     * Lettuce Connection Factory
-//     *
-//     * @return
-//     */
-//    @Bean
-//    public LettuceConnectionFactory redisConnectionFactory() {
-//        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration("server", 6379);
-//
-//        return new LettuceConnectionFactory();
-//    }
-
-//    /**
-//     * Jedis Connection Factory
-//     *
-//     * @return
-//     */
-//    @Bean
-//    public JedisConnectionFactory redisConnectionFactory() {
-//        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration("server", 6379);
-//        return new JedisConnectionFactory(config);
-//    }
-
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(redisConnectionFactory);
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
 
         // 字符串序列化
         RedisSerializer<String> stringRedisSerializer = new StringRedisSerializer();
@@ -55,14 +40,26 @@ public class RedisConfig {
         RedisSerializer<Object> fastJsonRedisSerializer = new GenericFastJsonRedisSerializer();
 //        RedisSerializer<Object> objectRedisSerializer = new JdkSerializationRedisSerializer();
 
-        template.setKeySerializer(stringRedisSerializer);
-        template.setValueSerializer(stringRedisSerializer); // 使用StringRedisSerializer才能进行valueOpsIncrement操作
+        // key 使用字符串序列化
+        redisTemplate.setKeySerializer(RedisSerializer.string());
+        redisTemplate.setHashKeySerializer(RedisSerializer.string());
 
-        template.setHashKeySerializer(stringRedisSerializer);
-        template.setHashValueSerializer(fastJsonRedisSerializer);
+        // value 使用字符串序列化
+        redisTemplate.setValueSerializer(RedisSerializer.string()); // 使用StringRedisSerializer才能进行valueOpsIncrement操作
+        redisTemplate.setHashValueSerializer(RedisSerializer.json());
 
-        template.afterPropertiesSet();
+        redisTemplate.afterPropertiesSet();
 
-        return template;
+        return redisTemplate;
     }
+
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(1));
+        return RedisCacheManager
+                .builder(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
+                .cacheDefaults(redisCacheConfiguration).build();
+    }
+
 }
