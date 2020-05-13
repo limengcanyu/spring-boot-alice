@@ -1,4 +1,4 @@
-package com.spring.boot.mybatisplus;
+package com.spring.boot.mybatisplus.service;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -6,68 +6,63 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * comment
+ * <p>Description: </p>
  *
- * @author rock
- * @date 2019/6/22
+ * @author rock.jiang
+ * Date 2020/05/13 21:42
  */
-public class CodeGenerator {
-
-//    /**
-//     * <p>
-//     * 读取控制台内容
-//     * </p>
-//     */
-//    public static String scanner(String tip) {
-//        Scanner scanner = new Scanner(System.in);
-//        StringBuilder help = new StringBuilder();
-//        help.append("请输入" + tip + "：");
-//        System.out.println(help.toString());
-//        if (scanner.hasNext()) {
-//            String ipt = scanner.next();
-//            if (StringUtils.isNotEmpty(ipt)) {
-//                return ipt;
-//            }
-//        }
-//        throw new MybatisPlusException("请输入正确的" + tip + "！");
-//    }
-
+public class MybatisPlusCodeGenerator {
     public static void main(String[] args) {
+        String projectPath = System.getProperty("user.dir");
+        String modulePath = "/spring-boot-mybatisplus";
+
+        String url = "jdbc:mysql://localhost:3306/artanis?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai";
+        String driverName = "com.mysql.cj.jdbc.Driver";
+        String username = "root";
+        String password = ".P@ssW0rd,321";
+
+        String parentPackageName = "com.spring.boot.mybatisplus";
+        String entityPackageName = "dao.entity";
+        String mapperPackageName = "dao.mapper";
+        String servicePackageName = "service";
+        String serviceImplPackageName = "service.impl";
+        String controllerPackageName = "controller";
+
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");
-        String modulePath = "/spring-boot-mybatisplus";
         gc.setOutputDir(projectPath + modulePath + "/src/main/java");
-        gc.setAuthor("rock");
+        gc.setAuthor("rock.jiang");
         gc.setOpen(false);
-        // gc.setSwagger2(true); 实体属性 Swagger2 注解
+//        gc.setSwagger2(true); // 实体属性 Swagger2 注解
         gc.setFileOverride(true);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
-        // MySQL
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/artanis?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf8");
+        dsc.setUrl(url);
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword(".P@ssW0rd,321");
+        dsc.setDriverName(driverName);
+        dsc.setUsername(username);
+        dsc.setPassword(password);
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-//        pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.spring.boot.mybatisplus");
-        pc.setEntity("dao.entity");
-        pc.setMapper("dao.mapper");
+        pc.setParent(parentPackageName);
+        pc.setEntity(entityPackageName);
+        pc.setMapper(mapperPackageName);
+        pc.setService(servicePackageName);
+        pc.setServiceImpl(serviceImplPackageName);
+        pc.setController(controllerPackageName);
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -79,9 +74,9 @@ public class CodeGenerator {
         };
 
         // 如果模板引擎是 freemarker
-//        String templatePath = "/templates/mapper.xml.ftl";
+        String templatePath = "/templates/mapper.xml.ftl";
         // 如果模板引擎是 velocity
-         String templatePath = "/templates/mapper.xml.vm";
+        // String templatePath = "/templates/mapper.xml.vm";
 
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
@@ -90,8 +85,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + modulePath + "/src/main/resources/mapper/" +
-                        tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                return projectPath + modulePath + "/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
         /*
@@ -99,8 +93,13 @@ public class CodeGenerator {
             @Override
             public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
                 // 判断自定义文件夹是否需要创建
-                checkDir("调用默认方法创建的目录");
-                return false;
+                checkDir("调用默认方法创建的目录，自定义目录用");
+                if (fileType == FileType.MAPPER) {
+                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
+                    return !new File(filePath).exists();
+                }
+                // 允许生成模板文件
+                return true;
             }
         });
         */
@@ -123,19 +122,20 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-//        strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
+//        strategy.setSuperEntityClass("com.spring.boot.mybatisplus.base.SupperEntity");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
+        strategy.setVersionFieldName("version"); // 乐观锁属性名称
+//        strategy.setLogicDeleteFieldName(); // 逻辑删除属性名称
         // 公共父类
-//        strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
+//        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
         // 写于父类中的公共字段
-        strategy.setSuperEntityColumns("id");
-        strategy.setInclude("tenant_user");
-        strategy.setControllerMappingHyphenStyle(false);
-//        strategy.setTablePrefix(pc.getModuleName() + "_");
+//        strategy.setSuperEntityColumns("id", "creatorId", "createTime", "modifierId", "modifyTime", "version");
+        strategy.setInclude("platform_salary_item");
+        strategy.setControllerMappingHyphenStyle(true);
+        strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
-//        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
     }
-
 }
