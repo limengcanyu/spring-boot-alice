@@ -1,12 +1,10 @@
-package com.spring.boot.mongo;
+package com.spring.boot.mongo.old;
 
 import com.spring.boot.mongo.service.TransactionService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * <p>Description: </p>
@@ -14,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author rock.jiang
  * Date 2020/04/11 12:04
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class TransactionServiceTest {
     @Autowired

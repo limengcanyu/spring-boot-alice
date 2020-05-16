@@ -1,8 +1,7 @@
-package com.spring.boot.mongo;
+package com.spring.boot.mongo.old;
 
 import com.spring.boot.mongo.entity.Person;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +27,6 @@ import static org.springframework.data.mongodb.core.query.Update.update;
  * @version 1.0
  * @date 2018/5/21 0021
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class SavingUpdatingRemovingDocumentsTest {
     private static final Logger logger = LoggerFactory.getLogger(SavingUpdatingRemovingDocumentsTest.class);

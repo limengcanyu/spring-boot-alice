@@ -1,17 +1,13 @@
-package com.spring.boot.mongo;
+package com.spring.boot.mongo.old;
 
-import com.mongodb.ClientSessionOptions;
 import com.mongodb.MongoClient;
-import com.mongodb.client.ClientSession;
 import org.bson.Document;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +18,6 @@ import java.util.List;
  * @author rock.jiang
  * Date 2019/12/15 14:21
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class MongoTemplateTest {
     @Autowired

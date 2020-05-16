@@ -1,43 +1,29 @@
-package com.spring.boot.mongo;
+package com.spring.boot.mongo.old;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.spring.boot.mongo.utils.DocumentUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapreduce.GroupBy;
-import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
-import static org.springframework.data.domain.Sort.Direction.DESC;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 @Slf4j
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class AggregationOperationsTest {
 
@@ -57,7 +43,7 @@ public class AggregationOperationsTest {
 
             document.put("employee_id", "employee_00000" + i);
 
-            document.put("item_020", 0.00);
+            document.put("item_020", 1.00);
 
             documentList.add(document);
         }
@@ -67,7 +53,17 @@ public class AggregationOperationsTest {
     }
 
     @Test
-    public void groupSort() {
+    public void createCollection() {
+        mongoTemplate.createCollection("group_test");
+    }
+
+    @Test
+    public void dropCollection() {
+        mongoTemplate.dropCollection("group_test");
+    }
+
+    @Test
+    public void groupSum() {
         Aggregation aggregation = newAggregation(
                 group("tenant_id", "company_id", "salary_month").sum("item_001").as("item001"),
                 sort(ASC, "tenant_id", "company_id", "salary_month", "item001")
@@ -76,8 +72,6 @@ public class AggregationOperationsTest {
         AggregationResults<Document> result = mongoTemplate.aggregate(aggregation, "group_test", Document.class);
         List<Document> mappedResults = result.getMappedResults();
         log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
-
-//        mongoTemplate.dropCollection("group_test");
     }
 
     @Test
@@ -95,17 +89,16 @@ public class AggregationOperationsTest {
                 .and("item_020").gt(0.00);
 
         List<Document> employeeList = mongoTemplate.find(Query.query(criteria), Document.class, "group_test");
-        System.out.println(employeeList);
+        log.debug("employeeList: {}", JSONObject.toJSONString(employeeList));
 
         Aggregation aggregation = newAggregation(
                 match(criteria),
-                group("employee_id").count().as("count")
+                group("company_id").count().as("count")
         );
 
         AggregationResults<Document> result = mongoTemplate.aggregate(aggregation, "group_test", Document.class);
         List<Document> mappedResults = result.getMappedResults();
         log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
-
     }
 
     @Data
@@ -115,40 +108,45 @@ public class AggregationOperationsTest {
     }
 
     @Test
-    public void example1() {
-        Document document = new Document();
-        document.put("tags", "tag1");
-        document.put("x", 1);
-        mongoTemplate.save(document, "tags");
-
-        document = new Document();
-        document.put("tags", "tag1");
-        document.put("x", 2);
-        mongoTemplate.save(document, "tags");
-
-        document = new Document();
-        document.put("tags", "tag2");
-        document.put("x", 1);
-        mongoTemplate.save(document, "tags");
-
+    public void projectFields() {
         Aggregation agg = newAggregation(
-                // 选中操作字段"tags"
-                project("tags"),
-                // 每个操作字段生成一个新的文档
-                unwind("tags"),
-                // 对字段"tags"分组，计数
-                group("tags").count().as("n"),
-                // previousOperation()：将先前操作的结果投射到当前字段
-                // 选中"n"字段，并使用"tag"为先前的分组操作生成的ID字段创建一个别名
-                project("n").and("tag").previousOperation(),
-                sort(DESC, "n")
+                // 选中操作字段
+                project("company_id", "employee_id")
         );
 
-        AggregationResults<TagCount> results = mongoTemplate.aggregate(agg, "tags", TagCount.class);
-        List<TagCount> tagCount = results.getMappedResults();
-        log.debug("tagCount: {}", tagCount);
+        AggregationResults<Document> results = mongoTemplate.aggregate(agg, "group_test", Document.class);
+        List<Document> getMappedResults = results.getMappedResults();
+        log.debug("getMappedResults: {}", getMappedResults);
+    }
 
-        mongoTemplate.dropCollection("tags");
+    /**
+     * 展开数组字段，根据每个值生成一个新文档
+     * <p>
+     * Unwind Array
+     * <p>
+     * From the mongo shell, create a sample collection named inventory with the following document:
+     * <p>
+     * db.inventory.insertOne({ "_id" : 1, "item" : "ABC1", sizes: [ "S", "M", "L"] })
+     * <p>
+     * The following aggregation uses the $unwind stage to output a document for each element in the sizes array:
+     * <p>
+     * db.inventory.aggregate( [ { $unwind : "$sizes" } ] )
+     * <p>
+     * The operation returns the following results:
+     * <p>
+     * { "_id" : 1, "item" : "ABC1", "sizes" : "S" }
+     * { "_id" : 1, "item" : "ABC1", "sizes" : "M" }
+     * { "_id" : 1, "item" : "ABC1", "sizes" : "L" }
+     */
+    @Test
+    public void unwindArray() {
+        Aggregation agg = newAggregation(
+                unwind("sizes")
+        );
+
+        AggregationResults<Document> results = mongoTemplate.aggregate(agg, "inventory", Document.class);
+        List<Document> getMappedResults = results.getMappedResults();
+        log.debug("getMappedResults: {}", getMappedResults);
     }
 
     @Data
@@ -343,6 +341,8 @@ public class AggregationOperationsTest {
         String name;
         double netPrice;
         int spaceUnits;
+        double discountRate;
+        double taxRate;
     }
 
     @Test
@@ -369,14 +369,14 @@ public class AggregationOperationsTest {
                         .andExpression("netPrice - 1").as("netPriceMinus1")
                         .andExpression("netPrice / 2").as("netPriceDiv2")
                         .andExpression("netPrice * 1.19").as("grossPrice")
-                        .andExpression("spaceUnits % 2").as("spaceUnitsMod2")
+                        .andExpression("netPrice % 2").as("spaceUnitsMod2")
                         .andExpression("(netPrice * 0.8  + 1.2) * 1.19").as("grossPriceIncludingDiscountAndCharge")
 
         );
 
-        AggregationResults<Document> result = mongoTemplate.aggregate(agg, Document.class);
-        List<Document> resultList = result.getMappedResults();
-        System.out.println();
+        AggregationResults<Product> result = mongoTemplate.aggregate(agg, Product.class);
+        List<Product> mappedResults = result.getMappedResults();
+        log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
     }
 
     @Test
@@ -389,7 +389,8 @@ public class AggregationOperationsTest {
         );
 
         AggregationResults<Document> result = mongoTemplate.aggregate(agg, Document.class);
-        List<Document> resultList = result.getMappedResults();
+        List<Document> mappedResults = result.getMappedResults();
+        log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
     }
 
     public class InventoryItem {

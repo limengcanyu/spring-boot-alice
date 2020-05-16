@@ -1,8 +1,7 @@
-package com.spring.boot.mongo;
+package com.spring.boot.mongo.old;
 
 import lombok.Data;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,9 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.*;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.startsWith;
 
 @Data
 class Person {
@@ -27,7 +26,6 @@ class Person {
     // … getters and setters omitted
 }
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class QueryByExampleTest {
     private static final Logger logger = LoggerFactory.getLogger(QueryByExampleTest.class);

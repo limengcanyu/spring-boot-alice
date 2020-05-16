@@ -1,9 +1,8 @@
-package com.spring.boot.mongo;
+package com.spring.boot.mongo.old;
 
 import com.alibaba.fastjson.JSONObject;
 import org.bson.Document;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +11,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.Index;
-import org.springframework.data.mongodb.core.index.IndexInfo;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class IndexAndCollectionManagementTest {
     private static final Logger logger = LoggerFactory.getLogger(IndexAndCollectionManagementTest.class);
