@@ -32,20 +32,10 @@ public class RedisConfig {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
-        // 字符串序列化
-        RedisSerializer<String> stringRedisSerializer = new StringRedisSerializer();
-
-        // 对象序列化
-//        RedisSerializer<Object> objectRedisSerializer = new GenericJackson2JsonRedisSerializer();
-        RedisSerializer<Object> fastJsonRedisSerializer = new GenericFastJsonRedisSerializer();
-//        RedisSerializer<Object> objectRedisSerializer = new JdkSerializationRedisSerializer();
-
-        // key 使用字符串序列化
         redisTemplate.setKeySerializer(RedisSerializer.string());
         redisTemplate.setHashKeySerializer(RedisSerializer.string());
 
-        // value 使用字符串序列化
-        redisTemplate.setValueSerializer(RedisSerializer.string()); // 使用StringRedisSerializer才能进行valueOpsIncrement操作
+        redisTemplate.setValueSerializer(RedisSerializer.json());
         redisTemplate.setHashValueSerializer(RedisSerializer.json());
 
         redisTemplate.afterPropertiesSet();
