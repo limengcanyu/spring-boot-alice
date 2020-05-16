@@ -1,7 +1,8 @@
 package com.spring.boot.elasticsearch;
 
-import com.alibaba.fastjson.JSONObject;
+import com.spring.boot.elasticsearch.entity.CompanySalaryItem;
 import com.spring.boot.elasticsearch.entity.Person;
+import com.spring.boot.elasticsearch.entity.SalaryComputeItem;
 import com.spring.boot.elasticsearch.utils.LocalDateTimeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -9,13 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.query.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>Description: </p>
@@ -43,7 +43,10 @@ public class ElasticsearchTemplateTest {
                 .withObject(person)
                 .build();
         String documentId = elasticsearchRestTemplate.index(indexQuery);
-        log.debug("documentId: {}", documentId);
+        log.debug("save Person documentId: {}", documentId);
+
+        person = elasticsearchRestTemplate.queryForObject(GetQuery.getById(documentId), Person.class);
+        log.debug("query person: {}", person);
 
 
         person = new Person();
@@ -57,7 +60,10 @@ public class ElasticsearchTemplateTest {
                 .withObject(person)
                 .build();
         documentId = elasticsearchRestTemplate.index(indexQuery);
-        log.debug("documentId: {}", documentId);
+        log.debug("save Person documentId: {}", documentId);
+
+        person = elasticsearchRestTemplate.queryForObject(GetQuery.getById(documentId), Person.class);
+        log.debug("query person: {}", person);
 
 
         person = new Person();
@@ -71,59 +77,50 @@ public class ElasticsearchTemplateTest {
                 .withObject(person)
                 .build();
         documentId = elasticsearchRestTemplate.index(indexQuery);
-        log.debug("documentId: {}", documentId);
+        log.debug("save Person documentId: {}", documentId);
+
+        person = elasticsearchRestTemplate.queryForObject(GetQuery.getById(documentId), Person.class);
+        log.debug("query person: {}", person);
 
     }
 
     @Test
-    public void getQuery() {
-        Person person = elasticsearchRestTemplate.queryForObject(GetQuery.getById("5VSfG3IB7wFlGJhGS-vU"), Person.class);
-        log.debug("person: {}", person);
+    public void saveSalaryComputeItem() {
+        List<CompanySalaryItem> salaryItemList = new ArrayList<>();
+        salaryItemList.add(new CompanySalaryItem("item_001", "薪资项001"));
+        salaryItemList.add(new CompanySalaryItem("item_002", "薪资项002"));
 
-        person = elasticsearchRestTemplate.queryForObject(GetQuery.getById("5lSfG3IB7wFlGJhGTOtP"), Person.class);
-        log.debug("person: {}", person);
+        SalaryComputeItem salaryComputeItem = new SalaryComputeItem(
+                "tenant_000001", "company_000001", "2020-05", 1, salaryItemList
+        );
 
-        person = elasticsearchRestTemplate.queryForObject(GetQuery.getById("51SfG3IB7wFlGJhGTOte"), Person.class);
-        log.debug("person: {}", person);
+//        IndexQuery indexQuery = new IndexQueryBuilder()
+//                .withObject(salaryComputeItem)
+//                .build();
+//        String documentId = elasticsearchRestTemplate.index(indexQuery);
+//        log.debug("save documentId: {}", documentId);
+
+        // EI1EHXIBQxZdUk1EfcoQ
+        salaryComputeItem = elasticsearchRestTemplate.queryForObject(GetQuery.getById("EI1EHXIBQxZdUk1EfcoQ"), SalaryComputeItem.class);
+        log.debug("query : {}", salaryComputeItem);
+
     }
 
     @Test
     public void criteriaQuery() {
         Criteria criteria = Criteria.where("firstName").is("artanis");
-        Person person = elasticsearchRestTemplate.queryForObject(new CriteriaQuery(criteria), Person.class);
-        log.debug("person: {}", person);
+        List<Person> personList = elasticsearchRestTemplate.queryForList(new CriteriaQuery(criteria), Person.class);
+        log.debug("personList: {}", personList);
 
-//        criteria = Criteria.where("firstName").is("samuro");
-//        person = elasticsearchRestTemplate.queryForObject(new CriteriaQuery(criteria), Person.class);
-//        log.debug("person: {}", person);
-//
-//        criteria = Criteria.where("firstName").is("rock");
-//        person = elasticsearchRestTemplate.queryForObject(new CriteriaQuery(criteria), Person.class);
-//        log.debug("person: {}", person);
+        criteria = Criteria.where("firstName").is("samuro");
+        personList = elasticsearchRestTemplate.queryForList(new CriteriaQuery(criteria), Person.class);
+        log.debug("personList: {}", personList);
+
+        criteria = Criteria.where("firstName").is("rock");
+        personList = elasticsearchRestTemplate.queryForList(new CriteriaQuery(criteria), Person.class);
+        log.debug("personList: {}", personList);
     }
 
-    /**
-     * java.lang.NoSuchMethodError: 'long org.elasticsearch.search.SearchHits.getTotalHits()'
-     */
-    @Test
-    public void stringQuery() {
-        Person person = elasticsearchRestTemplate.queryForObject(
-                new StringQuery(""),
-                Person.class);
-        log.debug("person: {}", person);
-
-//        criteria = Criteria.where("firstName").is("samuro");
-//        person = elasticsearchRestTemplate.queryForObject(new CriteriaQuery(criteria), Person.class);
-//        log.debug("person: {}", person);
-//
-//        criteria = Criteria.where("firstName").is("rock");
-//        person = elasticsearchRestTemplate.queryForObject(new CriteriaQuery(criteria), Person.class);
-//        log.debug("person: {}", person);
-    }
-
-    /**
-     * java.lang.NoSuchMethodError: 'long org.elasticsearch.search.SearchHits.getTotalHits()'
-     */
     @Test
     public void searchQuery() {
         SearchQuery query = new NativeSearchQueryBuilder()
@@ -131,7 +128,6 @@ public class ElasticsearchTemplateTest {
                 .withPageable(PageRequest.of(0, 10))
                 .build();
         List<Person> personList = elasticsearchRestTemplate.queryForList(query, Person.class);
-        log.debug("personList: {}", JSONObject.toJSONString(personList));
-
+        log.debug("personList: {}", personList);
     }
 }
