@@ -3,7 +3,7 @@ package com.spring.boot.jwt;
 import com.spring.boot.jwt.utils.JJwtRsaAlgorithmsUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class JJwtRsaAlgorithmsUtilsTest {
 
