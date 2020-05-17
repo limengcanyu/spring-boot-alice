@@ -4,6 +4,7 @@ import com.spring.boot.elasticsearch.entity.CompanySalaryItem;
 import com.spring.boot.elasticsearch.entity.Person;
 import com.spring.boot.elasticsearch.entity.SalaryComputeItem;
 import com.spring.boot.elasticsearch.utils.LocalDateTimeUtils;
+import com.spring.boot.elasticsearch.utils.SearchHitsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.*;
 
 import java.time.LocalDateTime;
@@ -42,10 +45,10 @@ public class ElasticsearchTemplateTest {
 //                .withId(person.getId())
                 .withObject(person)
                 .build();
-        String documentId = elasticsearchRestTemplate.index(indexQuery);
+        String documentId = elasticsearchRestTemplate.index(indexQuery, IndexCoordinates.of("person"));
         log.debug("save Person documentId: {}", documentId);
 
-        person = elasticsearchRestTemplate.queryForObject(GetQuery.getById(documentId), Person.class);
+        person = elasticsearchRestTemplate.get(documentId, Person.class);
         log.debug("query person: {}", person);
 
 
@@ -59,10 +62,10 @@ public class ElasticsearchTemplateTest {
 //                .withId(person.getId())
                 .withObject(person)
                 .build();
-        documentId = elasticsearchRestTemplate.index(indexQuery);
+        documentId = elasticsearchRestTemplate.index(indexQuery, IndexCoordinates.of("person"));
         log.debug("save Person documentId: {}", documentId);
 
-        person = elasticsearchRestTemplate.queryForObject(GetQuery.getById(documentId), Person.class);
+        person = elasticsearchRestTemplate.get(documentId, Person.class);
         log.debug("query person: {}", person);
 
 
@@ -76,10 +79,10 @@ public class ElasticsearchTemplateTest {
 //                .withId(person.getId())
                 .withObject(person)
                 .build();
-        documentId = elasticsearchRestTemplate.index(indexQuery);
+        documentId = elasticsearchRestTemplate.index(indexQuery, IndexCoordinates.of("person"));
         log.debug("save Person documentId: {}", documentId);
 
-        person = elasticsearchRestTemplate.queryForObject(GetQuery.getById(documentId), Person.class);
+        person = elasticsearchRestTemplate.get(documentId, Person.class);
         log.debug("query person: {}", person);
 
     }
@@ -94,14 +97,13 @@ public class ElasticsearchTemplateTest {
                 "tenant_000001", "company_000001", "2020-05", 1, salaryItemList
         );
 
-//        IndexQuery indexQuery = new IndexQueryBuilder()
-//                .withObject(salaryComputeItem)
-//                .build();
-//        String documentId = elasticsearchRestTemplate.index(indexQuery);
-//        log.debug("save documentId: {}", documentId);
+        IndexQuery indexQuery = new IndexQueryBuilder()
+                .withObject(salaryComputeItem)
+                .build();
+        String documentId = elasticsearchRestTemplate.index(indexQuery, IndexCoordinates.of("salary_compute_item"));
+        log.debug("save documentId: {}", documentId);
 
-        // EI1EHXIBQxZdUk1EfcoQ
-        salaryComputeItem = elasticsearchRestTemplate.queryForObject(GetQuery.getById("EI1EHXIBQxZdUk1EfcoQ"), SalaryComputeItem.class);
+        salaryComputeItem = elasticsearchRestTemplate.get(documentId, SalaryComputeItem.class);
         log.debug("query : {}", salaryComputeItem);
 
     }
@@ -109,25 +111,11 @@ public class ElasticsearchTemplateTest {
     @Test
     public void criteriaQuery() {
         Criteria criteria = Criteria.where("firstName").is("artanis");
-        List<Person> personList = elasticsearchRestTemplate.queryForList(new CriteriaQuery(criteria), Person.class);
-        log.debug("personList: {}", personList);
-
-        criteria = Criteria.where("firstName").is("samuro");
-        personList = elasticsearchRestTemplate.queryForList(new CriteriaQuery(criteria), Person.class);
-        log.debug("personList: {}", personList);
-
-        criteria = Criteria.where("firstName").is("rock");
-        personList = elasticsearchRestTemplate.queryForList(new CriteriaQuery(criteria), Person.class);
-        log.debug("personList: {}", personList);
-    }
-
-    @Test
-    public void searchQuery() {
-        SearchQuery query = new NativeSearchQueryBuilder()
-                .withQuery(QueryBuilders.matchQuery("firstName", "samuro"))
-                .withPageable(PageRequest.of(0, 10))
-                .build();
-        List<Person> personList = elasticsearchRestTemplate.queryForList(query, Person.class);
+        SearchHits<Person> searchHits = elasticsearchRestTemplate.search(new CriteriaQuery(criteria), Person.class, IndexCoordinates.of("person"));
+        log.debug("searchHits: {}", searchHits);
+        Person person = searchHits.getSearchHit(0).getContent();
+        log.debug("person: {}", person);
+        List<Person> personList =  SearchHitsUtils.getList(searchHits, Person.class);
         log.debug("personList: {}", personList);
     }
 }
