@@ -29,7 +29,7 @@ public class PersonServiceTest {
     public void findPersonByFirstName() {
         String firstName = "artanis";
         Pageable pageable = PageRequest.of(0, 10);
-        Page<Person> personPage = personService.findPersonByFirstName(firstName, pageable);
+        Page<Person> personPage = personService.findByFirstName(firstName, pageable);
         log.debug("personPage: {}", personPage);
 
         int total = personPage.getTotalPages();
@@ -38,11 +38,11 @@ public class PersonServiceTest {
     }
 
     @Test
-    public void findPersonByName() {
+    public void findByFirstNameAndLastName() {
         String firstName = "artanis";
         String lastName = "xxx";
-        Pageable pageable = PageRequest.of(0, 10); // 分页 page 从0开始
-        Page<Person> personPage = personService.findPersonByName(firstName, lastName, pageable);
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Person> personPage = personService.findByFirstNameAndLastName(firstName, lastName, pageable);
         log.debug("personPage: {}", personPage);
 
         int total = personPage.getTotalPages();

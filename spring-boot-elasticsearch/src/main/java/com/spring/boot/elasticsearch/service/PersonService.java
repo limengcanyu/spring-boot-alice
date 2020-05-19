@@ -11,6 +11,6 @@ import org.springframework.data.domain.Pageable;
  * Date 2020/05/17 23:14
  */
 public interface PersonService {
-    Page<Person> findPersonByFirstName(String firstName, Pageable pageable);
-    Page<Person> findPersonByName(String firstName, String lastName, Pageable pageable);
+    Page<Person> findByFirstName(String firstName, Pageable pageable);
+    Page<Person> findByFirstNameAndLastName(String firstName, String lastName, Pageable pageable);
 }
