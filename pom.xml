@@ -46,6 +46,7 @@
         <module>spring-boot-configuration-processor</module>
         <module>spring-boot-log</module>
         <module>spring-boot-json</module>
+        <module>spring-boot-postgres</module>
     </modules>
 
     <properties>
