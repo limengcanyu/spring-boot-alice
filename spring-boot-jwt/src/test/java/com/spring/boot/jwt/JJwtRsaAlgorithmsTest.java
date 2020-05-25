@@ -1,6 +1,5 @@
 package com.spring.boot.jwt;
 
-import com.spring.boot.jwt.utils.JwtConstant;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;

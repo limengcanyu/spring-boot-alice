@@ -1,5 +1,6 @@
 package com.spring.boot.jwt.utils;
 
+import com.spring.boot.jwt.constant.JwtConst;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -20,7 +21,7 @@ public class JwtUtils {
      */
     public static SecretKey getSecretKey() {
         // 本地的密码解码
-        byte[] encodedKey = Base64.decodeBase64(JwtConstant.JWT_SECRET);
+        byte[] encodedKey = Base64.decodeBase64(JwtConst.JWT_SECRET);
 
         // 根据给定的字节数组使用HmacSHA256加密算法构造一个密钥
         return new SecretKeySpec(encodedKey, "HmacSHA256");

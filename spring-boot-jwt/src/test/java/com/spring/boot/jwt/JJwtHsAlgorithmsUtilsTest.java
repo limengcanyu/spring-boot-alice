@@ -1,6 +1,5 @@
 package com.spring.boot.jwt;
 
-import com.spring.boot.jwt.utils.JJwtHsAlgorithmsUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.junit.jupiter.api.Test;
