@@ -47,6 +47,7 @@
         <module>spring-boot-log</module>
         <module>spring-boot-json</module>
         <module>spring-boot-postgres</module>
+        <module>spring-boot-swagger2</module>
     </modules>
 
     <properties>
