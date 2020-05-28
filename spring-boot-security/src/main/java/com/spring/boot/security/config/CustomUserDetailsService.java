@@ -1,5 +1,6 @@
 package com.spring.boot.security.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,9 +12,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * @author rock
  * date 2019/06/23
  */
-public class MyUserDetailsService implements UserDetailsService {
+@Slf4j
+public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return User.withUsername("rock").password("1234567890").roles("ADMIN").build();
+        log.debug("====== loadUserByUsername");
+        return User.withUsername("rock").password("1234567").roles("ADMIN").build();
     }
 }

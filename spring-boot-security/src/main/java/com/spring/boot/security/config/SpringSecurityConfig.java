@@ -15,13 +15,13 @@ public class SpringSecurityConfig {
     @Bean
     public MyAuthenticationProvider authenticationProvider() {
         MyAuthenticationProvider authenticationProvider =  new MyAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setUserDetailsService(customUserDetailsService());
         return authenticationProvider;
     }
 
     @Bean
-    public MyUserDetailsService userDetailsService() {
-        return new MyUserDetailsService();
+    public CustomUserDetailsService customUserDetailsService() {
+        return new CustomUserDetailsService();
     }
 
     @Bean

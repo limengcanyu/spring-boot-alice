@@ -1,6 +1,7 @@
 package com.spring.boot.security.config;
 
 import com.spring.boot.security.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * @author rock
  * date 2019/06/23
  */
+@Slf4j
 public class MyAuthenticationProvider extends DaoAuthenticationProvider {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -24,22 +26,20 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-        if (authentication.getCredentials() == null) {
-            logger.debug("Authentication failed: no credentials provided");
+        log.debug("====== additionalAuthenticationChecks");
 
-            throw new BadCredentialsException(messages.getMessage(
-                    "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                    "Bad credentials"));
+        if (authentication.getCredentials() == null) {
+            logger.debug("认证失败: no credentials provided");
+
+            throw new BadCredentialsException(messages.getMessage("1", "Bad credentials"));
         }
 
         String presentedPassword = userService.loadUserByUsername(authentication.getName()).getPassword();
 
         if (!passwordEncoder.matches(presentedPassword, passwordEncoder.encode(userDetails.getPassword()))) {
-            logger.debug("Authentication failed: password does not match stored value");
+            logger.debug("认证失败: password does not match stored value");
 
-            throw new BadCredentialsException(messages.getMessage(
-                    "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                    "Bad credentials"));
+            throw new BadCredentialsException(messages.getMessage("1", "Bad credentials"));
         }
     }
 }

@@ -11,6 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class HelloController {
+    /**
+     * localhost:8080/
+     *
+     * @return
+     */
+    @RequestMapping("/")
+    public String home() {
+        return "home";
+    }
+
+    /**
+     * localhost:8080/hello
+     *
+     * @return
+     */
     @RequestMapping("/hello")
     public String hello() {
         return "hello";
