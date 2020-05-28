@@ -3,6 +3,7 @@ package com.spring.boot.security.config;
 import com.spring.boot.security.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,13 +18,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * date 2019/06/23
  */
 @Slf4j
-public class MyAuthenticationProvider extends DaoAuthenticationProvider {
+public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
 
+    /**
+     * 此处验证用户密码
+     *
+     * @param userDetails
+     * @param authentication
+     * @throws AuthenticationException
+     */
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         log.debug("====== additionalAuthenticationChecks");

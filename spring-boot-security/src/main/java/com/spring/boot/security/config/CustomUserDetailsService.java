@@ -17,6 +17,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("====== loadUserByUsername");
-        return User.withUsername("rock").password("1234567").roles("ADMIN").build();
+        return User.withUsername("rock").password("1234567890").roles("ADMIN").build();
     }
 }
