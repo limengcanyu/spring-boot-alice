@@ -12,8 +12,15 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         log.debug("====== CustomWebSecurityConfigurer configure");
 
-        http.authorizeRequests(authorize -> authorize.anyRequest().authenticated())
-                .formLogin(withDefaults()) // 启用Spring Security自带的登陆页面
-                .httpBasic(withDefaults());
+        http.authorizeRequests(
+                authorize -> authorize.anyRequest()
+                        .permitAll()
+//                .authenticated()
+        )
+//                .formLogin(withDefaults()) // 启用Spring Security自带的登陆页面
+//                .httpBasic(withDefaults());
+//                .cors()
+//                .and()
+                .csrf().disable();
     }
 }

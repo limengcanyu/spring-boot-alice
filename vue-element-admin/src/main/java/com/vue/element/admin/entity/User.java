@@ -1,4 +1,4 @@
-package com.spring.boot.security.entity;
+package com.vue.element.admin.entity;
 
 import lombok.Data;
 
