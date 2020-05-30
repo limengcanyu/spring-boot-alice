@@ -19,7 +19,8 @@ public class User {
     private String avatar;
     private String introduction;
     private List<String> roles;
-    private List<String> routes;
+    private List<String> routePaths;
+    private List<String> routeNames;
 
     public User() {
     }

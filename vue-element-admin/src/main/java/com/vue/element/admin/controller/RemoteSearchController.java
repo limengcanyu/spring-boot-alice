@@ -25,8 +25,6 @@ public class RemoteSearchController {
     public Result list() {
         log.debug("====== list");
 
-        System.out.println("====== list");
-
         List<Transaction> list = new ArrayList<>();
         list.add(new Transaction("order_001", LocalDateTime.now(), "rock", 20.00, "success"));
         list.add(new Transaction("order_002", LocalDateTime.now(), "jessica", 21.00, "pending"));
