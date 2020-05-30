@@ -5,10 +5,7 @@ import com.vue.element.admin.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>Description: </p>
@@ -24,7 +21,10 @@ public class UserController {
     public Result login(@RequestBody User user) {
         log.debug("====== login user: {}", user);
 
-        return new Result(20000, null, user.getUsername() + "-token");
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", user.getUsername() + "-token");
+
+        return new Result(20000, null, tokenMap);
     }
 
     @GetMapping("/vue-element-admin/user/info")
@@ -48,7 +48,12 @@ public class UserController {
         return new Result(20000, null, null);
     }
 
-    private List<String> getRoutes(List<String> permissionRoutes, List<String> iconRoutes, List<String> componentsRoutes, List<String> chartsRoutes, List<String> nestedRoutes, List<String> tableRoutes, List<String> exampleRoutes, List<String> tabRoutes, List<String> errorRoutes, List<String> errorLogRoutes, List<String> excelRoutes, List<String> zipRoutes, List<String> pdfRoutes, List<String> themeRoutes, List<String> clipboardRoutes, List<String> externalLinkRoutes) {
+    private List<String> getRoutes(List<String> permissionRoutes, List<String> iconRoutes, List<String> componentsRoutes,
+                                   List<String> chartsRoutes, List<String> nestedRoutes, List<String> tableRoutes,
+                                   List<String> exampleRoutes, List<String> tabRoutes, List<String> errorRoutes,
+                                   List<String> errorLogRoutes, List<String> excelRoutes, List<String> zipRoutes,
+                                   List<String> pdfRoutes, List<String> themeRoutes, List<String> clipboardRoutes,
+                                   List<String> externalLinkRoutes, List<String> employeeRoutes, List<String> salaryRoutes) {
         List<String> routePaths = new ArrayList<>();
         routePaths.addAll(permissionRoutes);
         routePaths.addAll(iconRoutes);
@@ -66,6 +71,8 @@ public class UserController {
         routePaths.addAll(themeRoutes);
         routePaths.addAll(clipboardRoutes);
         routePaths.addAll(externalLinkRoutes);
+        routePaths.addAll(employeeRoutes);
+        routePaths.addAll(salaryRoutes);
 
         return routePaths;
     }
@@ -89,8 +96,13 @@ public class UserController {
         List<String> themeRoutes = Arrays.asList("/theme", "index");
         List<String> clipboardRoutes = Arrays.asList("/clipboard", "index");
         List<String> externalLinkRoutes = Arrays.asList("/external-link", "https://github.com/PanJiaChen/vue-element-admin");
+        List<String> employeeRoutes = Arrays.asList("/employee", "employee-list", "employee-add");
+        List<String> salaryRoutes = Arrays.asList("/salary", "salary-config", "salary-search", "attendance-summary", "salary-input",
+                "social-fund", "special-additional", "compute-execute", "salary-verify", "salary-offer", "salary-over");
 
-        return getRoutes(permissionRoutes, iconRoutes, componentsRoutes, chartsRoutes, nestedRoutes, tableRoutes, exampleRoutes, tabRoutes, errorRoutes, errorLogRoutes, excelRoutes, zipRoutes, pdfRoutes, themeRoutes, clipboardRoutes, externalLinkRoutes);
+        return getRoutes(permissionRoutes, iconRoutes, componentsRoutes, chartsRoutes, nestedRoutes, tableRoutes,
+                exampleRoutes, tabRoutes, errorRoutes, errorLogRoutes, excelRoutes, zipRoutes, pdfRoutes, themeRoutes,
+                clipboardRoutes, externalLinkRoutes, employeeRoutes, salaryRoutes);
     }
 
     private List<String> getRouteNames(){
@@ -112,7 +124,12 @@ public class UserController {
         List<String> themeRoutes = Arrays.asList("theme", "Theme");
         List<String> clipboardRoutes = Arrays.asList("clipboard", "ClipboardDemo");
         List<String> externalLinkRoutes = Arrays.asList("external-link", "VueElementAdmin");
+        List<String> employeeRoutes = Arrays.asList("EmployeeComponent", "EmployeeList", "EmployeeAdd");
+        List<String> salaryRoutes = Arrays.asList("SalaryComponent", "SalaryConfig", "SalarySearch", "AttendanceSummary", "SalaryInput",
+                "SocialFund", "SpecialAdditional", "ComputeExecute", "SalaryVerify", "SalaryOffer", "SalaryOver");
 
-        return getRoutes(permissionRoutes, iconRoutes, componentsRoutes, chartsRoutes, nestedRoutes, tableRoutes, exampleRoutes, tabRoutes, errorRoutes, errorLogRoutes, excelRoutes, zipRoutes, pdfRoutes, themeRoutes, clipboardRoutes, externalLinkRoutes);
+        return getRoutes(permissionRoutes, iconRoutes, componentsRoutes, chartsRoutes, nestedRoutes, tableRoutes, exampleRoutes,
+                tabRoutes, errorRoutes, errorLogRoutes, excelRoutes, zipRoutes, pdfRoutes, themeRoutes, clipboardRoutes,
+                externalLinkRoutes, employeeRoutes, salaryRoutes);
     }
 }

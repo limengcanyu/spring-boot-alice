@@ -26,11 +26,17 @@ public class RemoteSearchController {
         log.debug("====== list");
 
         List<Transaction> list = new ArrayList<>();
-        list.add(new Transaction("order_001", LocalDateTime.now(), "rock", 20.00, "success"));
-        list.add(new Transaction("order_002", LocalDateTime.now(), "jessica", 21.00, "pending"));
+
+        for (int i = 1; i <= 9; i++) {
+            list.add(new Transaction("order_00" + i, LocalDateTime.now(), "user0" + i, 20.00 + i, i % 2 == 0 ? "success" : "pending"));
+        }
+
+        for (int i = 10; i <= 20; i++) {
+            list.add(new Transaction("order_0" + i, LocalDateTime.now(), "user" + i, 20.00 + i, i % 2 == 0 ? "success" : "pending"));
+        }
 
         Map<String, Object> map = new HashMap<>();
-        map.put("total", 2);
+        map.put("total", 20);
         map.put("items", list);
 
         return new Result(20000, null, map);
