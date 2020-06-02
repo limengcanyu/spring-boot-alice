@@ -49,6 +49,7 @@
         <module>spring-boot-json</module>
         <module>spring-boot-postgres</module>
         <module>spring-boot-swagger2</module>
+        <module>spring-boot-flowable</module>
         <module>vue-element-admin</module>
     </modules>
 
