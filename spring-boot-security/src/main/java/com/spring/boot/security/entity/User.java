@@ -14,6 +14,7 @@ import java.util.List;
 public class User {
     private String username;
     private String password;
+    private String userId;
 
     private String name;
     private String avatar;
