@@ -2,9 +2,9 @@ GET http://localhost:8080/resources
 Accept: */*
 Cache-Control: no-cache
 
-###
+########################################################################################################################
 ### Send POST request with json body
-POST http://localhost:8080/auth/login2
+POST http://localhost:8080/security/auth/login
 Content-Type: application/json
 
 {
@@ -12,39 +12,38 @@ Content-Type: application/json
   "password": "1234567890"
 }
 
-<> 2020-06-06T105138.200.txt
-<> 2020-06-06T104859.200.txt
-<> 2020-06-06T091737.200.txt
-<> 2020-06-06T085228.403.json
-<> 2020-06-06T085056.200.txt
-<> 2020-06-06T085046.400.json
-<> 2020-06-06T084735.400.json
+### Send POST request with json body
+POST http://localhost:8080/security/auth/login
+Content-Type: application/json
 
-### Send POST request with body as parameters
-POST http://localhost:8080/auth/login
-Content-Type: application/x-www-form-urlencoded
+{
+  "username": "jessica",
+  "password": "1234567890"
+}
 
-username=rock&password=1234567890
-
-<> 2020-06-06T105159.200.txt
-<> 2020-06-06T104813.200.txt
-<> 2020-06-06T091750.200.txt
-<> 2020-06-06T091727.200.txt
-<> 2020-06-06T085345.403.json
-<> 2020-06-06T085251.403.json
-<> 2020-06-06T084844.200.txt
-
+########################################################################################################################
 ### GET request with a header
-GET localhost:8080/auth/logout?username=rock
+GET localhost:8080/security/auth/logout?username=rock
 Accept: application/json
 
-<> 2020-06-06T105145.200.json
-<> 2020-06-06T104853.200.json
-<> 2020-06-06T103439.401.json
-<> 2020-06-06T103358.401.json
-<> 2020-06-06T100353.200.html
-<> 2020-06-06T095505.403.json
-<> 2020-06-06T095315.403.json
-<> 2020-06-06T092610.200.json
-<> 2020-06-06T092541.200.json
-<> 2020-06-06T091932.200.json
+########################################################################################################################
+### GET request with a header
+GET localhost:8080/security/hello
+Accept: application/json
+
+########################################################################################################################
+### Authorization by token, part 1. Retrieve and save token.
+POST https://httpbin.org/post
+Content-Type: application/json
+
+{
+  "token": "my-secret-token"
+}
+
+> {% client.global.set("auth_token", response.body.json.token); %}
+
+### Authorization by token, part 2. Use token to authorize.
+GET https://httpbin.org/headers
+Authorization: Bearer {{auth_token}}
+
+########################################################################################################################

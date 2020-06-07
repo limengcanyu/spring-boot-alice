@@ -1,16 +1,23 @@
 package com.spring.boot.security.controller;
 
-import com.spring.boot.security.entity.User;
+import com.spring.boot.security.entity.JwtUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RequestMapping("/auth")
+@RequestMapping("/security/auth")
 @RestController
 public class AuthenticateController {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     /**
      * localhost:8080/auth/login?username=rock&password=1234567890
@@ -18,20 +25,25 @@ public class AuthenticateController {
      * @return
      */
     @RequestMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password){
-        log.debug("login ===========================================================");
-        return "login success";
-    }
+    public String login(@RequestBody JwtUser jwtUser) throws Exception {
+        log.debug("====== login jwtUser: {}", jwtUser);
 
-    /**
-     * localhost:8080/auth/login?username=rock&password=1234567890
-     *
-     * @return
-     */
-    @RequestMapping("/login2")
-    public String login2(@RequestBody User user){
-        log.debug("login ===========================================================");
-        return "login success";
+        // SecurityContextHolder 中设置 SecurityContext 表示认证成功
+//        SecurityContext context = SecurityContextHolder.createEmptyContext();
+//        Collection<GrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+//        Authentication authentication = new UsernamePasswordAuthenticationToken(jwtUser.getUsername(), jwtUser.getPassword(), authorities);
+//        context.setAuthentication(authentication);
+//
+//        SecurityContextHolder.setContext(context);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.debug("====== authentication: {}", authentication);
+
+//        // 登录成功之后根据 UserDetails 生成 token 返回
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+        return "login return token";
     }
 
     /**
@@ -41,7 +53,6 @@ public class AuthenticateController {
      */
     @RequestMapping("/register")
     public String register(@RequestParam String username, @RequestParam String password){
-
         return "register success";
     }
 
@@ -52,6 +63,12 @@ public class AuthenticateController {
      */
     @RequestMapping("/logout")
     public String logout(@RequestParam String username){
+        log.debug("====== logout");
+
+        SecurityContextHolder.clearContext();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.debug("====== authentication: {}", authentication);
 
         return "logout success";
     }

@@ -25,14 +25,4 @@ public class SalaryInputController {
     public Map<String, Object> getSalaryInputItemBigTypeList() {
         return SalaryItemConst.salaryInputItemBigTypeList;
     }
-
-    /**
-     * localhost:8080/hello
-     *
-     * @return
-     */
-    @RequestMapping("/hello")
-    public String hello() {
-        return "hello";
-    }
 }

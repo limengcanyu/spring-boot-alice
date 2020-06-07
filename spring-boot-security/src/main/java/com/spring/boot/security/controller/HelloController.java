@@ -24,9 +24,10 @@ public class HelloController {
      *
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping("/security")
     public String home() {
         log.debug("====== home");
+
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String username = authentication.getName();
@@ -39,12 +40,23 @@ public class HelloController {
     }
 
     /**
-     * localhost:8080/hello
+     * localhost:8080/security/hello
      *
      * @return
      */
-    @RequestMapping("/hello")
+    @RequestMapping("/security/hello")
     public String hello() {
+        log.debug("====== hello");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.debug("====== authentication: {}", authentication);
+
+        String username = authentication.getName();
+        Object principal = authentication.getPrincipal();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        log.debug("====== username: {} principal: {} authorities: {}", username, principal, authorities);
+
         return "hello";
     }
 }
