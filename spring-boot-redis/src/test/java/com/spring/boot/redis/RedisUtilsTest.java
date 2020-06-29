@@ -28,11 +28,14 @@ public class RedisUtilsTest {
         String key = "key001";
         String value = "value001";
         redisUtils.setString(key, value);
+
         System.out.println("value: " + redisUtils.getString("key001"));
 
         key = "key002";
         redisUtils.setObject(key, new User("user001", "墨月1", "1234567890"), 10, TimeUnit.SECONDS);
-        System.out.println("user: " + redisUtils.getObject("key002"));
+
+        User redisUser = (User) redisUtils.getObject("key002");
+        System.out.println("user: " + redisUser);
 
         key = "key004";
         List<User> userList = new ArrayList<>();
@@ -40,14 +43,17 @@ public class RedisUtilsTest {
         userList.add(new User("user003", "墨月3", "1234567890"));
         userList.add(new User("user004", "墨月4", "1234567890"));
         redisUtils.setList(key, userList);
-        System.out.println("userList: " + redisUtils.getList("key004"));
+
+        List<User> redisUserList = redisUtils.getList("key004");
+        System.out.println("userList: " + redisUserList);
 
         Map<String, User> map = new HashMap<>();
         map.put("user002", new User("user002", "墨月2", "1234567890"));
         map.put("user003", new User("user003", "墨月3", "1234567890"));
         redisUtils.setObject("key005", map);
 
-        System.out.println("map1: " + redisUtils.getObject("key005"));
+        Map<String, User> redisMap = (Map<String, User>) redisUtils.getObject("key005");
+        System.out.println("map: " + redisMap);
     }
 
 }
