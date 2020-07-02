@@ -1,7 +1,10 @@
-create table platform_user
+drop table if exists company_user;
+
+create table company_user
 (
     id              int auto_increment comment '主键ID'  primary key,
     tenant_id       varchar(20)                          null comment '租户ID',
+    company_id      varchar(20)                          null comment '公司ID',
     username        varchar(50)                          null comment '用户名',
     password        varchar(64)                          null comment '密码',
     user_id         varchar(50)                          null comment '用户ID',
@@ -9,17 +12,18 @@ create table platform_user
     avatar          varchar(200)                         null comment '头像',
     email           varchar(50)                          null comment 'email',
     introduction    varchar(255)                         null comment '描述',
+
     remark          varchar(255)                         null comment '备注',
-    active_flag     bit        default b'1'              null comment '是否启用：1-启用；0-禁用',
-    creator_id      varchar(20)                          null comment '创建人',
+    active_flag     tinyint(2) default 1                 null comment '是否启用：1-启用；0-禁用',
+    creator_id      varchar(20)                          null comment '创建人ID',
     create_time     datetime   default CURRENT_TIMESTAMP not null comment '创建时间',
-    updater_id      varchar(20)                          null comment '修改人',
-    update_time     datetime                             null comment '修改时间',
+    updater_id      varchar(20)                          null comment '修改人ID',
+    update_time     datetime   default CURRENT_TIMESTAMP not null comment '修改时间',
     version         int        default 0                 null comment '版本号'
-) comment '用户表';
+) comment '公司用户表';
 
 create index idx_username_query
-    on platform_user (tenant_id, username);
+    on company_user (tenant_id, username);
 
 create index idx_user_id_query
-    on platform_user (tenant_id, user_id);
+    on company_user (tenant_id, user_id);

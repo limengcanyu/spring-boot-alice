@@ -1,4 +1,4 @@
-package com.vue.element.admin.entity;
+package com.vue.element.admin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

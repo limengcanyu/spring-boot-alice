@@ -1,4 +1,4 @@
-package com.vue.element.admin.entity;
+package com.vue.element.admin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
  * <p>Description: </p>
  *
  * @author rock.jxf
- * @date 2020/6/4 22:11
+ * @date 2020/5/29 23:57
  */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SalaryItem {
-    private String itemCode;
-    private String itemName;
+public class Result {
+    private Integer code;
+    private String message;
+    private Object data;
 }

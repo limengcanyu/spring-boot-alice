@@ -1,12 +1,7 @@
 package com.vue.element.admin.controller;
 
-import com.vue.element.admin.entity.Result;
-import com.vue.element.admin.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * <p>Description: </p>

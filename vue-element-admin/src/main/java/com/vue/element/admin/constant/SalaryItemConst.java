@@ -1,6 +1,6 @@
 package com.vue.element.admin.constant;
 
-import com.vue.element.admin.entity.SalaryItem;
+import com.vue.element.admin.dto.SalaryItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,8 +1,7 @@
 package com.vue.element.admin.controller;
 
-import com.vue.element.admin.entity.Result;
-import com.vue.element.admin.entity.Transaction;
-import com.vue.element.admin.entity.User;
+import com.vue.element.admin.dto.Result;
+import com.vue.element.admin.dto.Transaction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

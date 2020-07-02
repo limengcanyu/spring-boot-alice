@@ -1,7 +1,7 @@
 package com.vue.element.admin.controller;
 
-import com.vue.element.admin.entity.Result;
-import com.vue.element.admin.entity.User;
+import com.vue.element.admin.dto.Result;
+import com.vue.element.admin.dto.CompanyUserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +18,11 @@ import java.util.*;
 public class UserController {
 
     @PostMapping("/vue-element-admin/user/login")
-    public Result login(@RequestBody User user) {
-        log.debug("====== login user: {}", user);
+    public Result login(@RequestBody CompanyUserDto companyUserDto) {
+        log.debug("====== login user: {}", companyUserDto);
 
         Map<String, String> tokenMap = new HashMap<>();
-        tokenMap.put("token", user.getUsername() + "-token");
+        tokenMap.put("token", companyUserDto.getUsername() + "-token");
 
         return new Result(20000, null, tokenMap);
     }
@@ -31,14 +31,14 @@ public class UserController {
     public Result info(@RequestParam String token) {
         log.debug("====== info token: {}", token);
 
-        User user = new User();
-        user.setName("Super Admin");
-        user.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        user.setIntroduction("I am a super administrator");
-        user.setRoles(Collections.singletonList("admin"));
-        user.setRoutePaths(getRoutePaths());
-        user.setRouteNames(getRouteNames());
-        return new Result(20000, null, user);
+        CompanyUserDto companyUserDto = new CompanyUserDto();
+        companyUserDto.setName("Super Admin");
+        companyUserDto.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        companyUserDto.setIntroduction("I am a super administrator");
+        companyUserDto.setRoles(Collections.singletonList("admin"));
+        companyUserDto.setRoutePaths(getRoutePaths());
+        companyUserDto.setRouteNames(getRouteNames());
+        return new Result(20000, null, companyUserDto);
     }
 
     @PostMapping("/vue-element-admin/user/logout")
