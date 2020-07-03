@@ -49,7 +49,8 @@ public class AsyncTaskWithoutResultServiceImpl implements AsyncTaskWithoutResult
         logger.debug("service 执行无返回任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
     }
 
-    @Async("asyncTaskExecutor") // 使用自定义线程池执行
+    @Async
+//    @Async("asyncTaskExecutor") // 使用自定义线程池执行
     @Override
     public void task4(int count) {
         logger.debug("service 执行无返回任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());

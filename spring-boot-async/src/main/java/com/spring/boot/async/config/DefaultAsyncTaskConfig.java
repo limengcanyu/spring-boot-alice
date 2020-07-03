@@ -2,6 +2,7 @@ package com.spring.boot.async.config;
 
 import com.spring.boot.async.utils.VisibleThreadPoolTaskExecutor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.task.TaskExecutorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
@@ -26,6 +27,7 @@ public class DefaultAsyncTaskConfig {
     @Value("${async.task.threadNamePrefix: artanis}")
     private String threadNamePrefix;
 
+    // 自定义异步执行线程池
     @Bean(name = "asyncTaskExecutor")
     public TaskExecutor asyncTaskExecutor() {
         ThreadPoolTaskExecutor executor = new VisibleThreadPoolTaskExecutor();

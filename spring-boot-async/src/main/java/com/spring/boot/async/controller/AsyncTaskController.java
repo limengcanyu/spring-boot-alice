@@ -280,7 +280,7 @@ public class AsyncTaskController {
 
         ContextUtils.setTenantId("tenant_000001");
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 100; i++) {
             asyncTaskWithoutResultService.task4(i);
         }
 
