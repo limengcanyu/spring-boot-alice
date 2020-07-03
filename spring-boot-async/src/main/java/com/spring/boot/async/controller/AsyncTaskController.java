@@ -3,6 +3,7 @@ package com.spring.boot.async.controller;
 
 import com.spring.boot.async.service.AsyncTaskWithResultService;
 import com.spring.boot.async.service.AsyncTaskWithoutResultService;
+import com.spring.boot.async.utils.ContextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -264,4 +265,28 @@ public class AsyncTaskController {
 
         return new WebAsyncTask<>(callable);
     }
+
+    /**
+     * 执行无返回任务
+     *
+     * localhost:8080/doTransmittableThreadLocal
+     *
+     * @return
+     * @throws InterruptedException
+     */
+    @RequestMapping("/doTransmittableThreadLocal")
+    public String doTransmittableThreadLocal() throws InterruptedException {
+        logger.debug("controller 执行传递ThreadLocal任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        long currentTimeMillis = System.currentTimeMillis();
+
+        ContextUtils.setTenantId("tenant_000001");
+
+        asyncTaskWithoutResultService.task4();
+
+        String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
+        logger.debug("controller 执行传递ThreadLocal任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
+
+        return "执行无返回任务 " + result;
+    }
+
 }

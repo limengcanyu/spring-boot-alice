@@ -1,6 +1,7 @@
 package com.spring.boot.async.service.impl;
 
 import com.spring.boot.async.service.AsyncTaskWithoutResultService;
+import com.spring.boot.async.utils.ContextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -40,6 +41,19 @@ public class AsyncTaskWithoutResultServiceImpl implements AsyncTaskWithoutResult
         logger.debug("service 执行无返回任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
         long currentTimeMillis = System.currentTimeMillis();
 
+        Thread.sleep(3000);
+
+        String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
+        logger.debug("service 执行无返回任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
+    }
+
+    @Async
+    @Override
+    public void task4() throws InterruptedException {
+        logger.debug("service 执行无返回任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
+        long currentTimeMillis = System.currentTimeMillis();
+
+        System.out.println("tenantId: " + ContextUtils.getTenantId());
         Thread.sleep(3000);
 
         String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
