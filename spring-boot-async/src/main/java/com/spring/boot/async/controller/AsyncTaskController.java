@@ -275,18 +275,18 @@ public class AsyncTaskController {
      * @throws InterruptedException
      */
     @RequestMapping("/doTransmittableThreadLocal")
-    public String doTransmittableThreadLocal() throws InterruptedException {
+    public String doTransmittableThreadLocal() {
         logger.debug("controller 执行传递ThreadLocal任务 开始 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
-        long currentTimeMillis = System.currentTimeMillis();
 
         ContextUtils.setTenantId("tenant_000001");
 
-        asyncTaskWithoutResultService.task4();
+        for (int i = 1; i <= 10; i++) {
+            asyncTaskWithoutResultService.task4(i);
+        }
 
-        String result = "耗时: " + (System.currentTimeMillis() - currentTimeMillis) + "ms";
-        logger.debug("controller 执行传递ThreadLocal任务 结束 线程 id: {} name: {} {}", Thread.currentThread().getId(), Thread.currentThread().getName(), result);
+        logger.debug("controller 执行传递ThreadLocal任务 结束 线程 id: {} name: {}", Thread.currentThread().getId(), Thread.currentThread().getName());
 
-        return "执行无返回任务 " + result;
+        return "执行doTransmittableThreadLocal";
     }
 
 }
