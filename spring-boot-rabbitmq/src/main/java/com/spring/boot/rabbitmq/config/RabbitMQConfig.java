@@ -88,11 +88,6 @@ public class RabbitMQConfig {
 //        return rabbitTemplate;
 //    }
 
-    @Bean
-    public Queue directExchangeQueue() {
-        return new Queue("directExchangeQueue", false, false, true);
-    }
-
     /**
      * A direct exchange delivers messages to queues based on the message routing key.
      *
@@ -104,9 +99,41 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding directExchangeBinding(){
-        return BindingBuilder.bind(directExchangeQueue()).to(directExchange()).with("directExchangeRoutingKey");
+    public Queue directExchangeQueue1() {
+        return new Queue("directExchangeQueue1", false, false, true);
     }
+
+    @Bean
+    public Queue directExchangeQueue2() {
+        return new Queue("directExchangeQueue2", false, false, true);
+    }
+
+    @Bean
+    public Queue directExchangeQueue3() {
+        return new Queue("directExchangeQueue3", false, false, true);
+    }
+
+    /**
+     * 将Queue绑定到Exchange，并设定路由到该Queue的key
+     *
+     * @return
+     */
+    @Bean
+    public Binding directExchangeBinding1(){
+        return BindingBuilder.bind(directExchangeQueue1()).to(directExchange()).with("directExchangeRoutingKey1");
+    }
+
+    @Bean
+    public Binding directExchangeBinding2(){
+        return BindingBuilder.bind(directExchangeQueue2()).to(directExchange()).with("directExchangeRoutingKey2");
+    }
+
+    @Bean
+    public Binding directExchangeBinding3(){
+        return BindingBuilder.bind(directExchangeQueue3()).to(directExchange()).with("directExchangeRoutingKey2");
+    }
+
+
 
     /**
      * Topic exchanges route messages to one or many queues based on matching between a message routing key and
@@ -118,6 +145,43 @@ public class RabbitMQConfig {
     public TopicExchange topicExchange() {
         return new TopicExchange("topicExchange", false, true);
     }
+
+    @Bean
+    public Queue topicExchangeQueue1() {
+        return new Queue("topicExchangeQueue1", false, false, true);
+    }
+
+    @Bean
+    public Queue topicExchangeQueue2() {
+        return new Queue("topicExchangeQueue2", false, false, true);
+    }
+
+    @Bean
+    public Queue topicExchangeQueue3() {
+        return new Queue("topicExchangeQueue3", false, false, true);
+    }
+
+    @Bean
+    public Binding topicExchangeBinding1(){
+        return BindingBuilder.bind(topicExchangeQueue1()).to(topicExchange()).with("topicExchangeRoutingKey1");
+    }
+
+    @Bean
+    public Binding topicExchangeBinding2(){
+        return BindingBuilder.bind(topicExchangeQueue2()).to(topicExchange()).with("topicExchangeRoutingKey2");
+    }
+
+    /**
+     * topicExchangeBinding2和topicExchangeBinding3路由key一样，消息会同时进入两个Queue
+     *
+     * @return
+     */
+    @Bean
+    public Binding topicExchangeBinding3(){
+        return BindingBuilder.bind(topicExchangeQueue3()).to(topicExchange()).with("topicExchangeRoutingKey2");
+    }
+
+
 
     /**
      * A fanout exchange routes messages to all of the queues that are bound to it and the routing key is ignored.
@@ -131,6 +195,37 @@ public class RabbitMQConfig {
         return new FanoutExchange("fanoutExchange", false, true);
     }
 
+    @Bean
+    public Queue fanoutExchangeQueue1() {
+        return new Queue("fanoutExchangeQueue1", false, false, true);
+    }
+
+    @Bean
+    public Queue fanoutExchangeQueue2() {
+        return new Queue("fanoutExchangeQueue2", false, false, true);
+    }
+
+    @Bean
+    public Queue fanoutExchangeQueue3() {
+        return new Queue("fanoutExchangeQueue3", false, false, true);
+    }
+
+    @Bean
+    public Binding fanoutExchangeBinding1(){
+        return BindingBuilder.bind(fanoutExchangeQueue1()).to(fanoutExchange());
+    }
+
+    @Bean
+    public Binding fanoutExchangeBinding2(){
+        return BindingBuilder.bind(fanoutExchangeQueue2()).to(fanoutExchange());
+    }
+
+    @Bean
+    public Binding fanoutExchangeBinding3(){
+        return BindingBuilder.bind(fanoutExchangeQueue3()).to(fanoutExchange());
+    }
+
+
     /**
      * A headers exchange is designed for routing on multiple attributes that are more easily expressed as message headers than a routing key.
      * Headers exchanges ignore the routing key attribute. Instead, the attributes used for routing are taken from the headers attribute.
@@ -141,5 +236,36 @@ public class RabbitMQConfig {
     public HeadersExchange headersExchange() {
         return new HeadersExchange("headersExchange", false, true);
     }
+
+    @Bean
+    public Queue headersExchangeQueue1() {
+        return new Queue("headersExchangeQueue1", false, false, true);
+    }
+
+    @Bean
+    public Queue headersExchangeQueue2() {
+        return new Queue("headersExchangeQueue2", false, false, true);
+    }
+
+    @Bean
+    public Queue headersExchangeQueue3() {
+        return new Queue("headersExchangeQueue3", false, false, true);
+    }
+
+    @Bean
+    public Binding headersExchangeBinding1(){
+        return BindingBuilder.bind(headersExchangeQueue1()).to(headersExchange()).where("headersExchangeKey1").exists();
+    }
+
+    @Bean
+    public Binding headersExchangeBinding2(){
+        return BindingBuilder.bind(headersExchangeQueue2()).to(headersExchange()).where("headersExchangeKey2").exists();
+    }
+
+    @Bean
+    public Binding headersExchangeBinding3(){
+        return BindingBuilder.bind(headersExchangeQueue3()).to(headersExchange()).where("headersExchangeKey3").exists();
+    }
+
 
 }

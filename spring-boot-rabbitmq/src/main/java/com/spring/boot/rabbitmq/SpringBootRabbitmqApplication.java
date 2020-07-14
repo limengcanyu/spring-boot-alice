@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -74,4 +75,18 @@ public class SpringBootRabbitmqApplication {
         return "stock Success message";
     }
 
+    @RabbitListener(queues = "directExchangeQueue1")
+    public void directExchangeQueue1(String message) {
+        log.debug("directExchangeQueue1 receive message: " + message);
+    }
+
+    @RabbitListener(queues = "topicExchangeQueue1")
+    public void topicExchangeQueue1(String message) {
+        log.debug("topicExchangeQueue1 receive message: " + message);
+    }
+
+    @RabbitListener(queues = "fanoutExchangeQueue1")
+    public void fanoutExchangeQueue1(String message) {
+        log.debug("fanoutExchangeQueue1 receive message: " + message);
+    }
 }
