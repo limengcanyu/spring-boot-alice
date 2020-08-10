@@ -43,6 +43,6 @@ public class RabbitConnectionListener implements ConnectionListener {
 
     @Override
     public void onShutDown(ShutdownSignalException signal) {
-        log.debug("====== Connection ShutDown ShutdownSignalException: {}", signal);
+        log.debug("====== Connection ShutDown ShutdownSignalException: ", signal);
     }
 }

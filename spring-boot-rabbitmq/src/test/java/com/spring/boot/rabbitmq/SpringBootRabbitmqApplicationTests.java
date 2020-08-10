@@ -10,8 +10,10 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.ReceiveAndReplyCallback;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,11 +25,14 @@ public class SpringBootRabbitmqApplicationTests {
     @Autowired
     private AmqpAdmin amqpAdmin;
 
-    @Autowired
+    @Qualifier("rabbitTemplate")
     private AmqpTemplate amqpTemplate;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private RabbitMessagingTemplate rabbitMessagingTemplate;
 
 //    @Autowired
 //    private TestRabbitTemplate testRabbitTemplate;
@@ -157,4 +162,37 @@ public class SpringBootRabbitmqApplicationTests {
         rabbitTemplate.convertAndSend("orderQueue", "order1");
     }
 
+    @Test
+    public void directExchange(){
+        rabbitTemplate.setExchange("directExchange");
+        rabbitTemplate.convertAndSend("directExchangeRoutingKey1", "directExchangeRoutingKey1Message");
+        rabbitTemplate.convertAndSend("directExchangeRoutingKey2", "directExchangeRoutingKey2Message");
+
+//        Object message = rabbitTemplate.receiveAndConvert("directExchangeQueue1");
+//        System.out.println("directExchangeQueue1 receive message: " + message);
+    }
+
+    @Test
+    public void topicExchange(){
+        rabbitTemplate.setExchange("topicExchange");
+        rabbitTemplate.convertAndSend("topicExchangeRoutingKey1", "topicExchangeRoutingKey1Message");
+        rabbitTemplate.convertAndSend("topicExchangeRoutingKey2", "topicExchangeRoutingKey2Message");
+    }
+
+    @Test
+    public void fanoutExchange(){
+        rabbitTemplate.setExchange("fanoutExchange");
+        rabbitTemplate.convertAndSend("fanoutExchangeMessage1");
+        rabbitTemplate.convertAndSend("fanoutExchangeMessage2");
+    }
+
+    /**
+     * 未完成
+     */
+    @Test
+    public void headersExchange(){
+        rabbitTemplate.setExchange("headersExchange");
+        rabbitTemplate.convertAndSend("headersExchangeMessage1");
+        rabbitTemplate.convertAndSend("headersExchangeMessage2");
+    }
 }
