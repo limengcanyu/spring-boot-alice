@@ -22,11 +22,11 @@ public class MyRestController {
     private MyService myService;
 
     /**
-     * http://localhost:8090/process
+     * http://localhost:8090/process/test-process
      */
-    @PostMapping(value="/process")
-    public void startProcessInstance() {
-        myService.startProcess();
+    @GetMapping(value="/process/{processName}")
+    public void startProcessInstance(@PathVariable String processName) {
+        myService.startProcess(processName);
     }
 
     /**

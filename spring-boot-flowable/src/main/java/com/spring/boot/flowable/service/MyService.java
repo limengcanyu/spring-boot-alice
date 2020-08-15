@@ -25,7 +25,7 @@ public class MyService {
     private TaskService taskService;
 
     @Transactional
-    public void startProcess() {
+    public void startProcess(String processName) {
         runtimeService.startProcessInstanceByKey("oneTaskProcess");
     }
 
