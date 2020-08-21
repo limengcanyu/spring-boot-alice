@@ -10,48 +10,50 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
+        <module>spring-boot-actuator</module>
+        <module>spring-boot-aop</module>
+        <module>spring-boot-async</module>
+        <module>spring-boot-batch</module>
+        <module>spring-boot-configuration-processor</module>
+        <module>spring-boot-custom-starter</module>
+        <module>spring-boot-custom-starter-test</module>
+        <module>spring-boot-docker</module>
+        <module>spring-boot-elasticsearch</module>
+        <module>spring-boot-flowable</module>
+        <module>spring-boot-jdbctemplate</module>
+        <module>spring-boot-jetty</module>
+        <module>spring-boot-json</module>
+        <module>spring-boot-jwt</module>
+        <module>spring-boot-kafka</module>
+        <module>spring-boot-kafka-streams</module>
+        <module>spring-boot-knife4j</module>
+        <module>spring-boot-log</module>
+        <module>spring-boot-mongo</module>
+        <module>spring-boot-mybatisplus</module>
+        <module>spring-boot-mybatisplus-druid-dynamic-datasource</module>
+        <module>spring-boot-mybatisplus-druid-multi-datasource</module>
+        <module>spring-boot-mybatisplus-sharding-jdbc</module>
+        <module>spring-boot-mycat</module>
+        <module>spring-boot-mysql-mongo-transaction</module>
+        <module>spring-boot-postgres</module>
+        <module>spring-boot-rabbitmq</module>
         <module>spring-boot-redis</module>
         <module>spring-boot-redis-reactive</module>
-        <module>spring-boot-jetty</module>
-        <module>spring-boot-mongo</module>
-        <module>spring-boot-mybatisplus-druid-multi-datasource</module>
-        <module>spring-boot-mybatisplus-druid-dynamic-datasource</module>
-        <module>spring-boot-mybatisplus-sharding-jdbc</module>
+        <module>spring-boot-screw</module>
         <module>spring-boot-security</module>
         <module>spring-boot-security-custom</module>
         <module>spring-boot-security-custom-cluster</module>
         <module>spring-boot-security-token</module>
         <module>spring-boot-security-token-cluster</module>
+        <module>spring-boot-sharding-jdbc</module>
         <module>spring-boot-shiro</module>
+        <module>spring-boot-ssl</module>
+        <module>spring-boot-swagger2</module>
+        <module>spring-boot-template</module>
         <module>spring-boot-tomcat</module>
         <module>spring-boot-undertow</module>
-        <module>spring-boot-actuator</module>
-        <module>spring-boot-batch</module>
-        <module>spring-boot-jdbctemplate</module>
-        <module>spring-boot-mybatisplus</module>
-        <module>spring-boot-sharding-jdbc</module>
-        <module>spring-boot-jwt</module>
-        <module>spring-boot-mycat</module>
-        <module>spring-boot-elasticsearch</module>
-        <module>spring-boot-docker</module>
-        <module>spring-boot-ssl</module>
-        <module>spring-boot-custom-starter</module>
-        <module>spring-boot-custom-starter-test</module>
-        <module>spring-boot-async</module>
-        <module>spring-boot-rabbitmq</module>
-        <module>spring-boot-template</module>
         <module>spring-boot-webflux</module>
-        <module>spring-boot-kafka</module>
-        <module>spring-boot-kafka-streams</module>
-        <module>spring-boot-aop</module>
-        <module>spring-boot-configuration-processor</module>
-        <module>spring-boot-log</module>
-        <module>spring-boot-json</module>
-        <module>spring-boot-postgres</module>
-        <module>spring-boot-swagger2</module>
-        <module>spring-boot-flowable</module>
         <module>vue-element-admin</module>
-        <module>spring-boot-mysql-mongo-transaction</module>
     </modules>
 
     <properties>

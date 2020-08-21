@@ -1,12 +1,10 @@
 package com.spring.boot.kafka;
 
 import com.spring.boot.kafka.entity.User;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * <p>Description: KafkaTemplate Test</p>
@@ -14,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author rock.jiang
  * date 2019/06/21
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class KafkaTemplateTest {
 
