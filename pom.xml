@@ -14,6 +14,7 @@
         <module>spring-boot-aop</module>
         <module>spring-boot-async</module>
         <module>spring-boot-batch</module>
+        <module>spring-boot-camunda</module>
         <module>spring-boot-configuration-processor</module>
         <module>spring-boot-custom-starter</module>
         <module>spring-boot-custom-starter-test</module>
@@ -58,7 +59,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>14</java.version>
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencyManagement>
@@ -67,7 +68,7 @@
                 <!-- Import dependency management from Spring Boot -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.3.2.RELEASE</version>
+                <version>2.3.3.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -140,7 +141,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.1.RELEASE</version>
+                <version>2.3.3.RELEASE</version>
                 <executions>
                     <execution>
                         <goals>
