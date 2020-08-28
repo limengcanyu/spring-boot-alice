@@ -23,6 +23,7 @@
         <module>spring-boot-flowable</module>
         <module>spring-boot-jdbctemplate</module>
         <module>spring-boot-jetty</module>
+        <module>spring-boot-jpa</module>
         <module>spring-boot-json</module>
         <module>spring-boot-jwt</module>
         <module>spring-boot-kafka</module>
