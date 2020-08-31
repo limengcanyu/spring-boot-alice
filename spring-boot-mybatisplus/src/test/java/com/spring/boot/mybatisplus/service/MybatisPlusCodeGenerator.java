@@ -25,7 +25,7 @@ public class MybatisPlusCodeGenerator {
         String url = "jdbc:mysql://localhost:3306/artanis?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai";
         String driverName = "com.mysql.cj.jdbc.Driver";
         String username = "root";
-        String password = ".P@ssW0rd,321";
+        String password = ".PassW0rd,321";
 
         String parentPackageName = "com.spring.boot.mybatisplus";
         String entityPackageName = "dao.entity";

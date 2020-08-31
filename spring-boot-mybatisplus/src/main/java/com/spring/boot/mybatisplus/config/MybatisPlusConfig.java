@@ -1,64 +1,51 @@
 package com.spring.boot.mybatisplus.config;
 
-import com.baomidou.mybatisplus.core.parser.ISqlParser;
-import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
-import com.baomidou.mybatisplus.core.parser.SqlParserHelper;
-import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
-import com.zaxxer.hikari.HikariDataSource;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.*;
 import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.expression.StringValue;
-import net.sf.jsqlparser.statement.delete.Delete;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.reflection.MetaObject;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * MybatisPlus Config
+ * <p>
+ * 注意:
+ * <p>
+ * 如果内部插件都是使用,需要注意顺序关系,建议使用如下顺序
+ * <p>
+ * 多租户插件,动态表名插件
+ * 分页插件,乐观锁插件
+ * sql性能规范插件,防止全表更新与删除插件
+ * 总结: 对sql进行单次改造的优先放入,不对sql进行改造的最后放入
+ * <p>
+ * 主体插件: MybatisPlusInterceptor
+ * 该插件内部插件集:
+ * <p>
+ * 分页插件: PaginationInnerInterceptor
+ * 多租户插件: TenantLineInnerInterceptor
+ * 动态表名插件: DynamicTableNameInnerInterceptor
+ * 乐观锁插件: OptimisticLockerInnerInterceptor
+ * sql性能规范插件: IllegalSQLInnerInterceptor
+ * 防止全表更新与删除插件: BlockAttackInnerInterceptor
  *
  * @author rock
- * date 2019/11/19
+ * @date 2019/11/19
  */
 @MapperScan("com.spring.boot.mybatisplus.dao.mapper")
 @Configuration
 public class MybatisPlusConfig {
 
     @Bean
-    public BlockAttackSqlParser blockAttackSqlParser() {
-        return new BlockAttackSqlParser() {
+    public TenantLineInnerInterceptor tenantLineInnerInterceptor() {
+        TenantLineInnerInterceptor tenantLineInnerInterceptor = new TenantLineInnerInterceptor();
+        TenantLineHandler tenantLineHandler = new TenantLineHandler() {
             @Override
-            public void processDelete(Delete delete) {
-                // 如果你想自定义做点什么，可以重写父类方法像这样子
-                if ("user".equals(delete.getTable().getName())) {
-                    // 自定义跳过某个表，其他关联表可以调用 delete.getTables() 判断
-                    return ;
-                }
-                super.processDelete(delete);
-            }
-        };
-    }
-
-    @Bean
-    public TenantSqlParser tenantSqlParser() {
-        TenantSqlParser tenantSqlParser = new TenantSqlParser();
-        tenantSqlParser.setTenantHandler(new TenantHandler() {
-            @Override
-            public Expression getTenantId(boolean where) {
-                // 该 where 条件 3.2.0 版本开始添加的，用于分区是否为在 where 条件中使用
-                // 如果是in/between之类的多个tenantId的情况，参考下方示例
-                return new StringValue("tenant_000000");
+            public Expression getTenantId() {
+                return new StringValue("tenant_000001");
             }
 
             @Override
@@ -67,54 +54,51 @@ public class MybatisPlusConfig {
             }
 
             @Override
-            public boolean doTableFilter(String tableName) {
-                // 这里可以判断是否过滤表
-            /*
-            if ("user".equals(tableName)) {
-                return true;
-            }*/
+            public boolean ignoreTable(String tableName) {
                 return false;
             }
-        });
-
-        return tenantSqlParser;
-    }
-
-    @Bean
-    public ISqlParserFilter sqlParserFilter() {
-        return metaObject -> {
-            MappedStatement ms = SqlParserHelper.getMappedStatement(metaObject);
-            // 过滤自定义查询此时无租户信息约束【 麻花藤 】出现
-            return "com.baomidou.springboot.mapper.UserMapper.selectListBySQL".equals(ms.getId());
         };
+        tenantLineInnerInterceptor.setTenantLineHandler(tenantLineHandler);
+
+        return tenantLineInnerInterceptor;
     }
 
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+    public PaginationInnerInterceptor paginationInnerInterceptor() {
+        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor(DbType.MYSQL);
+        return paginationInnerInterceptor;
+    }
 
-        List<ISqlParser> sqlParserList = new ArrayList<>();
-        // 攻击 SQL 阻断解析器、加入解析链
-        sqlParserList.add(blockAttackSqlParser());
+    @Bean
+    public OptimisticLockerInnerInterceptor optimisticLockerInnerInterceptor() {
+        OptimisticLockerInnerInterceptor optimisticLockerInnerInterceptor = new OptimisticLockerInnerInterceptor();
+        return optimisticLockerInnerInterceptor;
+    }
 
-        /*
-         * 【测试多租户】 SQL 解析处理拦截器<br>
-         * 这里固定写成住户 1 实际情况你可以从cookie读取，因此数据看不到 【 麻花藤 】 这条记录（ 注意观察 SQL ）<br>
-         */
-        sqlParserList.add(tenantSqlParser());
-        paginationInterceptor.setSqlParserList(sqlParserList);
-        paginationInterceptor.setSqlParserFilter(sqlParserFilter());
+    @Bean
+    public IllegalSQLInnerInterceptor illegalSQLInnerInterceptor() {
+        IllegalSQLInnerInterceptor illegalSQLInnerInterceptor = new IllegalSQLInnerInterceptor();
+        return illegalSQLInnerInterceptor;
+    }
 
-        return paginationInterceptor;
+    @Bean
+    public BlockAttackInnerInterceptor blockAttackInnerInterceptor() {
+        BlockAttackInnerInterceptor blockAttackInnerInterceptor = new BlockAttackInnerInterceptor();
+        return blockAttackInnerInterceptor;
     }
 
     /**
-     * 乐观锁插件
-     *
-     * @return
+     * 新的分页插件,一缓和二缓遵循mybatis的规则,需要设置 MybatisConfiguration#useDeprecatedExecutor = false 避免缓存出现问题(该属性会在旧插件移除后一同移除)
      */
     @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInterceptor();
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(tenantLineInnerInterceptor());
+        interceptor.addInnerInterceptor(paginationInnerInterceptor());
+        interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor());
+        interceptor.addInnerInterceptor(illegalSQLInnerInterceptor());
+        interceptor.addInnerInterceptor(blockAttackInnerInterceptor());
+        return interceptor;
     }
+
 }
