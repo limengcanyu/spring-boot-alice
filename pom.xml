@@ -47,7 +47,7 @@
         <module>spring-boot-security-custom-cluster</module>
         <module>spring-boot-security-token</module>
         <module>spring-boot-security-token-cluster</module>
-        <module>spring-boot-sharding-jdbc</module>
+        <module>spring-boot-shardingsphere-jdbc</module>
         <module>spring-boot-shiro</module>
         <module>spring-boot-ssl</module>
         <module>spring-boot-swagger2</module>

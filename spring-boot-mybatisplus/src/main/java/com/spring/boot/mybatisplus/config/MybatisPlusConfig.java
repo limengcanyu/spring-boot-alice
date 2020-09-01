@@ -35,7 +35,6 @@ import org.springframework.context.annotation.Configuration;
  * @author rock
  * @date 2019/11/19
  */
-@MapperScan("com.spring.boot.mybatisplus.dao.mapper")
 @Configuration
 public class MybatisPlusConfig {
 
@@ -93,7 +92,7 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(tenantLineInnerInterceptor());
+//        interceptor.addInnerInterceptor(tenantLineInnerInterceptor());
         interceptor.addInnerInterceptor(paginationInnerInterceptor());
         interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor());
         interceptor.addInnerInterceptor(illegalSQLInnerInterceptor());

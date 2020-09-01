@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +21,14 @@ import java.util.List;
 public class MybatisPlusCodeGenerator {
     public static void main(String[] args) {
         String projectPath = System.getProperty("user.dir");
-        String modulePath = "/spring-boot-mybatisplus";
+        String modulePath = "/spring-boot-shardingsphere-jdbc";
 
-        String url = "jdbc:mysql://localhost:3306/artanis?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai";
+        String url = "jdbc:mysql://localhost:3306/ds0?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai";
         String driverName = "com.mysql.cj.jdbc.Driver";
         String username = "root";
         String password = ".PassW0rd,321";
 
-        String parentPackageName = "com.spring.boot.mybatisplus";
+        String parentPackageName = "com.spring.boot.shardingsphere.jdbc";
         String entityPackageName = "dao.entity";
         String mapperPackageName = "dao.mapper";
         String servicePackageName = "service";
@@ -76,7 +77,7 @@ public class MybatisPlusCodeGenerator {
         // 如果模板引擎是 freemarker
         String templatePath = "/templates/mapper.xml.ftl";
         // 如果模板引擎是 velocity
-        // String templatePath = "/templates/mapper.xml.vm";
+//         String templatePath = "/templates/mapper.xml.vm";
 
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
@@ -131,7 +132,7 @@ public class MybatisPlusCodeGenerator {
 //        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
         // 写于父类中的公共字段
 //        strategy.setSuperEntityColumns("id", "creatorId", "createTime", "modifierId", "modifyTime", "version");
-        strategy.setInclude("platform_salary_item");
+        strategy.setInclude("t_order");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
