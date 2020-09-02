@@ -97,8 +97,8 @@ public class MybatisPlusConfig {
 //        interceptor.addInnerInterceptor(tenantLineInnerInterceptor());
         interceptor.addInnerInterceptor(paginationInnerInterceptor());
         interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor());
-        interceptor.addInnerInterceptor(illegalSQLInnerInterceptor());
-        interceptor.addInnerInterceptor(blockAttackInnerInterceptor());
+//        interceptor.addInnerInterceptor(illegalSQLInnerInterceptor());
+//        interceptor.addInnerInterceptor(blockAttackInnerInterceptor());
         return interceptor;
     }
 

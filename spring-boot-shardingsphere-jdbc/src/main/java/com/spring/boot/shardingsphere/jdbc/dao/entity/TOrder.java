@@ -1,13 +1,12 @@
 package com.spring.boot.shardingsphere.jdbc.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -15,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author rock.jiang
- * @since 2020-09-01
+ * @since 2020-09-02
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
