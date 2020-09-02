@@ -3,9 +3,8 @@ package com.spring.boot.shardingsphere.jdbc.dao.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,11 +14,11 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author rock.jiang
- * @since 2020-09-01
+ * @since 2020-09-02
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class TOrder implements Serializable {
+public class TOrderItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,6 +28,8 @@ public class TOrder implements Serializable {
     private Integer userId;
 
     private Integer orderId;
+
+    private Integer orderItemId;
 
     private LocalDateTime createTime;
 

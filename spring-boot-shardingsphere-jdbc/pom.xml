@@ -31,19 +31,6 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!--        <dependency>-->
-<!--            <groupId>org.apache.shardingsphere</groupId>-->
-<!--            <artifactId>shardingsphere-jdbc-core</artifactId>-->
-<!--            <version>${latest.release.version}</version>-->
-<!--        </dependency>-->
-
-        <!-- https://mvnrepository.com/artifact/org.apache.shardingsphere/sharding-jdbc-core -->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.shardingsphere</groupId>-->
-<!--            <artifactId>sharding-jdbc-core</artifactId>-->
-<!--            <version>4.1.1</version>-->
-<!--        </dependency>-->
-
         <!-- https://mvnrepository.com/artifact/org.apache.shardingsphere/sharding-jdbc-orchestration-spring-boot-starter -->
         <dependency>
             <groupId>org.apache.shardingsphere</groupId>

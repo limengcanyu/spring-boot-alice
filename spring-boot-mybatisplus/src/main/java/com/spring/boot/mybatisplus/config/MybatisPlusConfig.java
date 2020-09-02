@@ -9,6 +9,7 @@ import net.sf.jsqlparser.expression.StringValue;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * MybatisPlus Config
@@ -80,6 +81,7 @@ public class MybatisPlusConfig {
         return illegalSQLInnerInterceptor;
     }
 
+//    @Profile({"dev"})
     @Bean
     public BlockAttackInnerInterceptor blockAttackInnerInterceptor() {
         BlockAttackInnerInterceptor blockAttackInnerInterceptor = new BlockAttackInnerInterceptor();
