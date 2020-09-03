@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -44,13 +45,42 @@ class SpringBootShardingsphereJdbcApplicationTests {
             tOrder.setCreateTime(LocalDateTime.now());
             orderService.save(tOrder);
 
-//            TOrderItem tOrderItem = new TOrderItem();
-//            tOrderItem.setUserId(i);
-//            tOrderItem.setOrderId(i);
-//            tOrderItem.setOrderItemId(i);
-//            tOrderItem.setCreateTime(LocalDateTime.now());
-//            orderItemService.save(tOrderItem);
+            TOrderItem tOrderItem = new TOrderItem();
+            tOrderItem.setUserId(i);
+            tOrderItem.setOrderId(i);
+            tOrderItem.setOrderItemId(i);
+            tOrderItem.setCreateTime(LocalDateTime.now());
+            orderItemService.save(tOrderItem);
         }
+
+        long end = System.currentTimeMillis();
+        System.out.println("耗时: " + (end - start));
+    }
+
+    @Test
+    void save2() {
+        long start = System.currentTimeMillis();
+
+        List<TOrder> tOrderList = new ArrayList<>();
+        List<TOrderItem> tOrderItemList = new ArrayList<>();
+        for (int i = 1; i <= 10000; i++) {
+            System.out.println("====== i: " + i);
+
+            TOrder tOrder = new TOrder();
+            tOrder.setUserId(i);
+            tOrder.setOrderId(i);
+            tOrder.setCreateTime(LocalDateTime.now());
+            tOrderList.add(tOrder);
+
+            TOrderItem tOrderItem = new TOrderItem();
+            tOrderItem.setUserId(i);
+            tOrderItem.setOrderId(i);
+            tOrderItem.setOrderItemId(i);
+            tOrderItem.setCreateTime(LocalDateTime.now());
+            tOrderItemList.add(tOrderItem);
+        }
+        orderService.saveBatch(tOrderList);
+        orderItemService.saveBatch(tOrderItemList);
 
         long end = System.currentTimeMillis();
         System.out.println("耗时: " + (end - start));
