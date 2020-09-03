@@ -37,6 +37,7 @@
         <module>spring-boot-mybatisplus-sharding-jdbc</module>
         <module>spring-boot-mycat</module>
         <module>spring-boot-mysql-mongo-transaction</module>
+        <module>spring-boot-neo4j</module>
         <module>spring-boot-postgres</module>
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-redis</module>
