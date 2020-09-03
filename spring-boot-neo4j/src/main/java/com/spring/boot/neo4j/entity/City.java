@@ -1,11 +1,13 @@
 package com.spring.boot.neo4j.entity;
 
+import lombok.Data;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 import java.io.Serializable;
 
+@Data
 @NodeEntity
 public class City implements Serializable {
 

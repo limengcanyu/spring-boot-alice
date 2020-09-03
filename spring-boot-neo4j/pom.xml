@@ -52,11 +52,11 @@
 <!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-embedded-driver -->
-        <dependency>
-            <groupId>org.neo4j</groupId>
-            <artifactId>neo4j-ogm-embedded-driver</artifactId>
-            <version>3.2.15</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.neo4j</groupId>-->
+<!--            <artifactId>neo4j-ogm-embedded-driver</artifactId>-->
+<!--            <version>3.2.15</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-embedded-native-types -->
 <!--        <dependency>-->

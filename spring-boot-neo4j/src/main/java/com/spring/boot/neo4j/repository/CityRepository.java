@@ -9,4 +9,6 @@ public interface CityRepository extends Neo4jRepository<City, Long> {
 
     Optional<City> findOneByNameAndState(String name, String state);
 
+    City save(City city, int depth);
+
 }
