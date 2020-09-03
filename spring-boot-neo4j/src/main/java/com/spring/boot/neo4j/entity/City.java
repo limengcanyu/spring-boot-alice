@@ -15,6 +15,7 @@ public class City implements Serializable {
     @GeneratedValue
     private Long id;
 
+
     private String name;
 
     private String state;

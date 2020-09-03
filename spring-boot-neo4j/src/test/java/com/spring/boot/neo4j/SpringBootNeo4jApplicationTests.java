@@ -17,6 +17,10 @@ class SpringBootNeo4jApplicationTests {
     void findOneByNameAndState() {
         City city = cityRepository.findOneByNameAndState("rock", "1").orElse(null);
         System.out.println(city);
+
+        System.out.println("==============================================");
+        city = cityRepository.findOneByNameAndState("rock", "1").orElse(null);
+        System.out.println(city);
     }
 
     @Test
@@ -25,10 +29,12 @@ class SpringBootNeo4jApplicationTests {
         city = cityRepository.save(city);
         System.out.println(city);
 
-        Iterable<City> cityIterable = cityRepository.findAll();
-        cityIterable.forEach(city1 -> System.out.println(city1));
-
-        city = cityRepository.findById(31L).orElse(null);
-        System.out.println(city);
+//        System.out.println("--------------------------------------");
+//        Iterable<City> cityIterable = cityRepository.findAll();
+//        cityIterable.forEach(city1 -> System.out.println(city1));
+//
+//        System.out.println("--------------------------------------");
+//        city = cityRepository.findById(31L).orElse(null);
+//        System.out.println(city);
     }
 }
