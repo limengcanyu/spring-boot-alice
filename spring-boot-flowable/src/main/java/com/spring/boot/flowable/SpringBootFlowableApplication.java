@@ -15,7 +15,7 @@ public class SpringBootFlowableApplication {
         SpringApplication.run(SpringBootFlowableApplication.class, args);
     }
 
-    @Bean
+//    @Bean
     public CommandLineRunner init(final RepositoryService repositoryService,
                                   final RuntimeService runtimeService,
                                   final TaskService taskService) {
