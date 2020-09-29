@@ -11,6 +11,7 @@
 
     <modules>
         <module>spring-boot-actuator</module>
+        <module>spring-boot-akka</module>
         <module>spring-boot-aop</module>
         <module>spring-boot-async</module>
         <module>spring-boot-batch</module>
@@ -62,7 +63,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+        <java.version>14</java.version>
     </properties>
 
     <dependencyManagement>
@@ -71,7 +72,7 @@
                 <!-- Import dependency management from Spring Boot -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.3.3.RELEASE</version>
+                <version>2.3.4.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -126,8 +127,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>14</source>
+                    <target>14</target>
                 </configuration>
             </plugin>
 
@@ -144,7 +145,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.3.RELEASE</version>
+                <version>2.3.4.RELEASE</version>
                 <executions>
                     <execution>
                         <goals>
