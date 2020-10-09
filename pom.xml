@@ -55,6 +55,7 @@
         <module>spring-boot-ssl</module>
         <module>spring-boot-swagger2</module>
         <module>spring-boot-template</module>
+        <module>spring-boot-testing</module>
         <module>spring-boot-tomcat</module>
         <module>spring-boot-undertow</module>
         <module>spring-boot-webflux</module>
