@@ -41,5 +41,4 @@ localhost:8080/playground
       lastName
     }
   }
-
 }
