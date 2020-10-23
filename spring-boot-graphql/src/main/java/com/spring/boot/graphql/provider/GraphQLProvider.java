@@ -62,7 +62,7 @@ public class GraphQLProvider {
         SchemaParser schemaParser = new SchemaParser();
         String[] schemaArr = {"BookSchema", "UserSchema", "QuerySchema", "MutationSchema"};
         for (String str : schemaArr) {
-            typeRegistry.merge(schemaParser.parse(new ClassPathResource("schema/" + str + ".graphql").getInputStream()));
+            typeRegistry.merge(schemaParser.parse(new ClassPathResource("schema/" + str + ".graphqls").getInputStream()));
         }
 
         RuntimeWiring runtimeWiring = buildWiring();  // 数据方法对应编写
