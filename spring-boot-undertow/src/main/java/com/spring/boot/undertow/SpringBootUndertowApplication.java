@@ -18,10 +18,10 @@ public class SpringBootUndertowApplication {
 //        OrderService orderServiceBean = applicationContext.getBean(OrderService.class);
 //        log.debug("echoControllerBean = {} orderServiceBean = {}", echoControllerBean, orderServiceBean);
 
-        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
-
-        for (String name : beanDefinitionNames) {
-            log.debug("beanName: {}", name);
-        }
+//        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
+//
+//        for (String name : beanDefinitionNames) {
+//            log.debug("beanName: {}", name);
+//        }
     }
 }
