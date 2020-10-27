@@ -33,4 +33,9 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <!-- maven package 生成的jar文件名称-->
+        <finalName>${artifactId}-${version}</finalName>
+    </build>
 </project>
