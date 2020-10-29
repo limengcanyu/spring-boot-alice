@@ -125,6 +125,12 @@ class SpringBootNeo4jApplicationTests {
         Node1 node1 = node1Repository.findByName("node1Instance1");
         System.out.println("根据名称查找节点1: " + node1);
 
+        Iterable<Node1> node1Iterable = node1Repository.findAll(10);
+        System.out.println("根据深度查找节点1: ");
+        for (Node1 node11 : node1Iterable) {
+            System.out.println(JSONObject.toJSONString(node11));
+        }
+
         Node2 node2 = node2Repository.findByName("node2Instance1");
         System.out.println("根据名称查找节点2: " + node2);
 
