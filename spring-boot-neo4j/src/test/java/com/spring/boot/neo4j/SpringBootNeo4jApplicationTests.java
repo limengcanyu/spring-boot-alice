@@ -1,12 +1,8 @@
 package com.spring.boot.neo4j;
 
 import com.alibaba.fastjson.JSONObject;
-import com.spring.boot.neo4j.entity.City;
-import com.spring.boot.neo4j.entity.Movie;
-import com.spring.boot.neo4j.entity.Person;
-import com.spring.boot.neo4j.repository.CityRepository;
-import com.spring.boot.neo4j.repository.MovieRepository;
-import com.spring.boot.neo4j.repository.PersonRepository;
+import com.spring.boot.neo4j.entity.*;
+import com.spring.boot.neo4j.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,55 +17,55 @@ class SpringBootNeo4jApplicationTests {
     private MovieRepository movieRepository;
 
     @Autowired
-    private PersonRepository personRepository;
+    private ActorRepository actorRepository;
+
+    @Autowired
+    private Node1Repository node1Repository;
+
+    @Autowired
+    private Node2Repository node2Repository;
+
+    @Autowired
+    private Node3Repository node3Repository;
 
     @Test
     void saveMovie() {
         movieRepository.deleteAll();
-        personRepository.deleteAll();
+        cityRepository.deleteAll();
+        actorRepository.deleteAll();
 
         Movie m1 = new Movie("无问西东", "2018");
         Movie m2 = new Movie("罗曼蒂克消亡史", "2016");
         movieRepository.save(m1);
         movieRepository.save(m2);
-    }
 
-    @Test
-    void savePerson() {
-        Person p1 = new Person("章子怡", "1979");
-        Person p2 = new Person("李芳芳", "1976");
-        Person p3 = new Person("程耳", "1970");
+        City c1 = new City("香港", "1");
+        City c2 = new City("上海", "1");
+        cityRepository.save(c1);
+        cityRepository.save(c2);
 
-        Movie m1 = movieRepository.findByTitle("罗曼蒂克消亡史");
-        Movie m2 = movieRepository.findByTitle("无问西东");
-        System.out.println("m1: " + m1);
-        System.out.println("m2: " + m2);
+        Actor p1 = new Actor("章子怡", "1979");
+        Actor p2 = new Actor("李芳芳", "1976");
+        Actor p3 = new Actor("程耳", "1970");
 
-        if (m1!=null) {
-            p1.addActor(m1);
-            p3.addDirector(m1);
-        }
-        if (m2!=null) {
-            p1.addActor(m2);
-            p2.addDirector(m2);
-        }
+        p1.addCity(c1);
+        p1.addActor(m1);
+        p3.addDirector(m1);
 
-        personRepository.save(p1);
-        personRepository.save(p2);
-        personRepository.save(p3);
-    }
+        p2.addCity(c2);
+        p1.addActor(m2);
+        p2.addDirector(m2);
 
-    @Test
-    public void findByTitle() {
+        actorRepository.save(p1);
+        actorRepository.save(p2);
+        actorRepository.save(p3);
+
         Movie movie = movieRepository.findByTitle("罗曼蒂克消亡史");
-        System.out.println(JSONObject.toJSONString(movie));
+        System.out.println("根据电影标题查找电影: " + JSONObject.toJSONString(movie));
 
-    }
+        Actor person = actorRepository.findByName("章子怡");
+        System.out.println("根据演员姓名查找演员: " + JSONObject.toJSONString(person));
 
-    @Test
-    public void findByName() {
-        Person person = personRepository.findByName("章子怡");
-        System.out.println(JSONObject.toJSONString(person));
     }
 
     @Test
@@ -87,16 +83,54 @@ class SpringBootNeo4jApplicationTests {
         System.out.println("--------------------------------------");
         city = cityRepository.findById(25L).orElse(null);
         System.out.println(city);
-    }
 
-    @Test
-    void findOneCityByNameAndState() {
-        City city = cityRepository.findOneByNameAndState("shanghai", "1");
+        city = cityRepository.findOneByNameAndState("shanghai", "1");
         System.out.println(city);
 
         System.out.println("==============================================");
         city = cityRepository.findOneByNameAndState("nanyang", "2");
         System.out.println(city);
+    }
+
+    @Test
+    void node1() {
+        node1Repository.deleteAll();
+        node2Repository.deleteAll();
+        node3Repository.deleteAll();
+
+        Node1 node1Instance1 = new Node1("node1Instance1");
+
+        Node2 node2Instance1 = new Node2("node2Instance1");
+        Node2 node2Instance2 = new Node2("node2Instance2");
+        Node2 node2Instance3 = new Node2("node2Instance3");
+
+        Node3 node3Instance1 = new Node3("node3Instance1");
+        Node3 node3Instance2 = new Node3("node3Instance2");
+        Node3 node3Instance3 = new Node3("node3Instance3");
+
+        // node1 instance1 -> node2 instance1 -> node3 instance1
+        node2Instance1.addNode3(node3Instance1);
+        node1Instance1.addNode2(node2Instance1);
+
+        // node1 instance1 -> node2 instance3 -> node3 instance1
+        node2Instance3.addNode3(node3Instance1);
+        node1Instance1.addNode2(node2Instance3);
+
+        // node1 instance1 -> node2 instance3 -> node3 instance3
+        node2Instance3.addNode3(node3Instance3);
+        node1Instance1.addNode2(node2Instance3);
+
+        node1Repository.save(node1Instance1);
+
+        Node1 node1 = node1Repository.findByName("node1Instance1");
+        System.out.println("根据名称查找节点1: " + node1);
+
+        Node2 node2 = node2Repository.findByName("node2Instance1");
+        System.out.println("根据名称查找节点2: " + node2);
+
+        Node3 node3 = node3Repository.findByName("node3Instance1");
+        System.out.println("根据名称查找节点3: " + node3);
+
     }
 
 }

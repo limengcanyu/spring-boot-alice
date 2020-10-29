@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Data
 @NodeEntity
-public class Person {
+public class Actor {
 
     @Id
     @GeneratedValue
@@ -22,12 +22,22 @@ public class Person {
 
     private String born;
 
-    public Person() {
+    public Actor() {
     }
 
-    public Person(String name, String born) {
+    public Actor(String name, String born) {
         this.name = name;
         this.born = born;
+    }
+
+    @Relationship(type = "LIVED_IN", direction = Relationship.INCOMING)
+    public Set<City> cities;
+
+    public void addCity(City city) {
+        if (CollectionUtils.isEmpty(cities)) {
+            cities = new HashSet<>();
+        }
+        cities.add(city);
     }
 
     @Relationship(type = "ACTED_IN", direction = Relationship.OUTGOING)
