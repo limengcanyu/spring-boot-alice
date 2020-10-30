@@ -93,7 +93,7 @@ class SpringBootNeo4jApplicationTests {
     }
 
     @Test
-    void node1() {
+    void saveNode1() {
         node1Repository.deleteAll();
         node2Repository.deleteAll();
         node3Repository.deleteAll();
@@ -121,8 +121,11 @@ class SpringBootNeo4jApplicationTests {
         node1Instance1.addNode2(node2Instance3);
 
         node1Repository.save(node1Instance1);
+    }
 
-        Node1 node1 = node1Repository.findByName("node1Instance1");
+    @Test
+    void findNode1() {
+        Node1 node1 = node1Repository.findByName("node1Instance1").orElse(null);
         System.out.println("根据名称查找节点1: " + node1);
 
         Iterable<Node1> node1Iterable = node1Repository.findAll(10);
@@ -136,7 +139,72 @@ class SpringBootNeo4jApplicationTests {
 
         Node3 node3 = node3Repository.findByName("node3Instance1");
         System.out.println("根据名称查找节点3: " + node3);
+    }
 
+    /**
+     * 删除node1Instance1
+     */
+    @Test
+    void deleteNode1() {
+        // delete node1Instance1
+        node1Repository.deleteById(35L);
+    }
+
+    /**
+     * 创建新建的node1Instance1和node2Instance1之间的关联
+     */
+    @Test
+    void relateNode2Instance1() {
+        Node2 node2Instance1 = node2Repository.findByName("node2Instance1");
+        System.out.println("根据名称查找节点2: " + node2Instance1);
+
+        Node1 node1Instance1 = new Node1("node1Instance1");
+
+        // node1 instance1 -> node2 instance1
+        node1Instance1.addNode2(node2Instance1);
+
+        node1Repository.save(node1Instance1);
+    }
+
+    /**
+     * 创建已存在的node1Instance1和node2Instance3之间的关联
+     */
+    @Test
+    void relateNode2Instance3() {
+        Node1 node1Instance1 = node1Repository.findByName("node1Instance1").orElse(null);
+        System.out.println("根据名称查找节点1: " + node1Instance1);
+
+        Node2 node2Instance3 = node2Repository.findByName("node2Instance3");
+        System.out.println("根据名称查找节点2: " + node2Instance3);
+
+        // node1 instance1 -> node2 instance3
+        assert node1Instance1 != null;
+        node1Instance1.addNode2(node2Instance3);
+
+        node1Repository.save(node1Instance1);
+    }
+
+    /**
+     * 更新node1Instance1
+     */
+    @Test
+    void updateNode1Instance1() {
+        // 根据名称查找，不存在返回null
+        Node1 node1Instance1 = node1Repository.findByName("新建实例").orElse(null);
+        System.out.println("根据名称查找节点1: " + node1Instance1);
+
+        // 更新节点字段
+        assert node1Instance1 != null;
+        node1Instance1.setName("node1Instance1");
+
+        // 重新保存节点
+        node1Repository.save(node1Instance1);
+
+        node1Instance1 = node1Repository.findByName("node1Instance1").orElse(null);
+        System.out.println("根据名称查找节点1: " + node1Instance1);
+
+        node1Instance1 = node1Repository.findByName("新建实例").orElse(null);
+        System.out.println("根据名称查找节点1: " + node1Instance1);
     }
 
 }
