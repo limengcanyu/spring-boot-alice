@@ -28,4 +28,13 @@ public class SpringBootMybatisPlusApplicationTests {
         }
     }
 
+    @Test
+    void addItem() {
+        try {
+            System.out.println("add item " + platformSalaryItemService.addItem());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

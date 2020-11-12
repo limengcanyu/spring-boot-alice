@@ -1,6 +1,8 @@
 package com.spring.boot.mybatisplus.controller;
 
 
+import com.spring.boot.mybatisplus.service.IPlatformSalaryItemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -17,4 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/platform-salary-item")
 public class PlatformSalaryItemController {
 
+    @Autowired
+    private IPlatformSalaryItemService platformSalaryItemService;
+
+    /**
+     * localhost:8080/platform-salary-item/addItem
+     *
+     * @return
+     */
+    @RequestMapping("/addItem")
+    public String addItem() throws Exception {
+        platformSalaryItemService.addItem();
+        return "add item success";
+    }
 }
