@@ -2,7 +2,7 @@ package com.spring.boot.security.custom.jackson;
 
 import com.spring.boot.security.custom.util.Book;
 import com.spring.boot.security.custom.util.JacksonUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;

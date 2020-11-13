@@ -1,6 +1,6 @@
 package com.spring.boot.mongo.old;
 
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

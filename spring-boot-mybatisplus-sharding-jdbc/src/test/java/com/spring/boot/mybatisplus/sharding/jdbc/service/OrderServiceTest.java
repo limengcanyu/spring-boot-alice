@@ -1,12 +1,9 @@
 package com.spring.boot.mybatisplus.sharding.jdbc.service;
 
-import com.spring.boot.mybatisplus.sharding.jdbc.ShardingJdbcApplication;
 import com.spring.boot.mybatisplus.sharding.jdbc.dao.entity.Order;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * <p>Description: </p>
@@ -15,8 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @version 1.0
  * @date 2018/5/25 0025
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ShardingJdbcApplication.class)
+@SpringBootTest
 public class OrderServiceTest {
     @Autowired
     private OrderService orderService;

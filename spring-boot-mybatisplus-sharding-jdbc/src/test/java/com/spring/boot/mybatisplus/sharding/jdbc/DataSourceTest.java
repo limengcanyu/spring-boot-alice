@@ -1,9 +1,7 @@
 package com.spring.boot.mybatisplus.sharding.jdbc;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -15,8 +13,7 @@ import javax.sql.DataSource;
  * @version 1.0
  * @date 2018/5/25 0025
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ShardingJdbcApplication.class)
+@SpringBootTest
 public class DataSourceTest {
     @Resource
     private DataSource dataSource;
