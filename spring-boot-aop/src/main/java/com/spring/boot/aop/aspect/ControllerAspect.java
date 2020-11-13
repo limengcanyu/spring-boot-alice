@@ -1,4 +1,4 @@
-package com.spring.boot.aop.config;
+package com.spring.boot.aop.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

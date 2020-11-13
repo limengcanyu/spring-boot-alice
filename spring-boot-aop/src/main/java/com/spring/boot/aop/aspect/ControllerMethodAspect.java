@@ -1,13 +1,10 @@
-package com.spring.boot.aop.config;
+package com.spring.boot.aop.aspect;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Component
