@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "current.company.name",
+      "type": "java.lang.String",
+      "description": "Description for current.company.name."
+    }
+  ]
+}
