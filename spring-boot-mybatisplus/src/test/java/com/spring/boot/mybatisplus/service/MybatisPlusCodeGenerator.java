@@ -45,6 +45,7 @@ public class MybatisPlusCodeGenerator {
         gc.setOpen(false);
 //        gc.setSwagger2(true); // 实体属性 Swagger2 注解
         gc.setFileOverride(true);
+        gc.setServiceName(gc.getEntityName() + ConstVal.SERVICE); // 设置生成的接口名称，去掉接口前面的I开头
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
