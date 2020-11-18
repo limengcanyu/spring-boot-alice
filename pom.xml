@@ -46,6 +46,7 @@
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-redis</module>
         <module>spring-boot-redis-reactive</module>
+        <module>spring-boot-rocketmq</module>
         <module>spring-boot-screw</module>
         <module>spring-boot-security</module>
         <module>spring-boot-security-custom</module>
