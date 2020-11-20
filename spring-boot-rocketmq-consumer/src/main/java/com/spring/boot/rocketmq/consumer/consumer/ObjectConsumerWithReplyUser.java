@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
  * The consumer that replying Object
  */
 @Service
-@RocketMQMessageListener(topic = "${demo.rocketmq.objectRequestTopic}", consumerGroup = "${demo.rocketmq.objectRequestConsumer}", selectorExpression = "${demo.rocketmq.tag}")
+//@RocketMQMessageListener(topic = "${demo.rocketmq.objectRequestTopic}", consumerGroup = "${demo.rocketmq.objectRequestConsumer}", selectorExpression = "${demo.rocketmq.tag}")
 public class ObjectConsumerWithReplyUser implements RocketMQReplyListener<User, User> {
 
     @Override

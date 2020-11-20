@@ -75,156 +75,156 @@ public class RocketMQServiceImpl implements RocketMQService {
 
     @Override
     public void sendMessage() {
-        // Send string
-//        SendResult sendResult = rocketMQTemplate.syncSend(springTopic + ":tagA", "Hello, World!");
-        SendResult sendResult = rocketMQTemplate.syncSend(springTopic, "Hello, World!");
-        System.out.printf("syncSend1 to topic %s sendResult=%s %n", springTopic, sendResult);
-
-        sendResult = rocketMQTemplate.syncSend(userTopic, new User().setUserAge((byte) 18).setUserName("Kitty"));
-        System.out.printf("syncSend1 to topic %s sendResult=%s %n", userTopic, sendResult);
-
-        sendResult = rocketMQTemplate.syncSend(userTopic, MessageBuilder.withPayload(
-                new User().setUserAge((byte) 21).setUserName("Lester")).setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build());
-        System.out.printf("syncSend1 to topic %s sendResult=%s %n", userTopic, sendResult);
-
-        System.out.println("1 =====================================================================================\n");
-
-
-
-        // Use the extRocketMQTemplate
-        sendResult = extRocketMQTemplate.syncSend(springTopic, MessageBuilder.withPayload("Hello, World!2222".getBytes()).build());
-        System.out.printf("extRocketMQTemplate.syncSend1 to topic %s sendResult=%s %n", springTopic, sendResult);
-
-        System.out.println("2 =====================================================================================\n");
-
-
-
-        // Send string with spring Message
-        sendResult = rocketMQTemplate.syncSend(springTopic, MessageBuilder.withPayload("Hello, World! I'm from spring message").build());
-        System.out.printf("syncSend2 to topic %s sendResult=%s %n", springTopic, sendResult);
-
-        System.out.println("3 =====================================================================================\n");
-
-
-
-        // Send user-defined object
-        rocketMQTemplate.asyncSend(orderPaidTopic, new OrderPaidEvent("T_001", new BigDecimal("88.00")), new SendCallback() {
-            @Override
-            public void onSuccess(SendResult var1) {
-                System.out.printf("async onSucess SendResult=%s %n", var1);
-            }
-
-            @Override
-            public void onException(Throwable var1) {
-                System.out.printf("async onException Throwable=%s %n", var1);
-            }
-
-        });
-
-        System.out.println("4 =====================================================================================\n");
-
-
-
-        // Send message with special tag
-        rocketMQTemplate.convertAndSend(msgExtTopic + ":tag0", "I'm from tag0");  // tag0 will not be consumer-selected
-        System.out.printf("syncSend topic %s tag %s %n", msgExtTopic, "tag0");
-        rocketMQTemplate.convertAndSend(msgExtTopic + ":tag1", "I'm from tag1");
-        System.out.printf("syncSend topic %s tag %s %n", msgExtTopic, "tag1");
-
-        System.out.println("5 =====================================================================================\n");
-
-
-
-        // Send a batch of strings
-        testBatchMessages();
-
-        System.out.println("6 =====================================================================================\n");
-
-
-
-        // Send transactional messages using rocketMQTemplate
-        testRocketMQTemplateTransaction();
-
-        System.out.println("7 =====================================================================================\n");
-
-
-
-        // Send transactional messages using extRocketMQTemplate
-        testExtRocketMQTemplateTransaction();
-
-        System.out.println("8 =====================================================================================\n");
+//        // Send string
+////        SendResult sendResult = rocketMQTemplate.syncSend(springTopic + ":tagA", "Hello, World!");
+//        SendResult sendResult = rocketMQTemplate.syncSend(springTopic, "Hello, World!");
+//        System.out.printf("syncSend1 to topic %s sendResult=%s %n", springTopic, sendResult);
+//
+//        sendResult = rocketMQTemplate.syncSend(userTopic, new User().setUserAge((byte) 18).setUserName("Kitty"));
+//        System.out.printf("syncSend1 to topic %s sendResult=%s %n", userTopic, sendResult);
+//
+//        sendResult = rocketMQTemplate.syncSend(userTopic, MessageBuilder.withPayload(
+//                new User().setUserAge((byte) 21).setUserName("Lester")).setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build());
+//        System.out.printf("syncSend1 to topic %s sendResult=%s %n", userTopic, sendResult);
+//
+//        System.out.println("1 =====================================================================================\n");
+//
+//
+//
+//        // Use the extRocketMQTemplate
+//        sendResult = extRocketMQTemplate.syncSend(springTopic, MessageBuilder.withPayload("Hello, World!2222".getBytes()).build());
+//        System.out.printf("extRocketMQTemplate.syncSend1 to topic %s sendResult=%s %n", springTopic, sendResult);
+//
+//        System.out.println("2 =====================================================================================\n");
+//
+//
+//
+//        // Send string with spring Message
+//        sendResult = rocketMQTemplate.syncSend(springTopic, MessageBuilder.withPayload("Hello, World! I'm from spring message").build());
+//        System.out.printf("syncSend2 to topic %s sendResult=%s %n", springTopic, sendResult);
+//
+//        System.out.println("3 =====================================================================================\n");
+//
+//
+//
+//        // Send user-defined object
+//        rocketMQTemplate.asyncSend(orderPaidTopic, new OrderPaidEvent("T_001", new BigDecimal("88.00")), new SendCallback() {
+//            @Override
+//            public void onSuccess(SendResult var1) {
+//                System.out.printf("async onSucess SendResult=%s %n", var1);
+//            }
+//
+//            @Override
+//            public void onException(Throwable var1) {
+//                System.out.printf("async onException Throwable=%s %n", var1);
+//            }
+//
+//        });
+//
+//        System.out.println("4 =====================================================================================\n");
+//
+//
+//
+//        // Send message with special tag
+//        rocketMQTemplate.convertAndSend(msgExtTopic + ":tag0", "I'm from tag0");  // tag0 will not be consumer-selected
+//        System.out.printf("syncSend topic %s tag %s %n", msgExtTopic, "tag0");
+//        rocketMQTemplate.convertAndSend(msgExtTopic + ":tag1", "I'm from tag1");
+//        System.out.printf("syncSend topic %s tag %s %n", msgExtTopic, "tag1");
+//
+//        System.out.println("5 =====================================================================================\n");
+//
+//
+//
+//        // Send a batch of strings
+//        testBatchMessages();
+//
+//        System.out.println("6 =====================================================================================\n");
+//
+//
+//
+//        // Send transactional messages using rocketMQTemplate
+//        testRocketMQTemplateTransaction();
+//
+//        System.out.println("7 =====================================================================================\n");
+//
+//
+//
+//        // Send transactional messages using extRocketMQTemplate
+//        testExtRocketMQTemplateTransaction();
+//
+//        System.out.println("8 =====================================================================================\n");
 
 
 
         // 执行异常
-//        // Send request in sync mode and receive a reply of String type.
-//        String replyString = rocketMQTemplate.sendAndReceive(stringRequestTopic, "request string", String.class);
-//        System.out.printf("send %s and receive %s %n", "request string", replyString);
+        // Send request in sync mode and receive a reply of String type.
+        String replyString = rocketMQTemplate.sendAndReceive(stringRequestTopic, "request string", String.class);
+        System.out.printf("send %s and receive %s %n", "request string", replyString);
 
         System.out.println("9 =====================================================================================\n");
 
 
 
-        // 执行异常
-//        // Send request in sync mode with timeout parameter and receive a reply of byte[] type.
-//        byte[] replyBytes = rocketMQTemplate.sendAndReceive(bytesRequestTopic, MessageBuilder.withPayload("request byte[]").build(), byte[].class, 3000);
-//        System.out.printf("send %s and receive %s %n", "request byte[]", new String(replyBytes));
-
-        System.out.println("10 ====================================================================================\n");
-
-
-
-        // 执行异常
-//        // Send request in sync mode with hashKey parameter and receive a reply of User type.
-//        User requestUser = new User().setUserAge((byte) 9).setUserName("requestUserName");
-//        User replyUser = rocketMQTemplate.sendAndReceive(objectRequestTopic, requestUser, User.class, "order-id");
-//        System.out.printf("send %s and receive %s %n", requestUser, replyUser);
-
-        System.out.println("11 ====================================================================================\n");
-
-
-
-        // 执行异常
-//        // Send request in sync mode with timeout and delayLevel parameter parameter and receive a reply of generic type.
-//        ProductWithPayload<String> replyGenericObject = rocketMQTemplate.sendAndReceive(genericRequestTopic, "request generic",
-//                new TypeReference<ProductWithPayload<String>>() {
-//                }.getType(), 30000, 2);
-//        System.out.printf("send %s and receive %s %n", "request generic", replyGenericObject);
-
-        System.out.println("12 ====================================================================================\n");
-
-
-        // Send request in async mode and receive a reply of String type.
-        rocketMQTemplate.sendAndReceive(stringRequestTopic, "request string", new RocketMQLocalRequestCallback<String>() {
-            @Override
-            public void onSuccess(String message) {
-                System.out.printf("send %s and receive %s %n", "request string", message);
-            }
-
-            @Override
-            public void onException(Throwable e) {
-                e.printStackTrace();
-            }
-        });
-
-        System.out.println("13 ====================================================================================\n");
-
-
-
-        // Send request in async mode and receive a reply of User type.
-        rocketMQTemplate.sendAndReceive(objectRequestTopic, new User().setUserAge((byte) 9).setUserName("requestUserName"), new RocketMQLocalRequestCallback<User>() {
-            @Override
-            public void onSuccess(User message) {
-                System.out.printf("send user object and receive %s %n", message.toString());
-            }
-
-            @Override
-            public void onException(Throwable e) {
-                e.printStackTrace();
-            }
-        }, 5000);
-
-        System.out.println("14 ====================================================================================\n");
+//        // 执行异常
+////        // Send request in sync mode with timeout parameter and receive a reply of byte[] type.
+////        byte[] replyBytes = rocketMQTemplate.sendAndReceive(bytesRequestTopic, MessageBuilder.withPayload("request byte[]").build(), byte[].class, 3000);
+////        System.out.printf("send %s and receive %s %n", "request byte[]", new String(replyBytes));
+//
+//        System.out.println("10 ====================================================================================\n");
+//
+//
+//
+//        // 执行异常
+////        // Send request in sync mode with hashKey parameter and receive a reply of User type.
+////        User requestUser = new User().setUserAge((byte) 9).setUserName("requestUserName");
+////        User replyUser = rocketMQTemplate.sendAndReceive(objectRequestTopic, requestUser, User.class, "order-id");
+////        System.out.printf("send %s and receive %s %n", requestUser, replyUser);
+//
+//        System.out.println("11 ====================================================================================\n");
+//
+//
+//
+//        // 执行异常
+////        // Send request in sync mode with timeout and delayLevel parameter parameter and receive a reply of generic type.
+////        ProductWithPayload<String> replyGenericObject = rocketMQTemplate.sendAndReceive(genericRequestTopic, "request generic",
+////                new TypeReference<ProductWithPayload<String>>() {
+////                }.getType(), 30000, 2);
+////        System.out.printf("send %s and receive %s %n", "request generic", replyGenericObject);
+//
+//        System.out.println("12 ====================================================================================\n");
+//
+//
+////        // Send request in async mode and receive a reply of String type.
+////        rocketMQTemplate.sendAndReceive(stringRequestTopic, "request string", new RocketMQLocalRequestCallback<String>() {
+////            @Override
+////            public void onSuccess(String message) {
+////                System.out.printf("send %s and receive %s %n", "request string", message);
+////            }
+////
+////            @Override
+////            public void onException(Throwable e) {
+////                e.printStackTrace();
+////            }
+////        });
+//
+//        System.out.println("13 ====================================================================================\n");
+//
+//
+//
+//        // Send request in async mode and receive a reply of User type.
+//        rocketMQTemplate.sendAndReceive(objectRequestTopic, new User().setUserAge((byte) 9).setUserName("requestUserName"), new RocketMQLocalRequestCallback<User>() {
+//            @Override
+//            public void onSuccess(User message) {
+//                System.out.printf("send user object and receive %s %n", message.toString());
+//            }
+//
+//            @Override
+//            public void onException(Throwable e) {
+//                e.printStackTrace();
+//            }
+//        }, 5000);
+//
+//        System.out.println("14 ====================================================================================\n");
 
     }
 

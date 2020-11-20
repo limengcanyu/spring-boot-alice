@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 //@RocketMQMessageListener(topic = "${demo.rocketmq.stringRequestTopic}", consumerGroup = "${demo.rocketmq.stringRequestConsumer}", selectorExpression = "${demo.rocketmq.tag}")
+@RocketMQMessageListener(topic = "${demo.rocketmq.stringRequestTopic}", consumerGroup = "string_request_consumer")
 public class StringConsumerWithReplyString implements RocketMQReplyListener<String, String> {
 
     @Override
