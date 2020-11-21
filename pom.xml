@@ -43,6 +43,7 @@
         <module>spring-boot-mycat</module>
         <module>spring-boot-mysql-mongo-transaction</module>
         <module>spring-boot-neo4j</module>
+        <module>spring-boot-okhttp</module>
         <module>spring-boot-postgres</module>
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-redis</module>
@@ -70,7 +71,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>15</java.version>
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencyManagement>
