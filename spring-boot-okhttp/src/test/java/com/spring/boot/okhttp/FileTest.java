@@ -21,6 +21,6 @@ public class FileTest {
     void testHttps() throws IOException {
         ClassPathResource classPathResource = new ClassPathResource("client/ds.crt");
         InputStream inputStream =classPathResource.getInputStream();
-//        System.out.println(new String(inputStream.readAllBytes()));
+        System.out.println(new String(inputStream.readAllBytes()));
     }
 }
