@@ -1,8 +1,6 @@
-package com.spring.boot.kafka.entity;
+package com.spring.boot.kafka.producer.entity;
 
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * <p>Description: </p>

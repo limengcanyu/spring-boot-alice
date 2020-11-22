@@ -32,6 +32,8 @@
         <module>spring-boot-json</module>
         <module>spring-boot-jwt</module>
         <module>spring-boot-kafka</module>
+        <module>spring-boot-kafka-consumer</module>
+        <module>spring-boot-kafka-producer</module>
         <module>spring-boot-kafka-streams</module>
         <module>spring-boot-knife4j</module>
         <module>spring-boot-log</module>

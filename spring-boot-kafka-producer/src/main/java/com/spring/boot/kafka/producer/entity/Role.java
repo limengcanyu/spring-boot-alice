@@ -1,4 +1,4 @@
-package com.spring.boot.kafka.entity;
+package com.spring.boot.kafka.producer.entity;
 
 import lombok.Data;
 

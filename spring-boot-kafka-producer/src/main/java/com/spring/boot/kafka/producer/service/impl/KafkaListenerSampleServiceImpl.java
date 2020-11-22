@@ -1,6 +1,6 @@
-package com.spring.boot.kafka.service.impl;
+package com.spring.boot.kafka.producer.service.impl;
 
-import com.spring.boot.kafka.service.KafkaListenerSampleService;
+import com.spring.boot.kafka.producer.service.KafkaListenerSampleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

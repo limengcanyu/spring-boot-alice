@@ -1,4 +1,4 @@
-package com.spring.boot.kafka.service;
+package com.spring.boot.kafka.producer.service;
 
 /**
  * <p>Description: KafkaListener Sample Service</p>
