@@ -37,6 +37,8 @@ public class JdController {
     }
 
     /**
+     * https://localhost:9527/get/test
+     *
      * 用于get方法测试
      *
      * @date 2019/6/10 9:52
