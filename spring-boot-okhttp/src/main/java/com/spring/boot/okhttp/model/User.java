@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 /**
  * 用户模型
  *
- * @author JustryDeng
- * @date 2019/6/10 9:41
  */
 @Data
 @NoArgsConstructor

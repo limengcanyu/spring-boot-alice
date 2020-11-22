@@ -15,8 +15,6 @@ import java.security.SecureRandom;
 /**
  * controller
  *
- * @author JustryDeng
- * @date 2019/6/10 9:50
  */
 @Slf4j
 @RestController

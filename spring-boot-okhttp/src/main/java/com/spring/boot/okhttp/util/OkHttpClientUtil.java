@@ -17,15 +17,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * OkHttpClient工具类
- *
+ * <p>
  * 注: OkHttp官方文档并不建议我们创建多个OkHttpClient，建议使用同一个实例; 所以此工具类采取单例模式
- *
+ * <p>
  * 注: 此工具类主要功能是 封装了 获取HTTP、HTTPS(不需验证CA)、HTTPS(需验证CA)请求客户端的实例,
- *     对此客户端的属性设置的比较少，只设置了 【连接超时时间】、【读超时时间】、【写超时时间】、【连接池】，
- *      可根据自己的实际项目情况， 灵活设置这些属性的属性值，还可以添加其它的属性设置
- *
- * @author JustryDeng
- * @date 2019/6/11 20:50
+ * 对此客户端的属性设置的比较少，只设置了 【连接超时时间】、【读超时时间】、【写超时时间】、【连接池】，
+ * 可根据自己的实际项目情况， 灵活设置这些属性的属性值，还可以添加其它的属性设置
  */
 @Slf4j
 public class OkHttpClientUtil {
@@ -35,34 +32,35 @@ public class OkHttpClientUtil {
      * <p>
      * 确保本条指令不会因编译器的优化而省略，且要求每次直接读值
      */
-    private static volatile OkHttpClient httpClient;
-
+    private static OkHttpClient httpClient;
 
     /**
      * HTTPS实例(不需要校验CA)
      * <p>
      * 确保本条指令不会因编译器的优化而省略，且要求每次直接读值
      */
-    private static volatile OkHttpClient httpsClient;
+    private static OkHttpClient httpsClient;
 
-    /** ssl socket工厂（不需要校验CA） */
+    /**
+     * ssl socket工厂（不需要校验CA）
+     */
     private static SSLSocketFactory sslSocketFactory = null;
 
     private static X509TrustManager trustManager = null;
-
 
     /**
      * HTTPS实例(需要校验CA)
      * <p>
      * 确保本条指令不会因编译器的优化而省略，且要求每次直接读值
      */
-    private static volatile OkHttpClient verifyCaHttpsClient;
+    private static OkHttpClient verifyCaHttpsClient;
 
-    /** ssl socket工厂（需要校验CA） */
+    /**
+     * ssl socket工厂（需要校验CA）
+     */
     private static SSLSocketFactory sslSocketFactoryVerifyCa = null;
 
     private static X509TrustManager trustManagerVerifyCa = null;
-
 
     /**
      * 超时时间等参数设置
@@ -74,10 +72,15 @@ public class OkHttpClientUtil {
     private static final int WRITE_TIMEOUT = 60;
 
     /**
+     * 私有化构造器，只能通过方法实例化
+     */
+    private OkHttpClientUtil() {
+    }
+
+    /**
      * 获取http客户端
      *
      * @return OkHttpClient客户端实例
-     * @date 2019/6/11 20:36
      */
     public static OkHttpClient getHttpClient() {
         if (httpClient == null) {
@@ -94,9 +97,9 @@ public class OkHttpClientUtil {
      * 获取https客户端(不需要校验证书)
      *
      * @return OkHttpClient客户端实例
-     * @date 2019/6/11 20:36
      */
-    public static OkHttpClient getHttpsClient() throws Exception {
+    public static OkHttpClient getHttpsClient()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException {
         if (httpsClient == null) {
             synchronized (OkHttpClientUtil.class) {
                 if (httpsClient == null) {
@@ -110,15 +113,13 @@ public class OkHttpClientUtil {
     /**
      * 获取https客户端(需要校验证书)
      *
-     * @param caInputStream
-     *         CA证书(此证书应由要访问的服务端提供)
-     * @param cAalias
-     *         别名
-     *         注意:别名应该是唯一的， 别名不要和其他的别名一样，否者会覆盖之前的相同别名的证书信息。别名即key-value中的key。
+     * @param caInputStream CA证书(此证书应由要访问的服务端提供)
+     * @param cAalias       别名
+     *                      注意:别名应该是唯一的， 别名不要和其他的别名一样，否者会覆盖之前的相同别名的证书信息。别名即key-value中的key。
      * @return OkHttpClient客户端实例
-     * @date 2019/6/11 20:36
      */
-    public static OkHttpClient getHttpsClient(InputStream caInputStream, String cAalias) throws Exception {
+    public static OkHttpClient getHttpsClient(InputStream caInputStream, String cAalias)
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException {
         if (verifyCaHttpsClient == null) {
             synchronized (OkHttpClientUtil.class) {
                 if (verifyCaHttpsClient == null) {
@@ -126,6 +127,7 @@ public class OkHttpClientUtil {
                     if (caInputStream == null || cAalias == null) {
                         throw new RuntimeException("[ca] and [alias] must not be null!");
                     }
+
                     initHttpsClient(true, caInputStream, cAalias);
                 }
             }
@@ -136,7 +138,6 @@ public class OkHttpClientUtil {
     /**
      * 初始化HTTP客户端
      *
-     * @date 2019/6/11 16:12
      */
     private static void initHttpClient() {
         // 进行数据初始化
@@ -155,20 +156,16 @@ public class OkHttpClientUtil {
     /**
      * 初始化HTTPS客户端
      *
-     * @param needVerifyCa
-     *         是否需要检验CA证书(即:是否需要检验服务器的身份)
-     * @param caInputStream
-     *         CA证书。(若不需要检验证书，那么此处传null即可)
-     * @param cAalias
-     *         别名。(若不需要检验证书，那么此处传null即可)
-     *         注意:别名应该是唯一的， 别名不要和其他的别名一样，否者会覆盖之前的相同别名的证书信息。别名即key-value中的key。
-     * @date 2019/6/11 16:12
+     * @param needVerifyCa  是否需要检验CA证书(即:是否需要检验服务器的身份)
+     * @param caInputStream CA证书。(若不需要检验证书，那么此处传null即可)
+     * @param cAalias       别名。(若不需要检验证书，那么此处传null即可)
+     *                      注意:别名应该是唯一的， 别名不要和其他的别名一样，否者会覆盖之前的相同别名的证书信息。别名即key-value中的key。
      */
     private static void initHttpsClient(boolean needVerifyCa, InputStream caInputStream, String cAalias)
-            throws CertificateException, NoSuchAlgorithmException, KeyStoreException,
-                   KeyManagementException, IOException {
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
         // 先调用helper方法，初始化
         httpsHelper(needVerifyCa, caInputStream, cAalias);
+
         // 进行数据初始化
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 // 设置读取超时时间
@@ -179,6 +176,7 @@ public class OkHttpClientUtil {
                 .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 // 使用连接池
                 .connectionPool(pool());
+
         // 需要校验证书
         if (needVerifyCa) {
             builder.sslSocketFactory(sslSocketFactoryVerifyCa, trustManagerVerifyCa);
@@ -200,11 +198,14 @@ public class OkHttpClientUtil {
             verifyCaHttpsClient = builder.build();
             return;
         }
+
         // 不需要校验证书
         builder.sslSocketFactory(sslSocketFactory, trustManager);
+
         // 不校验 url中的hostname(直接返回true，表示不校验hostname)
         // 注:hostname 指 ip/域名
         builder.hostnameVerifier((String hostname, SSLSession session) -> true);
+
         httpsClient = builder.build();
     }
 
@@ -213,7 +214,6 @@ public class OkHttpClientUtil {
      * <p>
      * Sets the connection pool used to recycle HTTP and HTTPS connections.
      *
-     * @date 2019/6/11 19:35
      */
     private static ConnectionPool pool() {
         return new ConnectionPool(100, 5, TimeUnit.MINUTES);
@@ -222,44 +222,39 @@ public class OkHttpClientUtil {
     /**
      * HTTPS辅助方法, 为HTTPS请求 创建SSLSocketFactory实例、TrustManager实例
      *
-     * @param needVerifyCa
-     *         是否需要检验CA证书(即:是否需要检验服务器的身份)
-     * @param caInputStream
-     *         CA证书。(若不需要检验证书，那么此处传null即可)
-     * @param cAalias
-     *         别名。(若不需要检验证书，那么此处传null即可)
-     *         注意:别名应该是唯一的， 别名不要和其他的别名一样，否者会覆盖之前的相同别名的证书信息。别名即key-value中的key。
-     * @throws NoSuchAlgorithmException
-     *         异常信息
-     * @throws CertificateException
-     *         异常信息
-     * @throws KeyStoreException
-     *         异常信息
-     * @throws IOException
-     *         异常信息
-     * @throws KeyManagementException
-     *         异常信息
-     * @date 2019/6/11 19:52
+     * @param needVerifyCa  是否需要检验CA证书(即:是否需要检验服务器的身份)
+     * @param caInputStream CA证书。(若不需要检验证书，那么此处传null即可)
+     * @param cAalias       别名。(若不需要检验证书，那么此处传null即可)
+     *                      注意:别名应该是唯一的， 别名不要和其他的别名一样，否者会覆盖之前的相同别名的证书信息。别名即key-value中的key。
+     * @throws NoSuchAlgorithmException 异常信息
+     * @throws CertificateException     异常信息
+     * @throws KeyStoreException        异常信息
+     * @throws IOException              异常信息
+     * @throws KeyManagementException   异常信息
      */
     private static void httpsHelper(boolean needVerifyCa, InputStream caInputStream, String cAalias)
-            throws CertificateException, NoSuchAlgorithmException, KeyStoreException,
-                   IOException, KeyManagementException {
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException {
         // https请求，需要校验证书
         if (needVerifyCa) {
             KeyStore keyStore = getKeyStore(caInputStream, cAalias);
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             trustManagerFactory.init(keyStore);
             TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+
             if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
                 throw new IllegalStateException("Unexpected default trust managers:" + Arrays.toString(trustManagers));
             }
+
             trustManagerVerifyCa = (X509TrustManager) trustManagers[0];
+
             // 这里传TLS或SSL其实都可以的
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, new TrustManager[]{trustManagerVerifyCa}, new SecureRandom());
             sslSocketFactoryVerifyCa = sslContext.getSocketFactory();
+
             return;
         }
+
         // https请求，不作证书校验
         trustManager = new X509TrustManager() {
             @Override
@@ -276,6 +271,7 @@ public class OkHttpClientUtil {
                 return new X509Certificate[0];
             }
         };
+
         SSLContext sslContext = SSLContext.getInstance("TLS");
         sslContext.init(null, new TrustManager[]{trustManager}, new SecureRandom());
         sslSocketFactory = sslContext.getSocketFactory();
@@ -285,26 +281,26 @@ public class OkHttpClientUtil {
      * 获取(密钥及证书)仓库
      * 注:该仓库用于存放 密钥以及证书
      *
-     * @param caInputStream
-     *         CA证书(此证书应由要访问的服务端提供)
-     * @param cAalias
-     *         别名
-     *         注意:别名应该是唯一的， 别名不要和其他的别名一样，否者会覆盖之前的相同别名的证书信息。别名即key-value中的key。
+     * @param caInputStream CA证书(此证书应由要访问的服务端提供)
+     * @param cAalias       别名
+     *                      注意:别名应该是唯一的， 别名不要和其他的别名一样，否者会覆盖之前的相同别名的证书信息。别名即key-value中的key。
      * @return 密钥、证书 仓库
-     * @throws KeyStoreException 异常信息
-     * @throws CertificateException 异常信息
-     * @throws IOException 异常信息
+     * @throws KeyStoreException        异常信息
+     * @throws CertificateException     异常信息
+     * @throws IOException              异常信息
      * @throws NoSuchAlgorithmException 异常信息
-     * @date 2019/6/11 18:48
      */
     private static KeyStore getKeyStore(InputStream caInputStream, String cAalias)
             throws KeyStoreException, CertificateException, IOException, NoSuchAlgorithmException {
         // 证书工厂
         CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+
         // 秘钥仓库
         KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+
         keyStore.load(null);
         keyStore.setCertificateEntry(cAalias, certificateFactory.generateCertificate(caInputStream));
+
         return keyStore;
     }
 }
