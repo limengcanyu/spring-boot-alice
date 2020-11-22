@@ -33,7 +33,12 @@ import java.security.NoSuchAlgorithmException;
 public class ApplicationConfig {
 
     @Bean
-    RestTemplate restTemplate() {
+    RestTemplate httpRestTemplate() {
+        return new RestTemplateBuilder().build();
+    }
+
+    @Bean
+    RestTemplate httpsRestTemplate() {
         try {
             return new RestTemplateBuilder().requestFactory(this::clientHttpRequestFactory).build();
         } catch (Exception e) {
