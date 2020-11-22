@@ -48,6 +48,8 @@
         <module>spring-boot-okhttp</module>
         <module>spring-boot-postgres</module>
         <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-rabbitmq-consumer</module>
+        <module>spring-boot-rabbitmq-producer</module>
         <module>spring-boot-redis</module>
         <module>spring-boot-redis-reactive</module>
         <module>spring-boot-rocketmq</module>

@@ -1,4 +1,4 @@
-package com.spring.boot.rabbitmq.listener;
+package com.spring.boot.rabbitmq.producer.listener;
 
 import com.rabbitmq.client.ShutdownSignalException;
 import lombok.extern.slf4j.Slf4j;

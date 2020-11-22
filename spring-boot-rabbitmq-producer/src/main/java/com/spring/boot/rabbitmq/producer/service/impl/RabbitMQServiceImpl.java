@@ -1,6 +1,6 @@
-package com.spring.boot.rabbitmq.service.impl;
+package com.spring.boot.rabbitmq.producer.service.impl;
 
-import com.spring.boot.rabbitmq.service.RabbitMQService;
+import com.spring.boot.rabbitmq.producer.service.RabbitMQService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

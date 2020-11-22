@@ -1,6 +1,6 @@
-package com.spring.boot.rabbitmq.controller;
+package com.spring.boot.rabbitmq.producer.controller;
 
-import com.spring.boot.rabbitmq.service.RabbitMQService;
+import com.spring.boot.rabbitmq.producer.service.RabbitMQService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

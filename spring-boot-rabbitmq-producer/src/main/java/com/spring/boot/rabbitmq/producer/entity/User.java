@@ -1,4 +1,4 @@
-package com.spring.boot.rabbitmq.entity;
+package com.spring.boot.rabbitmq.producer.entity;
 
 import lombok.Data;
 

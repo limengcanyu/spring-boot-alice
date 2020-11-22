@@ -1,4 +1,4 @@
-package com.spring.boot.rabbitmq.config;
+package com.spring.boot.rabbitmq.producer.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
@@ -119,20 +119,19 @@ public class RabbitMQConfig {
      * @return
      */
     @Bean
-    public Binding directExchangeBinding1(){
+    public Binding directExchangeBinding1() {
         return BindingBuilder.bind(directExchangeQueue1()).to(directExchange()).with("directExchangeRoutingKey1");
     }
 
     @Bean
-    public Binding directExchangeBinding2(){
+    public Binding directExchangeBinding2() {
         return BindingBuilder.bind(directExchangeQueue2()).to(directExchange()).with("directExchangeRoutingKey2");
     }
 
     @Bean
-    public Binding directExchangeBinding3(){
+    public Binding directExchangeBinding3() {
         return BindingBuilder.bind(directExchangeQueue3()).to(directExchange()).with("directExchangeRoutingKey2");
     }
-
 
 
     /**
@@ -162,12 +161,12 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding topicExchangeBinding1(){
+    public Binding topicExchangeBinding1() {
         return BindingBuilder.bind(topicExchangeQueue1()).to(topicExchange()).with("topicExchangeRoutingKey1");
     }
 
     @Bean
-    public Binding topicExchangeBinding2(){
+    public Binding topicExchangeBinding2() {
         return BindingBuilder.bind(topicExchangeQueue2()).to(topicExchange()).with("topicExchangeRoutingKey2");
     }
 
@@ -177,10 +176,9 @@ public class RabbitMQConfig {
      * @return
      */
     @Bean
-    public Binding topicExchangeBinding3(){
+    public Binding topicExchangeBinding3() {
         return BindingBuilder.bind(topicExchangeQueue3()).to(topicExchange()).with("topicExchangeRoutingKey2");
     }
-
 
 
     /**
@@ -211,17 +209,17 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding fanoutExchangeBinding1(){
+    public Binding fanoutExchangeBinding1() {
         return BindingBuilder.bind(fanoutExchangeQueue1()).to(fanoutExchange());
     }
 
     @Bean
-    public Binding fanoutExchangeBinding2(){
+    public Binding fanoutExchangeBinding2() {
         return BindingBuilder.bind(fanoutExchangeQueue2()).to(fanoutExchange());
     }
 
     @Bean
-    public Binding fanoutExchangeBinding3(){
+    public Binding fanoutExchangeBinding3() {
         return BindingBuilder.bind(fanoutExchangeQueue3()).to(fanoutExchange());
     }
 
@@ -253,17 +251,17 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding headersExchangeBinding1(){
+    public Binding headersExchangeBinding1() {
         return BindingBuilder.bind(headersExchangeQueue1()).to(headersExchange()).where("headersExchangeKey1").exists();
     }
 
     @Bean
-    public Binding headersExchangeBinding2(){
+    public Binding headersExchangeBinding2() {
         return BindingBuilder.bind(headersExchangeQueue2()).to(headersExchange()).where("headersExchangeKey2").exists();
     }
 
     @Bean
-    public Binding headersExchangeBinding3(){
+    public Binding headersExchangeBinding3() {
         return BindingBuilder.bind(headersExchangeQueue3()).to(headersExchange()).where("headersExchangeKey3").exists();
     }
 

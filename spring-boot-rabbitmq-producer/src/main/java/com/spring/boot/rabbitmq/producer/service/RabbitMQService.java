@@ -1,4 +1,4 @@
-package com.spring.boot.rabbitmq.service;
+package com.spring.boot.rabbitmq.producer.service;
 
 /**
  * description:
