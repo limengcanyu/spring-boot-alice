@@ -47,6 +47,7 @@
         <module>spring-boot-mysql-mongo-transaction</module>
         <module>spring-boot-neo4j</module>
         <module>spring-boot-okhttp</module>
+        <module>spring-boot-poi</module>
         <module>spring-boot-postgres</module>
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-rabbitmq-consumer</module>
