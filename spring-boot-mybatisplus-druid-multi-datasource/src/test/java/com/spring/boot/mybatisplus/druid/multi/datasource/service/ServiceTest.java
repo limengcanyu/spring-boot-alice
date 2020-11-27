@@ -3,17 +3,14 @@ package com.spring.boot.mybatisplus.druid.multi.datasource.service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.spring.boot.mybatisplus.druid.multi.datasource.artanis.dao.entity.SysUser;
-import com.spring.boot.mybatisplus.druid.multi.datasource.DruidMultiDatasourceApplication;
 import com.spring.boot.mybatisplus.druid.multi.datasource.artanis.service.SysUserService;
 import com.spring.boot.mybatisplus.druid.multi.datasource.samuro.dao.entity.SysCompany;
 import com.spring.boot.mybatisplus.druid.multi.datasource.samuro.service.SysCompanyService;
 import com.spring.boot.mybatisplus.druid.multi.datasource.valeera.dao.entity.SysOrder;
 import com.spring.boot.mybatisplus.druid.multi.datasource.valeera.service.SysOrderService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
@@ -24,8 +21,7 @@ import java.util.List;
  * @version 1.0
  * @date 2018/5/23 0023
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = DruidMultiDatasourceApplication.class)
+@SpringBootTest
 public class ServiceTest {
     @Autowired
     SysUserService sysUserService;
