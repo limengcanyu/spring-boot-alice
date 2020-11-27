@@ -1,25 +1,22 @@
 package com.spring.boot.template.service;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class RestTemplateTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Test
     public void test() {
-        String url = "/template/getRequestParam?id={id}"; // 请求参数占位符
+        String url = "/template/getRequestParam?id={id}" ; // 请求参数占位符
 
         Map<String, Object> uriVariables = new HashMap<>(); // 请求参数
         uriVariables.put("id", 1);
@@ -30,7 +27,7 @@ public class RestTemplateTest {
 
     @Test
     public void getRequestParamBody() {
-        String url = "/template/getRequestParamBody?id={id}"; // 请求参数占位符
+        String url = "/template/getRequestParamBody?id={id}" ; // 请求参数占位符
 
         Map<String, Object> uriVariables = new HashMap<>(); // 请求参数
         uriVariables.put("id", 1);
@@ -45,7 +42,7 @@ public class RestTemplateTest {
 
     @Test
     public void postForEntity() {
-        String url = "/template/getRequestParamBody?id={id}"; // 请求参数占位符
+        String url = "/template/getRequestParamBody?id={id}" ; // 请求参数占位符
 
         Map<String, Object> uriVariables = new HashMap<>(); // 请求参数
         uriVariables.put("id", 1);

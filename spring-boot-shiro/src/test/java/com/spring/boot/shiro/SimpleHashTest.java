@@ -3,7 +3,7 @@ package com.spring.boot.shiro;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>Description: </p>
