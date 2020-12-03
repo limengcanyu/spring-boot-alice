@@ -9,7 +9,9 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +32,16 @@ public class SentinelConfig {
         return new SentinelResourceAspect();
     }
 
-    //@PostConstruct
+    @PostConstruct
     private void initFlowRules() {
+        log.debug("依赖注入完成，执行初始化操作...");
+
         // 限流规则
         List<FlowRule> rules = new ArrayList<>();
         FlowRule rule = new FlowRule();
-        rule.setResource("sayHello");
+        rule.setResource("sayHello"); // 指定限流资源
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        rule.setCount(2);
+        rule.setCount(2); // Set limit QPS to 2
         rules.add(rule);
         FlowRuleManager.loadRules(rules);
 
