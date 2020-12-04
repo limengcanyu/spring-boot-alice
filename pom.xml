@@ -44,7 +44,7 @@
         <module>spring-boot-mybatisplus-druid-multi-datasource</module>
         <module>spring-boot-mybatisplus-sharding-jdbc</module>
         <module>spring-boot-mycat</module>
-        <module>spring-boot-mysql-mongo-transaction</module>
+        <module>spring-boot-multi-datasource-transaction</module>
         <module>spring-boot-neo4j</module>
         <module>spring-boot-okhttp</module>
         <module>spring-boot-poi</module>
