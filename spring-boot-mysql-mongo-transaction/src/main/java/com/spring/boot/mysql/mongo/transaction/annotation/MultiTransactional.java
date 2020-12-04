@@ -12,9 +12,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface MultiTransactional {
 
-    /**
-     * 事务管理器数组
-     */
-    String[] transactionManagers();
+//    /**
+//     * 事务管理器数组
+//     */
+//    String[] transactionManagers();
 
 }

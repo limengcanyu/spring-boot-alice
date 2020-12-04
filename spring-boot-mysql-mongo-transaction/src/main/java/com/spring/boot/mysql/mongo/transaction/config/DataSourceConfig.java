@@ -5,11 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
-import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * description:
@@ -34,7 +32,7 @@ public class DataSourceConfig {
 
     /**
      * mongo操作需要事务支持时需指定事务管理器
-     *
+     * <p>
      * 例如，@Transactional(transactionManager="mongoTransactionManager")
      *
      * @param mongoDatabaseFactory
