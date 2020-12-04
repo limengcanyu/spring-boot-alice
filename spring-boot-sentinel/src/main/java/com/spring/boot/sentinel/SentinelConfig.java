@@ -38,12 +38,21 @@ public class SentinelConfig {
 
         // 限流规则
         List<FlowRule> rules = new ArrayList<>();
+//        FlowRule rule = new FlowRule();
+//        rule.setResource("sayHello"); // 指定限流资源
+//        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+//        rule.setCount(2); // Set limit QPS to 2
+//        rules.add(rule);
+//        FlowRuleManager.loadRules(rules);
+
         FlowRule rule = new FlowRule();
         rule.setResource("sayHello"); // 指定限流资源
-        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        rule.setCount(2); // Set limit QPS to 2
+        rule.setGrade(RuleConstant.FLOW_GRADE_THREAD);
+        rule.setCount(2); // Set limit THREAD to 2
+        rule.setLimitApp("default");
         rules.add(rule);
         FlowRuleManager.loadRules(rules);
+
 
         // 降级规则，可以多个degradeRule rule
         // DegradeRuleManager.getRules()可以获取到已经设置的降级规则
