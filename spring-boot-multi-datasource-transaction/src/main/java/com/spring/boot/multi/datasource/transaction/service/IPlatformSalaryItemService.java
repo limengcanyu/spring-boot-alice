@@ -5,13 +5,11 @@ import com.spring.boot.multi.datasource.transaction.dao.entity.PlatformSalaryIte
 
 /**
  * <p>
- * 平台薪资项定义信息表 服务类
+ * 薪资项定义表 服务类
  * </p>
- *
- * @author rock.jiang
- * @since 2020-09-02
  */
 public interface IPlatformSalaryItemService extends IService<PlatformSalaryItem> {
+
     boolean addItem() throws Exception;
 
     boolean updateItem() throws Exception;

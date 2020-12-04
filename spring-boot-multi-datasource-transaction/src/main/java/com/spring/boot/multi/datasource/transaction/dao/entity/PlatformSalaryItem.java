@@ -11,11 +11,8 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 平台薪资项定义信息表
+ * 薪资项定义表
  * </p>
- *
- * @author rock.jiang
- * @since 2020-09-02
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -42,59 +39,9 @@ public class PlatformSalaryItem implements Serializable {
     private String itemName;
 
     /**
-     * 薪资项变量
-     */
-    private String itemVariant;
-
-    /**
-     * 薪资项别名
-     */
-    private String itemAlias;
-
-    /**
-     * 薪资项类型：1-文本项；2-输入项；3-计算项
-     */
-    private Integer itemType;
-
-    /**
      * 数据类型：1-文本；2-整数；3-小数
      */
     private Integer dataType;
-
-    /**
-     * 数据长度
-     */
-    private Integer dataLength;
-
-    /**
-     * 小数位数
-     */
-    private Integer decimalDigits;
-
-    /**
-     * 进位方式：1-四舍五入；2-简单去位
-     */
-    private Integer roundingMode;
-
-    /**
-     * 原始公式
-     */
-    private String originalExpression;
-
-    /**
-     * 计算公式
-     */
-    private String computeExpression;
-
-    /**
-     * 显示顺序
-     */
-    private Integer displayOrder;
-
-    /**
-     * 计算顺序
-     */
-    private Integer computeOrder;
 
     /**
      * 备注 

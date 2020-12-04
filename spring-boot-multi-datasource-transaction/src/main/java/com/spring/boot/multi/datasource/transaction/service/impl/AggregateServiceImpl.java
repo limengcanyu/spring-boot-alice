@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>Description: </p>
  *
@@ -47,7 +50,37 @@ public class AggregateServiceImpl implements AggregateService {
         Document iDoc = mongoTemplate.insert(employee, "artanis");
         log.debug("iDoc: {}", iDoc);
 
-        throw new Exception();
-//        return null;
+//        throw new Exception();
+        return "success";
+    }
+
+    @MultiTransactional
+    @Override
+    public String saveItemData() {
+        // mysql保存数据结构
+        List<PlatformSalaryItem> itemList = new ArrayList<>();
+
+        PlatformSalaryItem item = new PlatformSalaryItem();
+        item.setItemCode("item_001");
+        item.setItemName("薪资项001");
+        itemList.add(item);
+
+        item = new PlatformSalaryItem();
+        item.setItemCode("item_002");
+        item.setItemName("薪资项002");
+        itemList.add(item);
+        platformSalaryItemService.saveBatch(itemList);
+
+        // mongo保存数据
+        Document record = new Document();
+        record.put("tenant_id", "tenant_001");
+        record.put("company_id", "company_001");
+        record.put("month", "2020-12");
+        record.put("item_001", 200.00); // 数据结构项赋值
+        record.put("item_002", 300.00); // 数据结构项赋值
+        record = mongoTemplate.insert(record, "item_record");
+        log.debug("record: {}", record);
+
+        return "success";
     }
 }

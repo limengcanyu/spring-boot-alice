@@ -9,11 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
- * 平台薪资项定义信息表 服务实现类
+ * 薪资项定义表 服务实现类
  * </p>
- *
- * @author rock.jiang
- * @since 2020-09-02
  */
 @Service
 public class PlatformSalaryItemServiceImpl extends ServiceImpl<PlatformSalaryItemMapper, PlatformSalaryItem> implements IPlatformSalaryItemService {

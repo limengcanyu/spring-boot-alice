@@ -32,4 +32,12 @@ class SpringBootMysqlMongoTransactionApplicationTests {
         aggregateService.aggregate();
     }
 
+    @Test
+    void saveItemData() throws Exception {
+        mongoTemplate.dropCollection("item_record");
+        mongoTemplate.createCollection("item_record");
+
+        aggregateService.saveItemData();
+    }
+
 }
