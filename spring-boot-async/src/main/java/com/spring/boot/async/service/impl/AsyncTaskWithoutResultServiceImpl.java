@@ -5,6 +5,7 @@ import com.spring.boot.async.utils.ContextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AsyncTaskWithoutResultServiceImpl implements AsyncTaskWithoutResultService {
     private static final Logger logger = LoggerFactory.getLogger(AsyncTaskWithoutResultServiceImpl.class);
+
+    @Value("${async.task.corePoolSize: 10}")
+    private int corePoolSize;
 
     @Async
     @Override
