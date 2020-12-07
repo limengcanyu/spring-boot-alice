@@ -28,7 +28,7 @@ public class PlatformSalaryItem implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private String tenantId;
+//    private String tenantId;
 
     /**
      * 薪资项编码

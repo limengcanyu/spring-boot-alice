@@ -1,0 +1,7 @@
+### GET request with a header http调用失败
+GET http://localhost:8443/echo
+Accept: application/json
+
+### GET request with a header https调用成功
+GET https://localhost:8443/echo
+Accept: application/json

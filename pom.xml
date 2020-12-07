@@ -24,40 +24,53 @@
         <module>spring-boot-docker</module>
         <module>spring-boot-elasticsearch</module>
         <module>spring-boot-flowable</module>
+        <module>spring-boot-generator</module>
         <module>spring-boot-graphql</module>
+        <module>spring-boot-httpcomponents</module>
         <module>spring-boot-jdbctemplate</module>
         <module>spring-boot-jetty</module>
         <module>spring-boot-jpa</module>
         <module>spring-boot-json</module>
         <module>spring-boot-jwt</module>
         <module>spring-boot-kafka</module>
+        <module>spring-boot-kafka-consumer</module>
+        <module>spring-boot-kafka-producer</module>
         <module>spring-boot-kafka-streams</module>
         <module>spring-boot-knife4j</module>
         <module>spring-boot-log</module>
         <module>spring-boot-mongo</module>
+        <module>spring-boot-multi-datasource-transaction</module>
         <module>spring-boot-mybatisplus</module>
         <module>spring-boot-mybatisplus-druid-dynamic-datasource</module>
         <module>spring-boot-mybatisplus-druid-multi-datasource</module>
         <module>spring-boot-mybatisplus-sharding-jdbc</module>
         <module>spring-boot-mycat</module>
-        <module>spring-boot-mysql-mongo-transaction</module>
         <module>spring-boot-neo4j</module>
+        <module>spring-boot-okhttp</module>
+        <module>spring-boot-poi</module>
         <module>spring-boot-postgres</module>
         <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-rabbitmq-consumer</module>
+        <module>spring-boot-rabbitmq-producer</module>
         <module>spring-boot-redis</module>
         <module>spring-boot-redis-reactive</module>
+        <module>spring-boot-rocketmq</module>
+        <module>spring-boot-rocketmq-consumer</module>
+        <module>spring-boot-rocketmq-producer</module>
         <module>spring-boot-screw</module>
         <module>spring-boot-security</module>
         <module>spring-boot-security-custom</module>
         <module>spring-boot-security-custom-cluster</module>
         <module>spring-boot-security-token</module>
         <module>spring-boot-security-token-cluster</module>
+        <module>spring-boot-sentinel</module>
         <module>spring-boot-shardingsphere-jdbc</module>
         <module>spring-boot-shiro</module>
         <module>spring-boot-ssl</module>
         <module>spring-boot-swagger2</module>
         <module>spring-boot-template</module>
         <module>spring-boot-testing</module>
+        <module>spring-boot-thrift</module>
         <module>spring-boot-tomcat</module>
         <module>spring-boot-undertow</module>
         <module>spring-boot-webflux</module>
@@ -73,6 +86,8 @@
         <guava.version>30.0-jre</guava.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+        <java.version>15</java.version>
+        <spring.boot.version>2.3.6.RELEASE</spring.boot.version>
     </properties>
 
     <dependencyManagement>
@@ -82,6 +97,7 @@
                 <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
                 <version>${spring.boot.dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -131,6 +147,13 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <!-- Configuring the Annotation Processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
@@ -160,6 +183,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

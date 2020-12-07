@@ -32,4 +32,15 @@ public class PlatformSalaryItemController {
         platformSalaryItemService.addItem();
         return "add item success";
     }
+
+    /**
+     * localhost:8080/platform-salary-item/updateItem
+     *
+     * @return
+     */
+    @RequestMapping("/updateItem")
+    public String updateItem() throws Exception {
+        platformSalaryItemService.updateItem();
+        return "add item success";
+    }
 }

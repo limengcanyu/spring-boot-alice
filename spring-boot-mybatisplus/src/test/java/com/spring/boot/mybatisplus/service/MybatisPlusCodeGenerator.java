@@ -45,6 +45,7 @@ public class MybatisPlusCodeGenerator {
         gc.setOpen(false);
 //        gc.setSwagger2(true); // 实体属性 Swagger2 注解
         gc.setFileOverride(true);
+        gc.setServiceName("%s" + ConstVal.SERVICE); // 设置生成的接口名称，去掉接口前面的I开头
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -114,7 +115,7 @@ public class MybatisPlusCodeGenerator {
         //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
         // templateConfig.setEntity("templates/entity2.java");
         // templateConfig.setService();
-        // templateConfig.setController();
+        templateConfig.setController("templates/controller2.java");
 
         templateConfig.setXml(null);
         mpg.setTemplate(templateConfig);
@@ -132,7 +133,7 @@ public class MybatisPlusCodeGenerator {
 //        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
         // 写于父类中的公共字段
 //        strategy.setSuperEntityColumns("id", "creatorId", "createTime", "modifierId", "modifyTime", "version");
-        strategy.setInclude("platform_salary_item");
+        strategy.setInclude("Company");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);

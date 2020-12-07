@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPlatformSalaryItemService extends IService<PlatformSalaryItem> {
     boolean addItem() throws Exception;
+
+    boolean updateItem() throws Exception;
 }

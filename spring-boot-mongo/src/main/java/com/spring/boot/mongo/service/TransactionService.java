@@ -12,5 +12,7 @@ public interface TransactionService {
 
     void transactionMethod2() throws Exception;
 
+    void transactionMethod3() throws Exception;
+
     void select();
 }

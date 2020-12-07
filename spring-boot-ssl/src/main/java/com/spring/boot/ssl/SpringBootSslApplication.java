@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 public class SpringBootSslApplication {
 
+    /**
+     * https://localhost:8443/echo
+     *
+     * @return
+     */
     @RequestMapping("/echo")
     public String echo() {
         return "hello ssl";

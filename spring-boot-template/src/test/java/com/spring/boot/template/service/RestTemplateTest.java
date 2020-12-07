@@ -16,7 +16,7 @@ public class RestTemplateTest {
 
     @Test
     public void test() {
-        String url = "/template/getRequestParam?id={id}"; // 请求参数占位符
+        String url = "/template/getRequestParam?id={id}" ; // 请求参数占位符
 
         Map<String, Object> uriVariables = new HashMap<>(); // 请求参数
         uriVariables.put("id", 1);
@@ -27,7 +27,7 @@ public class RestTemplateTest {
 
     @Test
     public void getRequestParamBody() {
-        String url = "/template/getRequestParamBody?id={id}"; // 请求参数占位符
+        String url = "/template/getRequestParamBody?id={id}" ; // 请求参数占位符
 
         Map<String, Object> uriVariables = new HashMap<>(); // 请求参数
         uriVariables.put("id", 1);
@@ -42,7 +42,7 @@ public class RestTemplateTest {
 
     @Test
     public void postForEntity() {
-        String url = "/template/getRequestParamBody?id={id}"; // 请求参数占位符
+        String url = "/template/getRequestParamBody?id={id}" ; // 请求参数占位符
 
         Map<String, Object> uriVariables = new HashMap<>(); // 请求参数
         uriVariables.put("id", 1);

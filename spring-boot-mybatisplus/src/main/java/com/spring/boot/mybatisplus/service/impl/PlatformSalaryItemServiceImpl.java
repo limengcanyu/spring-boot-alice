@@ -33,4 +33,22 @@ public class PlatformSalaryItemServiceImpl extends ServiceImpl<PlatformSalaryIte
         }
         return true;
     }
+
+//    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateItem() throws Exception {
+        PlatformSalaryItem update1 = new PlatformSalaryItem();
+        update1.setId(155);
+        update1.setItemName("实发补偿金111");
+        updateById(update1);
+
+        throw new Exception();
+
+//        PlatformSalaryItem update2 = new PlatformSalaryItem();
+//        update1.setId(156);
+//        update1.setItemName("报盘工资111");
+//        updateById(update1);
+//
+//        return false;
+    }
 }

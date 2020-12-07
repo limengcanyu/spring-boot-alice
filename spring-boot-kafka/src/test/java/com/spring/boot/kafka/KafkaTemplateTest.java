@@ -1,6 +1,5 @@
 package com.spring.boot.kafka;
 
-import com.spring.boot.kafka.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +26,7 @@ public class KafkaTemplateTest {
 
     @Test
     public void sendPOJOMessage() {
-        kafkaTemplate.send("userTopic", new User("userId_003", "userName", "1234567890"));
-        kafkaTemplate.send("userTopic", new User("userId_004", "userName", "1234567890"));
+//        kafkaTemplate.send("userTopic", new User("userId_003", "userName", "1234567890"));
+//        kafkaTemplate.send("userTopic", new User("userId_004", "userName", "1234567890"));
     }
 }

@@ -1,0 +1,14 @@
+### GET request with a header
+GET https://localhost:9527/getResourceFromClassPathResource
+Accept: application/json
+
+
+### GET request with a header
+GET https://localhost:9527/getResourceFromResourceUtils
+Accept: application/json
+
+
+### GET request with a header
+GET https://localhost:9527/getResourceFromFileSystemResource
+Accept: application/json
+
