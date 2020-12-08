@@ -26,8 +26,8 @@ class SpringBootMysqlMongoTransactionApplicationTests {
 
     @Test
     void aggregate() throws Exception {
-        mongoTemplate.dropCollection("artanis");
-        mongoTemplate.createCollection("artanis");
+        mongoTemplate.dropCollection("employee");
+        mongoTemplate.createCollection("employee");
 
         aggregateService.aggregate();
     }

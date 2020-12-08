@@ -8,15 +8,17 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.mongodb.MongoTransactionManager;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.util.ObjectUtils;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 多数据源事务切面
@@ -47,19 +49,9 @@ public class MultiTransactionDynamicAop {
     public void pointcut() {
     }
 
-//    @Before("@annotation(multiTransactional)")
-//    public void beforeProcess(MultiTransactional multiTransactional) {
-//        String[] transactionManagerList = multiTransactional.transactionManager();
-//
-//        for (String s : transactionManagerList) {
-//            System.out.println(s);
-//        }
-//
-//    }
-
     @Around("@annotation(multiTransactional)")
     public Object doBasicProfiling(ProceedingJoinPoint pjp, MultiTransactional multiTransactional) throws Throwable {
-        log.debug("多数据源事务处理 开始......");
+        log.debug("Thread ID: {} Name: {} 多数据源动态事务处理 开始......", Thread.currentThread().getId(), Thread.currentThread().getName());
 
         Deque<Map<PlatformTransactionManager, TransactionStatus>> transactionManagers = new ArrayDeque<>();
 
@@ -68,6 +60,7 @@ public class MultiTransactionDynamicAop {
         for (String s : transactionManagerList) {
             PlatformTransactionManager transactionManager = applicationContext.getBean(s, PlatformTransactionManager.class);
             TransactionStatus transactionStatus = transactionManager.getTransaction(def);
+            log.debug("begin 事务管理器: " + transactionManager + " 事务状态: " + transactionStatus);
             Map<PlatformTransactionManager, TransactionStatus> map = new HashMap<>();
             map.put(transactionManager, transactionStatus);
             transactionManagers.push(map);
@@ -78,24 +71,27 @@ public class MultiTransactionDynamicAop {
             // start stopwatch
             retVal = pjp.proceed();
         } catch (Exception ex) {
-            for (int i = 0; i < transactionManagers.size(); i++) {
+            log.debug("Thread ID: {} Name: {} 多数据源动态事务处理 回滚......", Thread.currentThread().getId(), Thread.currentThread().getName());
+            while (!ObjectUtils.isEmpty(transactionManagers.peek())) {
                 Map<PlatformTransactionManager, TransactionStatus> map = transactionManagers.pop();
                 PlatformTransactionManager transactionManager = (PlatformTransactionManager) map.keySet().toArray()[0];
                 TransactionStatus transactionStatus = map.get(transactionManager);
+                log.debug("rollback 事务管理器: " + transactionManager + " 事务状态: " + transactionStatus);
                 transactionManager.rollback(transactionStatus);
             }
 
             throw ex;
         }
 
-        for (int i = 0; i < transactionManagers.size(); i++) {
+        while (!ObjectUtils.isEmpty(transactionManagers.peek())) {
             Map<PlatformTransactionManager, TransactionStatus> map = transactionManagers.pop();
             PlatformTransactionManager transactionManager = (PlatformTransactionManager) map.keySet().toArray()[0];
             TransactionStatus transactionStatus = map.get(transactionManager);
+            log.debug("commit 事务管理器: " + transactionManager + " 事务状态: " + transactionStatus);
             transactionManager.commit(transactionStatus);
         }
 
-        log.debug("多数据源事务处理 结束......");
+        log.debug("Thread ID: {} Name: {} 多数据源动态事务处理 结束......", Thread.currentThread().getId(), Thread.currentThread().getName());
         // stop stopwatch
         return retVal;
     }

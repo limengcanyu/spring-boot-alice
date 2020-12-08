@@ -29,7 +29,7 @@ public class AggregateServiceImpl implements AggregateService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    @MultiTransactional
+    @MultiTransactional(transactionManager = {"dataSourceTransactionManager", "mongoTransactionManager"})
     @Override
     public String aggregate() throws Exception {
         // put your business logic here
@@ -47,7 +47,7 @@ public class AggregateServiceImpl implements AggregateService {
         employee.put("department_id", "department_000001");
         employee.put("department_name", "部门000001");
 
-        Document iDoc = mongoTemplate.insert(employee, "artanis");
+        Document iDoc = mongoTemplate.insert(employee, "employee");
         log.debug("iDoc: {}", iDoc);
 
 //        throw new Exception();
@@ -56,7 +56,7 @@ public class AggregateServiceImpl implements AggregateService {
 
     @MultiTransactional
     @Override
-    public String saveItemData() {
+    public String saveItemData() throws Exception {
         // mysql保存数据结构
         List<PlatformSalaryItem> itemList = new ArrayList<>();
 

@@ -34,14 +34,13 @@ public class MysqlServiceImpl implements MysqlService {
             item.setItemName("item_134");
             platformSalaryItemService.save(item);
 
-            throw new Exception();
+//            throw new Exception();
         } catch (Exception ex) {
             dataSourceTransactionManager.rollback(status);
             throw ex;
         }
 
-//        dataSourceTransactionManager.commit(status);
-//
-//        return null;
+        dataSourceTransactionManager.commit(status);
+        return null;
     }
 }
