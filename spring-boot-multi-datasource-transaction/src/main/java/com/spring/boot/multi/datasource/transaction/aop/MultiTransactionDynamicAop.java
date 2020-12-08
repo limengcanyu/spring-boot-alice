@@ -15,6 +15,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.ObjectUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ import java.util.Map;
 @Component
 public class MultiTransactionDynamicAop {
 
-    @Autowired
+    @Resource
     private ApplicationContext applicationContext;
 
     /**
@@ -57,6 +58,28 @@ public class MultiTransactionDynamicAop {
 
         String[] transactionManagerList = multiTransactional.transactionManager();
 
+        log.debug("Thread ID: {} Name: {} 多数据源动态事务处理 开始......", Thread.currentThread().getId(), Thread.currentThread().getName());
+        beginTransaction(transactionManagers, transactionManagerList);
+
+        Object retVal;
+        try {
+            // start stopwatch
+            retVal = pjp.proceed();
+        } catch (Exception ex) {
+            log.debug("Thread ID: {} Name: {} 多数据源动态事务处理 回滚......", Thread.currentThread().getId(), Thread.currentThread().getName());
+            rollbackTransaction(transactionManagers);
+            throw ex;
+        }
+
+        log.debug("Thread ID: {} Name: {} 多数据源动态事务处理 提交......", Thread.currentThread().getId(), Thread.currentThread().getName());
+        commitTransaction(transactionManagers);
+
+        log.debug("Thread ID: {} Name: {} 多数据源动态事务处理 结束......", Thread.currentThread().getId(), Thread.currentThread().getName());
+        // stop stopwatch
+        return retVal;
+    }
+
+    void beginTransaction(Deque<Map<PlatformTransactionManager, TransactionStatus>> transactionManagers, String[] transactionManagerList) {
         for (String s : transactionManagerList) {
             PlatformTransactionManager transactionManager = applicationContext.getBean(s, PlatformTransactionManager.class);
             TransactionStatus transactionStatus = transactionManager.getTransaction(def);
@@ -65,24 +88,19 @@ public class MultiTransactionDynamicAop {
             map.put(transactionManager, transactionStatus);
             transactionManagers.push(map);
         }
+    }
 
-        Object retVal;
-        try {
-            // start stopwatch
-            retVal = pjp.proceed();
-        } catch (Exception ex) {
-            log.debug("Thread ID: {} Name: {} 多数据源动态事务处理 回滚......", Thread.currentThread().getId(), Thread.currentThread().getName());
-            while (!ObjectUtils.isEmpty(transactionManagers.peek())) {
-                Map<PlatformTransactionManager, TransactionStatus> map = transactionManagers.pop();
-                PlatformTransactionManager transactionManager = (PlatformTransactionManager) map.keySet().toArray()[0];
-                TransactionStatus transactionStatus = map.get(transactionManager);
-                log.debug("rollback 事务管理器: " + transactionManager + " 事务状态: " + transactionStatus);
-                transactionManager.rollback(transactionStatus);
-            }
-
-            throw ex;
+    void rollbackTransaction(Deque<Map<PlatformTransactionManager, TransactionStatus>> transactionManagers) {
+        while (!ObjectUtils.isEmpty(transactionManagers.peek())) {
+            Map<PlatformTransactionManager, TransactionStatus> map = transactionManagers.pop();
+            PlatformTransactionManager transactionManager = (PlatformTransactionManager) map.keySet().toArray()[0];
+            TransactionStatus transactionStatus = map.get(transactionManager);
+            log.debug("rollback 事务管理器: " + transactionManager + " 事务状态: " + transactionStatus);
+            transactionManager.rollback(transactionStatus);
         }
+    }
 
+    void commitTransaction(Deque<Map<PlatformTransactionManager, TransactionStatus>> transactionManagers) {
         while (!ObjectUtils.isEmpty(transactionManagers.peek())) {
             Map<PlatformTransactionManager, TransactionStatus> map = transactionManagers.pop();
             PlatformTransactionManager transactionManager = (PlatformTransactionManager) map.keySet().toArray()[0];
@@ -90,9 +108,5 @@ public class MultiTransactionDynamicAop {
             log.debug("commit 事务管理器: " + transactionManager + " 事务状态: " + transactionStatus);
             transactionManager.commit(transactionStatus);
         }
-
-        log.debug("Thread ID: {} Name: {} 多数据源动态事务处理 结束......", Thread.currentThread().getId(), Thread.currentThread().getName());
-        // stop stopwatch
-        return retVal;
     }
 }

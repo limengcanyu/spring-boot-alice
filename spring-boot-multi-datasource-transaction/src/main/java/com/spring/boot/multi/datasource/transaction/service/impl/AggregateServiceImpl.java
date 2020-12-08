@@ -50,8 +50,8 @@ public class AggregateServiceImpl implements AggregateService {
         Document iDoc = mongoTemplate.insert(employee, "employee");
         log.debug("iDoc: {}", iDoc);
 
-//        throw new Exception();
-        return "success";
+        throw new Exception();
+//        return "success";
     }
 
     @MultiTransactional
