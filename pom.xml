@@ -13,6 +13,7 @@
         <module>spring-boot-actuator</module>
         <module>spring-boot-akka</module>
         <module>spring-boot-aliyun</module>
+        <module>spring-boot-annotation</module>
         <module>spring-boot-aop</module>
         <module>spring-boot-async</module>
         <module>spring-boot-batch</module>
