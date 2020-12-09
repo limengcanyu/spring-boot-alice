@@ -27,6 +27,7 @@
         <module>spring-boot-flowable</module>
         <module>spring-boot-generator</module>
         <module>spring-boot-graphql</module>
+        <module>spring-boot-hole</module>
         <module>spring-boot-httpcomponents</module>
         <module>spring-boot-jdbctemplate</module>
         <module>spring-boot-jetty</module>
