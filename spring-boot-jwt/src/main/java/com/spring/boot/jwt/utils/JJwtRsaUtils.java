@@ -15,6 +15,10 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 
 public class JJwtRsaUtils {
+
+    private JJwtRsaUtils() {
+    }
+
     private static PublicKey getPublicKey() {
         int keySizeInBits = 4096;
         SecureRandom random = new SecureRandom(JwtConst.SECRET_KEY.getBytes());
@@ -36,6 +40,7 @@ public class JJwtRsaUtils {
                 .compact();
     }
 
+    @SuppressWarnings("unused")
     public static String creatJWS(TokenEntity tokenEntity) {
         Claims claims = Jwts.claims();
 
