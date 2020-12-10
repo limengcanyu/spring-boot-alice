@@ -24,7 +24,11 @@ public class TransactionServiceTest {
     @Test
     void createCollection() {
         mongoTemplate.dropCollection("artanis");
-        mongoTemplate.createCollection("artanis");
+        mongoTemplate.dropCollection("employee");
+
+//        mongoTemplate.createCollection("artanis");
+//        mongoTemplate.createCollection("employee");
+
     }
 
     @Test
