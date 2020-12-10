@@ -48,7 +48,7 @@
         <dependency>
             <groupId>com.spring.boot.mybatisplus</groupId>
             <artifactId>spring-boot-mybatisplus</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 

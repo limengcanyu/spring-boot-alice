@@ -56,12 +56,6 @@
             <artifactId>jwks-rsa</artifactId>
             <version>0.8.2</version>
         </dependency>
-
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <version>0.10.5</version>
-        </dependency>
         <!-- auth0/java-jwt end -->
     </dependencies>
 </project>
