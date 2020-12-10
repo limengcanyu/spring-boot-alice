@@ -20,7 +20,7 @@ public class EchoController {
      */
     @RequestMapping("/echo")
     public String echo() {
-        log.debug("this is undertow app echo");
+        log.debug("this is undertow app echo currentTimeMillis: {}", System.currentTimeMillis());
         return "this is undertow app";
     }
 

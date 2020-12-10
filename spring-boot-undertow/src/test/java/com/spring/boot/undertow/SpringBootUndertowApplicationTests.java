@@ -12,12 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
  * date 2019/06/20
  */
 @SpringBootTest
-public class SpringBootUndertowApplicationTests {
+class SpringBootUndertowApplicationTests {
     @Autowired
     private ProjectConfigurationService projectConfigurationService;
 
     @Test
-    public void getCurrentCompanyName() {
+    void getCurrentCompanyName() {
         System.out.println(projectConfigurationService.getCurrentCompanyName());
     }
 
