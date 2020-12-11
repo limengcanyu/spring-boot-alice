@@ -30,6 +30,8 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 
 /**
+ * https://github.com/alibaba/Sentinel/wiki/%E9%99%90%E6%B5%81---%E5%86%B7%E5%90%AF%E5%8A%A8
+ *
  * 基于QPS/并发数的流量控制
  *
  * 2.2 QPS流量控制
@@ -70,9 +72,9 @@ public class WarmUpFlowDemo {
 
     private static final String KEY = "abc";
 
-    private static AtomicInteger pass = new AtomicInteger();
-    private static AtomicInteger block = new AtomicInteger();
-    private static AtomicInteger total = new AtomicInteger();
+    private static final AtomicInteger pass = new AtomicInteger();
+    private static final AtomicInteger block = new AtomicInteger();
+    private static final AtomicInteger total = new AtomicInteger();
 
     private static volatile boolean stop = false;
 
@@ -81,6 +83,7 @@ public class WarmUpFlowDemo {
 
     public static void main(String[] args) throws Exception {
         initFlowRule();
+
         // trigger Sentinel internal init
         Entry entry = null;
         try {
@@ -92,6 +95,7 @@ public class WarmUpFlowDemo {
             }
         }
 
+        // 启动统计线程
         Thread timer = new Thread(new TimerTask());
         timer.setName("sentinel-timer-task");
         timer.start();
@@ -119,12 +123,12 @@ public class WarmUpFlowDemo {
     private static void initFlowRule() {
         List<FlowRule> rules = new ArrayList<FlowRule>();
         FlowRule rule1 = new FlowRule();
-        rule1.setResource(KEY);
-        rule1.setCount(20);
-        rule1.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        rule1.setLimitApp("default");
-        rule1.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_WARM_UP);
-        rule1.setWarmUpPeriodSec(10);
+        rule1.setResource(KEY); // resource：资源名，即限流规则的作用对象
+        rule1.setCount(20); // count: 限流阈值
+        rule1.setGrade(RuleConstant.FLOW_GRADE_QPS); // grade: 限流阈值类型（QPS 或并发线程数）
+        rule1.setLimitApp("default"); // limitApp: 流控针对的调用来源，若为 default 则不区分调用来源
+        rule1.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_WARM_UP); // controlBehavior: 流量控制效果（直接拒绝、Warm Up、匀速排队）
+        rule1.setWarmUpPeriodSec(10); // warmUpPeriodSec 代表期待系统进入稳定状态的时间（即预热时长）
 
         rules.add(rule1);
         FlowRuleManager.loadRules(rules);
@@ -135,6 +139,7 @@ public class WarmUpFlowDemo {
         public void run() {
             while (!stop) {
                 Entry entry = null;
+
                 try {
                     entry = SphU.entry(KEY);
                     // token acquired, means pass
@@ -149,6 +154,7 @@ public class WarmUpFlowDemo {
                         entry.exit();
                     }
                 }
+
                 Random random2 = new Random();
                 try {
                     TimeUnit.MILLISECONDS.sleep(random2.nextInt(2000));
@@ -177,6 +183,7 @@ public class WarmUpFlowDemo {
                         entry.exit();
                     }
                 }
+
                 Random random2 = new Random();
                 try {
                     TimeUnit.MILLISECONDS.sleep(random2.nextInt(50));
@@ -192,10 +199,13 @@ public class WarmUpFlowDemo {
         @Override
         public void run() {
             long start = System.currentTimeMillis();
-            System.out.println("begin to statistic!!!");
+//            System.out.println("begin to statistic!!!");
+            System.out.println("开始统计!!!");
+
             long oldTotal = 0;
             long oldPass = 0;
             long oldBlock = 0;
+
             while (!stop) {
                 try {
                     TimeUnit.SECONDS.sleep(1);
@@ -214,18 +224,28 @@ public class WarmUpFlowDemo {
                 long oneSecondBlock = globalBlock - oldBlock;
                 oldBlock = globalBlock;
 
-                System.out.println(TimeUtil.currentTimeMillis() + ", total:" + oneSecondTotal
-                    + ", pass:" + oneSecondPass
-                    + ", block:" + oneSecondBlock);
+//                System.out.println(TimeUtil.currentTimeMillis() + ", total:" + oneSecondTotal
+//                    + ", pass:" + oneSecondPass
+//                    + ", block:" + oneSecondBlock);
+
+                System.out.println(TimeUtil.currentTimeMillis() + ", 总数量:" + oneSecondTotal
+                    + ", 通过:" + oneSecondPass
+                    + ", 阻塞:" + oneSecondBlock);
+
                 if (seconds-- <= 0) {
                     stop = true;
                 }
             }
 
             long cost = System.currentTimeMillis() - start;
-            System.out.println("time cost: " + cost + " ms");
-            System.out.println("total:" + total.get() + ", pass:" + pass.get()
-                + ", block:" + block.get());
+//            System.out.println("time cost: " + cost + " ms");
+//            System.out.println("total:" + total.get() + ", pass:" + pass.get()
+//                + ", block:" + block.get());
+
+            System.out.println("耗时: " + cost + " ms");
+            System.out.println("总数量:" + total.get() + ", 通过:" + pass.get()
+                    + ", 阻塞:" + block.get());
+
             System.exit(0);
         }
     }
