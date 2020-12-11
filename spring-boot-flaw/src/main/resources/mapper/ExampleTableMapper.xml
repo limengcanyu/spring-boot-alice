@@ -4,23 +4,9 @@
 
     <select id="getListByUserId" parameterType="java.lang.String"
             resultType="com.spring.boot.flaw.dao.entity.ExampleTable">
-        SELECT id, user_id, zh_name, age, address
+        SELECT id, user_id, password, zh_name, age, address
         FROM example_table
         where user_id like concat('%', #{userId}, '%')
-    </select>
-
-    <select id="getListByZhName" parameterType="java.lang.String"
-            resultType="com.spring.boot.flaw.dao.entity.ExampleTable">
-        SELECT id, user_id, zh_name, age, address
-        FROM example_table
-        where zh_name like #{zhName}
-    </select>
-
-    <select id="getOneByZhName" parameterType="java.lang.String"
-            resultType="com.spring.boot.flaw.dao.entity.ExampleTable">
-        SELECT id, user_id, zh_name, age, address
-        FROM example_table
-        where zh_name = #{zhName}
     </select>
 
 </mapper>

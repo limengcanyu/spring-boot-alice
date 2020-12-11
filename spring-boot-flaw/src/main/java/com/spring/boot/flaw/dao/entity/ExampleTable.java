@@ -25,6 +25,8 @@ public class ExampleTable implements Serializable {
 
     private String userId;
 
+    private String password;
+
     private String zhName;
 
     private Integer age;

@@ -14,9 +14,7 @@ import java.util.List;
  * @since 2020-12-09
  */
 public interface ExampleTableMapper extends BaseMapper<ExampleTable> {
+
     List<ExampleTable> getListByUserId(String userId);
 
-    List<ExampleTable> getListByZhName(String zhName);
-
-    ExampleTable getOneByZhName(String zhName);
 }

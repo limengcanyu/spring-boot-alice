@@ -31,18 +31,4 @@ public class ExampleTableServiceImpl extends ServiceImpl<ExampleTableMapper, Exa
         return exampleTableMapper.getListByUserId(userId);
     }
 
-    @Override
-    public List<ExampleTable> getListByZhName(String zhName) {
-//        String legalName = SQLInjectionUtils.replaceIllegalCharacter(zhName);
-//        log.debug("合法字符: {}", legalName);
-//        legalName = "%" + legalName + "%";
-//        return exampleTableMapper.getListByZhName(legalName);
-
-        return exampleTableMapper.getListByZhName(zhName);
-    }
-
-    @Override
-    public ExampleTable getOneByZhName(String zhName) {
-        return exampleTableMapper.getOneByZhName(zhName);
-    }
 }
