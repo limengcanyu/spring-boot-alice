@@ -17,6 +17,7 @@
         <module>spring-boot-aop</module>
         <module>spring-boot-async</module>
         <module>spring-boot-batch</module>
+        <module>spring-boot-caffeine</module>
         <module>spring-boot-camunda</module>
         <module>spring-boot-clickhouse</module>
         <module>spring-boot-configuration-processor</module>
