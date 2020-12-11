@@ -10,8 +10,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class JJwtHsUtils {
+
     private static SecretKey getSecretKey() {
-//        byte[] encodedKey = Base64.decodeBase64(JwtConstant.SECRET_KEY);
         byte[] encodedKey = Base64Utils.decodeFromString(JwtConst.SECRET_KEY);
         return new SecretKeySpec(encodedKey, "HmacSHA256");
     }

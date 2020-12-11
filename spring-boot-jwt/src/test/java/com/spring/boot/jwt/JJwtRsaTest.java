@@ -15,7 +15,7 @@ import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JJwtRsaAlgorithmsTest {
+class JJwtRsaTest {
     private PublicKey getPublicKey() {
         int keySizeInBits = 4096;
         SecureRandom random = new SecureRandom(JwtConst.JWT_SECRET.getBytes());
@@ -31,7 +31,7 @@ public class JJwtRsaAlgorithmsTest {
     }
 
     @Test
-    public void creatJWS() {
+    void creatJWS() {
         Map<String, Object> header = new HashMap<>();
         header.put("kid", "myKeyId");
 
@@ -56,7 +56,7 @@ public class JJwtRsaAlgorithmsTest {
     }
 
     @Test
-    public void readJWS() {
+    void readJWS() {
         try {
             String jwsString = "eyJraWQiOiJteUtleUlkIiwiYWxnIjoiUlM1MTIifQ.eyJoZWxsbyI6IndvcmxkIn0.JNp3TNfYgqJ3iV8Ls0LGD2pP4sLYHwB1eAst1GVNnB8QkgZwc9o7Dutu7r-3NbRerMS3wsmMCXEma_yIqA_vCbNsvCi4XHGxb68dxqfjqha6uiVP__KRXCqdLwyGMkqaNc1faF946O6t5izpeKGtAX8594ZSdFtBE5g-fTBw99ut02osa4xkpmjEGe168Mw1qKQdx3awrBn4uIaKkAEL_-iwROtS-gF3fnyFDgIHxxGPEk8sva3XsEU4GM-h4RQUOVyL097anXfzYayixoTDtzi2F3VgSdSg2GEYTeJqYR00m3FCgrqED1grwHZV-ip7kej91cPbGnliU6fKsZ73QlFLtmaOP_Z4g3YmBnEg5ieySzNKm8gWx93ULSM48F0lrFoqwTj_RM6XQ7w1egwt8c5pT2vNr5r-bgC0szEaooFYzsiKFbY941kB8adDEbujM09lUCQ7Jx3X6NHzzOw4yQRQD-ASoIJzyPgbOxOE-xUk2VbKPEj7n2okJ3LtY7UzOie6X9T3ppswOyQ61DsKbJIrP_5l2C-lJ09k1Ud8XAjyEMYQKnX2xdHAJSkuibYF68DqCgD8LeM35xv4hFb5xCPJ9tu-nypAT0F5Y_ETmnbWdb2Tz0wDkS0x5EypaAUQ7V9vRsQrVNSfZxDSSLJud2SJLsWPEAwozQwldfkaAWE";
 

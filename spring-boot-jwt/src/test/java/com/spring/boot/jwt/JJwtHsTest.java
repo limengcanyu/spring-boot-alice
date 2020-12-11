@@ -13,14 +13,14 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JJwtHsAlgorithmsTest {
+class JJwtHsTest {
     private SecretKey getSecretKey() {
         byte[] encodedKey = Base64.decodeBase64(JwtConst.JWT_SECRET);
         return new SecretKeySpec(encodedKey, "HmacSHA256");
     }
 
     @Test
-    public void creatJWS() {
+    void creatJWS() {
         Map<String, Object> header = new HashMap<>();
         header.put("kid", "myKeyId");
 
@@ -45,7 +45,7 @@ public class JJwtHsAlgorithmsTest {
     }
 
     @Test
-    public void readJWS() {
+    void readJWS() {
         try {
             String jwsString = "eyJraWQiOiJteUtleUlkIiwiYWxnIjoiSFMzODQifQ.eyJoZWxsbyI6IndvcmxkIn0.Co0FONm1CaCcd9uAT3ExmXc54feiAf1-DLuTRdG_RdCSJDld1PAYdKcdxvEiZJp3";
 
