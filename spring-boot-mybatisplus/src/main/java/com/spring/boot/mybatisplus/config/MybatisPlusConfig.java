@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.*;
+import com.spring.boot.mybatisplus.interceptor.CustomInnerInterceptor;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.StringValue;
 import org.mybatis.spring.annotation.MapperScan;
@@ -88,6 +89,12 @@ public class MybatisPlusConfig {
         return blockAttackInnerInterceptor;
     }
 
+    @Bean
+    public CustomInnerInterceptor customInnerInterceptor() {
+        CustomInnerInterceptor customInnerInterceptor = new CustomInnerInterceptor();
+        return customInnerInterceptor;
+    }
+
     /**
      * 新的分页插件,一缓和二缓遵循mybatis的规则,需要设置 MybatisConfiguration#useDeprecatedExecutor = false 避免缓存出现问题(该属性会在旧插件移除后一同移除)
      */
@@ -99,6 +106,7 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor());
 //        interceptor.addInnerInterceptor(illegalSQLInnerInterceptor());
 //        interceptor.addInnerInterceptor(blockAttackInnerInterceptor());
+        interceptor.addInnerInterceptor(customInnerInterceptor());
         return interceptor;
     }
 
