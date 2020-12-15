@@ -1,5 +1,6 @@
 package com.spring.boot.caffeine;
 
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class MathController {
@@ -41,10 +43,10 @@ public class MathController {
     @RequestMapping("/math/computePiDecimal")
     public int computePiDecimal() {
         Collection<String> cacheNames = cacheManager.getCacheNames();
-        cacheNames.forEach(System.out::println);
+//        cacheNames.forEach(System.out::println);
 
         Cache cache = cacheManager.getCache("piDecimals");
-        System.out.println("cache: " + cache);
+//        System.out.println("cache: " + cache);
 
         if (!ObjectUtils.isEmpty(cache)) {
             Integer result = cache.get(1, Integer.class);

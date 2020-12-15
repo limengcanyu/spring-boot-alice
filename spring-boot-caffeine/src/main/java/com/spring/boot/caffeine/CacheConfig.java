@@ -8,16 +8,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CacheConfig {
 
-    @Bean
-    public CacheManagerCustomizer<ConcurrentMapCacheManager> cacheManagerCustomizer() {
-        return new CacheManagerCustomizer<ConcurrentMapCacheManager>() {
-
-            @Override
-            public void customize(ConcurrentMapCacheManager cacheManager) {
-                cacheManager.setAllowNullValues(false);
-            }
-
-        };
-    }
+//    @Bean
+//    public CacheManagerCustomizer<ConcurrentMapCacheManager> cacheManagerCustomizer() {
+//        return new CacheManagerCustomizer<ConcurrentMapCacheManager>() {
+//
+//            @Override
+//            public void customize(ConcurrentMapCacheManager cacheManager) {
+//                cacheManager.setAllowNullValues(false);
+//            }
+//
+//        };
+//    }
 
 }
