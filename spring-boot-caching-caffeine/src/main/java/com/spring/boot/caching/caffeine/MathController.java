@@ -1,6 +1,5 @@
-package com.spring.boot.caffeine;
+package com.spring.boot.caching.caffeine;
 
-import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 public class MathController {

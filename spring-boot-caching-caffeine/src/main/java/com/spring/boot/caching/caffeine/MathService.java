@@ -1,4 +1,4 @@
-package com.spring.boot.caffeine;
+package com.spring.boot.caching.caffeine;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;

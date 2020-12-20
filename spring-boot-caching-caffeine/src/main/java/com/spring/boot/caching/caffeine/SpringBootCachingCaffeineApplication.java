@@ -1,4 +1,4 @@
-package com.spring.boot.caffeine;
+package com.spring.boot.caching.caffeine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @EnableCaching
 @SpringBootApplication
-public class SpringBootCaffeineApplication {
+public class SpringBootCachingCaffeineApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootCaffeineApplication.class, args);
+        SpringApplication.run(SpringBootCachingCaffeineApplication.class, args);
     }
 
 }

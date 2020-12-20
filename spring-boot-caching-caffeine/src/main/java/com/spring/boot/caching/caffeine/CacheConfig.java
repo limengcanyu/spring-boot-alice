@@ -1,4 +1,4 @@
-package com.spring.boot.caffeine;
+package com.spring.boot.caching.caffeine;
 
 import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizer;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;

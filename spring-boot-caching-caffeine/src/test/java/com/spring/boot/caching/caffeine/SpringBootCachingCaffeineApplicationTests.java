@@ -1,10 +1,10 @@
-package com.spring.boot.caffeine;
+package com.spring.boot.caching.caffeine;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootCaffeineApplicationTests {
+class SpringBootCachingCaffeineApplicationTests {
 
     @Test
     void contextLoads() {
