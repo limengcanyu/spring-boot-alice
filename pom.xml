@@ -52,6 +52,7 @@
         <module>spring-boot-okhttp</module>
         <module>spring-boot-poi</module>
         <module>spring-boot-postgres</module>
+        <module>spring-boot-prometheus</module>
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-rabbitmq-consumer</module>
         <module>spring-boot-rabbitmq-producer</module>
@@ -77,11 +78,13 @@
         <module>spring-boot-tomcat</module>
         <module>spring-boot-undertow</module>
         <module>spring-boot-webflux</module>
+        <module>spring-boot-xxl-job</module>
         <module>vue-element-admin</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <java.version>15</java.version>
 
         <spring.boot.dependencies.version>2.4.1</spring.boot.dependencies.version>
