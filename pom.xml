@@ -18,6 +18,8 @@
         <module>spring-boot-async</module>
         <module>spring-boot-batch</module>
         <module>spring-boot-caching-caffeine</module>
+        <module>spring-boot-caching-redis</module>
+        <module>spring-boot-caching-redis-reactive</module>
         <module>spring-boot-camunda</module>
         <module>spring-boot-clickhouse</module>
         <module>spring-boot-configuration-processor</module>
@@ -56,8 +58,6 @@
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-rabbitmq-consumer</module>
         <module>spring-boot-rabbitmq-producer</module>
-        <module>spring-boot-redis</module>
-        <module>spring-boot-redis-reactive</module>
         <module>spring-boot-rocketmq</module>
         <module>spring-boot-rocketmq-consumer</module>
         <module>spring-boot-rocketmq-producer</module>
