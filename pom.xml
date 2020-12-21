@@ -62,6 +62,7 @@
         <module>spring-boot-rocketmq-producer</module>
         <module>spring-boot-redis</module>
         <module>spring-boot-redis-reactive</module>
+        <module>spring-boot-redisson</module>
         <module>spring-boot-screw</module>
         <module>spring-boot-security</module>
         <module>spring-boot-security-custom</module>
