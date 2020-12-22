@@ -31,6 +31,7 @@
         <module>spring-boot-graphql</module>
         <module>spring-boot-hazelcast</module>
         <module>spring-boot-httpcomponents</module>
+        <module>spring-boot-influxdb</module>
         <module>spring-boot-jdbctemplate</module>
         <module>spring-boot-jetty</module>
         <module>spring-boot-jpa</module>
