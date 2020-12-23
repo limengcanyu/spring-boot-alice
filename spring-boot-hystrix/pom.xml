@@ -41,11 +41,11 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-dashboard -->
-<!--        <dependency>-->
-<!--            <groupId>com.netflix.hystrix</groupId>-->
-<!--            <artifactId>hystrix-dashboard</artifactId>-->
-<!--            <version>1.5.18</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.netflix.hystrix</groupId>-->
+        <!--            <artifactId>hystrix-dashboard</artifactId>-->
+        <!--            <version>1.5.18</version>-->
+        <!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
         <dependency>
@@ -62,10 +62,23 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-examples-webapp -->
-<!--        <dependency>-->
-<!--            <groupId>com.netflix.hystrix</groupId>-->
-<!--            <artifactId>hystrix-examples-webapp</artifactId>-->
-<!--            <version>1.5.18</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.netflix.hystrix</groupId>-->
+        <!--            <artifactId>hystrix-examples-webapp</artifactId>-->
+        <!--            <version>1.5.18</version>-->
+        <!--        </dependency>-->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-javanica -->
+        <dependency>
+            <groupId>com.netflix.hystrix</groupId>
+            <artifactId>hystrix-javanica</artifactId>
+            <version>1.5.18</version>
+        </dependency>
     </dependencies>
 </project>
