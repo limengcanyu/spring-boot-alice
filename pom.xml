@@ -31,6 +31,7 @@
         <module>spring-boot-graphql</module>
         <module>spring-boot-hazelcast</module>
         <module>spring-boot-httpcomponents</module>
+        <module>spring-boot-hystrix</module>
         <module>spring-boot-influxdb</module>
         <module>spring-boot-jdbctemplate</module>
         <module>spring-boot-jetty</module>
@@ -64,6 +65,7 @@
         <module>spring-boot-redis</module>
         <module>spring-boot-redis-reactive</module>
         <module>spring-boot-redisson</module>
+        <module>spring-boot-resilience4j</module>
         <module>spring-boot-screw</module>
         <module>spring-boot-security</module>
         <module>spring-boot-security-custom</module>
