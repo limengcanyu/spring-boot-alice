@@ -33,6 +33,7 @@
         <module>spring-boot-httpcomponents</module>
         <module>spring-boot-hystrix</module>
         <module>spring-boot-influxdb</module>
+        <module>spring-boot-jar-war</module>
         <module>spring-boot-jdbctemplate</module>
         <module>spring-boot-jetty</module>
         <module>spring-boot-jpa</module>
