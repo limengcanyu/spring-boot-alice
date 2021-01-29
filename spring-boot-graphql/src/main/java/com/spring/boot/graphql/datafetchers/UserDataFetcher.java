@@ -23,7 +23,7 @@ public class UserDataFetcher {
      * @return 列表嵌套
      */
     private List<Map<String, String>> users() {
-        Map<String, String> map1 = new HashMap<String, String>();
+        Map<String, String> map1 = new HashMap<>();
         map1.put("id", "user-1");
         map1.put("username", "11Harry Potter and the Philosopher's Stone");
         map1.put("password", "13");
@@ -47,17 +47,17 @@ public class UserDataFetcher {
      * @return 列表嵌套
      */
     private List<Map<String, String>> infos() {
-        Map<String, String> map1 = new HashMap<String, String>();
+        Map<String, String> map1 = new HashMap<>();
         map1.put("id", "info-1");
         map1.put("age", "11");
         map1.put("firstName", "11Herman");
         map1.put("lastName", "11Rowling");
-        Map<String, String> map2 = new HashMap<String, String>();
+        Map<String, String> map2 = new HashMap<>();
         map2.put("id", "info-2");
         map2.put("age", "22");
         map2.put("firstName", "22Herman");
         map2.put("lastName", "22Rowling");
-        Map<String, String> map3 = new HashMap<String, String>();
+        Map<String, String> map3 = new HashMap<>();
         map3.put("id", "info-3");
         map3.put("age", "33");
         map3.put("firstName", "33Herman");

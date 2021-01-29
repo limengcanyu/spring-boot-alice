@@ -23,3 +23,9 @@ graphql:
     tracing-enabled: true
     actuator-metrics: true
 
+altair:
+  enabled: true
+  mapping: /altair
+  endpoint.graphql: /graphql
+  pageTitle: Altair
+  props.resources.variables: graphqls/altair/variables.graphql
