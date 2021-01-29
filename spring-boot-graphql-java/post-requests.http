@@ -1,8 +1,0 @@
-POST http://localhost:8080/graphql
-Content-Type: application/json
-
-{
-  "query": "{ bookById(id: \"book-1\"){ id, name, pageCount, author { firstName, lastName }} }"
-}
-
-###

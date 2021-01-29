@@ -72,7 +72,6 @@ public class UserDataFetcher {
      */
     public DataFetcher getUsersDataFetcher() {
         return environment -> {
-            System.err.println("getUsersDataFetcher查询指定字段：" + environment.getSelectionSet().getArguments().keySet());
             System.err.println("getUsersDataFetcher参数变量：" + environment.getVariables());
             return users();
         };
@@ -101,7 +100,6 @@ public class UserDataFetcher {
      */
     public DataFetcher getInfoDataFetcher() {
         return dataFetchingEnvironment -> {
-            System.err.println("getInfoDataFetcher查询指定字段：" + dataFetchingEnvironment.getSelectionSet().getArguments().keySet());
             Map<String, String> user = dataFetchingEnvironment.getSource();
             System.out.println("getInfoDataFetcher级联查询info字段：" + user);
             String infoID = user.get("info");

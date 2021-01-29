@@ -29,7 +29,7 @@
         <module>spring-boot-flowable</module>
         <module>spring-boot-generator</module>
         <module>spring-boot-graphql</module>
-        <module>spring-boot-graphql-java</module>
+        <module>spring-boot-graphql-java-kickstart</module>
         <module>spring-boot-hazelcast</module>
         <module>spring-boot-httpcomponents</module>
         <module>spring-boot-hystrix</module>
