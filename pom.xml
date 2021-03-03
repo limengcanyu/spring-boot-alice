@@ -96,7 +96,7 @@
 
         <java.version>15</java.version>
 
-        <spring.boot.dependencies.version>2.4.1</spring.boot.dependencies.version>
+        <spring.boot.dependencies.version>2.4.3</spring.boot.dependencies.version>
 
         <lombok.version>1.18.16</lombok.version>
         <fastjson.version>1.2.75</fastjson.version>
