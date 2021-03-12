@@ -1,15 +1,15 @@
-package com.spring.boot.json;
+package com.spring.boot.aliyun;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyuncs.exceptions.ClientException;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.Map;
 
-class FastJsonTest {
-
+public class JsonReaderTest {
     @Test
-    void parseAliyun() {
+    void read() throws ClientException {
         String result = "{\n" +
                 "\t\"Instances\": {\n" +
                 "\t\t\"Instance\": [\n" +
@@ -143,67 +143,125 @@ class FastJsonTest {
                 "    \"NextToken\": \"caeba0bbb2be03f84eb48b699f0a4883\"\n" +
                 "}";
 
-        Map<String, Object> retMap = parse(JSONObject.parseObject(result));
-        System.out.println("===============================================================");
-        for (Map.Entry<String, Object> stringObjectEntry : retMap.entrySet()) {
+//        Reader reader = new JsonReader();
+//        Map<String, String> tag = reader.read(result, "Tag");
+//        for (Map.Entry<String, String> stringStringEntry : tag.entrySet()) {
+//            System.out.println(stringStringEntry.getKey() + ": " + stringStringEntry.getValue());
+//        }
+//
+//        System.out.println("=========================================================");
+//
+//        Map<String, Object> parse = JsonUtils.parse(JSONObject.parseObject(result));
+//        for (Map.Entry<String, Object> stringObjectEntry : parse.entrySet()) {
+//            System.out.println(stringObjectEntry.getKey() + ": " + stringObjectEntry.getValue());
+//        }
+
+        JSONObject jsonObject = JSONObject.parseObject(result);
+        JSONObject retObject = parse(jsonObject);
+        for (Map.Entry<String, Object> stringObjectEntry : retObject.entrySet()) {
             String key = stringObjectEntry.getKey();
             Object value = stringObjectEntry.getValue();
-            System.out.println("retMap key: " + key + " value: " + value);
+            System.out.println(key + ": " + value);
         }
+
     }
 
-    /**
-     * 递归解析JSON对象，获取最终字段名和字段值
-     *
-     * @param object
-     * @return
-     */
-    private Map<String, Object> parse(Object object) {
-        Map<String, Object> retMap = new HashMap<>();
+    private JSONObject parse(Object object) {
+        JSONObject retObject = new JSONObject();
 
         if (object instanceof JSONObject) {
-            System.out.println("object is JSONObject!");
             JSONObject jsonObject = (JSONObject) object;
             for (Map.Entry<String, Object> stringObjectEntry : jsonObject.entrySet()) {
                 String key = stringObjectEntry.getKey();
                 Object value = stringObjectEntry.getValue();
 
-                if ("SecurityGroupId".equals(key)) {
-                    System.out.println();
-                }
-
                 if (value instanceof JSONObject) {
-                    Map<String, Object> map = parse(value);
-                    retMap.putAll(map);
-                } else if (value instanceof JSONArray) {
-                    if (value.toString().contains(":")) { // "PublicIpAddress": {"IpAddress": ["121.40.**.**"]}
-                        Map<String, Object> map = parse(value);
-                        retMap.putAll(map);
-                    } else { // ["172.17.**.**"]
-                        JSONArray jsonArray = (JSONArray) value;
-                        List<String> list = new ArrayList<>();
-                        for (Object o : jsonArray) {
-                            list.add(o.toString());
-                        }
+                    JSONObject jsonObject1 = (JSONObject) value;
 
-                        retMap.put(key, String.join(",", list));
+                    JSONObject jsonObject2 = joinJSONObject(key, jsonObject1);
+                    JSONObject parse = parse(jsonObject2);
+
+                    retObject.putAll(parse);
+                } else if (value instanceof JSONArray) {
+                    JSONArray jsonArray = (JSONArray) value;
+                    if (jsonArray.toString().contains(":")) {
+
+                        JSONArray jsonArray1 = joinJSONArray(key, jsonArray);
+                        JSONObject parse = parse(jsonArray1);
+
+                        retObject.putAll(parse);
+                    } else {
+                        String s = joinJSONArray(jsonArray);
+                        retObject.put(key, s);
                     }
                 } else {
-//                    System.out.println("object is not JSONObject or JSONArray! object: " + object);
-                    retMap.put(key, value);
+                    retObject.put(key, value);
                 }
             }
         } else if (object instanceof JSONArray) {
-            System.out.println("object is JSONArray!");
             JSONArray jsonArray = (JSONArray) object;
+
             for (Object o : jsonArray) {
-                Map<String, Object> map = parse(o);
-                retMap.putAll(map);
+                if (o instanceof JSONObject) {
+                    JSONObject parse = parse(o);
+                    retObject.putAll(parse);
+                }
             }
         } else {
-            System.out.println("object is not JSONObject or JSONArray! object: " + object);
+            System.out.println("object is not JSONObject or JSONArray!");
         }
 
-        return retMap;
+        return retObject;
+    }
+
+    private JSONObject joinJSONObject(String key, JSONObject paramObject) {
+        JSONObject retObject = new JSONObject();
+
+        for (Map.Entry<String, Object> stringObjectEntry : paramObject.entrySet()) {
+            retObject.put(key + "." + stringObjectEntry.getKey(), stringObjectEntry.getValue());
+        }
+
+        return retObject;
+    }
+
+    private JSONObject joinJSONObject(String key, int index, JSONObject paramObject) {
+        JSONObject retObject = new JSONObject();
+
+        for (Map.Entry<String, Object> stringObjectEntry : paramObject.entrySet()) {
+            retObject.put(key + "[" + index + "]" + "." + stringObjectEntry.getKey(), stringObjectEntry.getValue());
+        }
+
+        return retObject;
+    }
+
+    private JSONArray joinJSONArray(String key, JSONArray paramArray) {
+        JSONArray retArray = new JSONArray();
+
+        for (int i = 0; i < paramArray.size(); i++) {
+            Object o = paramArray.get(i);
+
+            if (o instanceof JSONObject) {
+                JSONObject jsonObject = (JSONObject) o;
+                JSONObject joinObject = joinJSONObject(key, i, jsonObject);
+                retArray.add(joinObject);
+            } else {
+                System.out.println("paramArray is not JSONObject array!");
+            }
+        }
+
+        return retArray;
+    }
+
+    private String joinJSONArray(JSONArray paramArray) {
+        StringBuilder sb = new StringBuilder();
+
+        for (Object o : paramArray) {
+            sb.append(o.toString()).append(",");
+        }
+        if (sb.length() > 1) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        return sb.toString();
     }
 }
