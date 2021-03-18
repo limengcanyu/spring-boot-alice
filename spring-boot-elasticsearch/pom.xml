@@ -17,7 +17,7 @@
     <url>http://www.example.com</url>
 
     <properties>
-        <elasticsearch.version>7.6.2</elasticsearch.version>
+        <elasticsearch.version>7.11.2</elasticsearch.version>
         <lucene.version>8.4.0</lucene.version>
     </properties>
 
