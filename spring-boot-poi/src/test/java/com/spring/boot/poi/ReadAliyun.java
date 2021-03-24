@@ -43,14 +43,14 @@ class ReadAliyun {
 
                 String cellValue;
 
-                switch (cell.getCellType()) {
-                    case STRING -> cellValue = cell.getStringCellValue();
-                    case NUMERIC -> cellValue = cell.getNumericCellValue() + "";
-                    case BOOLEAN -> cellValue = cell.getBooleanCellValue() + "";
-                    case BLANK -> cellValue = "";
-                    default -> throw new IllegalStateException("Unexpected value: " + cell.getCellType());
-                }
-                System.out.println("cellValue: " + cellValue);
+//                switch (cell.getCellType()) {
+//                    case STRING -> cellValue = cell.getStringCellValue();
+//                    case NUMERIC -> cellValue = cell.getNumericCellValue() + "";
+//                    case BOOLEAN -> cellValue = cell.getBooleanCellValue() + "";
+//                    case BLANK -> cellValue = "";
+//                    default -> throw new IllegalStateException("Unexpected value: " + cell.getCellType());
+//                }
+//                System.out.println("cellValue: " + cellValue);
             }
 
         }
