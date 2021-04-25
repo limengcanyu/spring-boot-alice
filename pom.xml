@@ -62,6 +62,7 @@
         <module>spring-boot-poi</module>
         <module>spring-boot-postgres</module>
         <module>spring-boot-prometheus</module>
+        <module>spring-boot-pulsar</module>
         <module>spring-boot-qingcloud</module>
         <module>spring-boot-questdb</module>
         <module>spring-boot-rabbitmq</module>
