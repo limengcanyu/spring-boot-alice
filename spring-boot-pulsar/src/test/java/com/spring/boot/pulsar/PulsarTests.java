@@ -35,7 +35,6 @@ public class PulsarTests {
         PulsarClient client = PulsarClient.builder()
                 .serviceUrl("pulsar://192.168.203.132:6650")
                 .build();
-        System.out.println("client: " + client);
 
         // 消费者（Consumer）
         Consumer<String> consumer = client.newConsumer(Schema.STRING)
