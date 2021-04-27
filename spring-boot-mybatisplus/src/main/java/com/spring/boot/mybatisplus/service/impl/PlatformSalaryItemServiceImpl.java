@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * <p>
  * 平台薪资项定义信息表 服务实现类
@@ -51,4 +53,5 @@ public class PlatformSalaryItemServiceImpl extends ServiceImpl<PlatformSalaryIte
 //
 //        return false;
     }
+
 }
