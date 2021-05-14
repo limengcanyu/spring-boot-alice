@@ -1,10 +1,8 @@
 package com.spring.boot.async;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.context.ApplicationContext;
 
 
 //@EnableScheduling
@@ -12,7 +10,13 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class SpringBootAsyncApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootAsyncApplication.class, args);
+        ApplicationContext context = SpringApplication.run(SpringBootAsyncApplication.class, args);
+        String[] beanDefinitionNames = context.getBeanDefinitionNames();
+        for (String beanDefinitionName : beanDefinitionNames) {
+            if (beanDefinitionName.toLowerCase().contains("task")) {
+                System.out.println("beanDefinitionName: " + beanDefinitionName);
+            }
+        }
     }
 
 }
