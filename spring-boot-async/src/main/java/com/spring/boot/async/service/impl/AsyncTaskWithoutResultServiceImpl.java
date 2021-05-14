@@ -14,9 +14,6 @@ import org.springframework.stereotype.Service;
 public class AsyncTaskWithoutResultServiceImpl implements AsyncTaskWithoutResultService {
     private static final Logger logger = LoggerFactory.getLogger(AsyncTaskWithoutResultServiceImpl.class);
 
-    @Value("${async.task.corePoolSize: 10}")
-    private int corePoolSize;
-
     @Async
     @Override
     public void task1() throws InterruptedException {
