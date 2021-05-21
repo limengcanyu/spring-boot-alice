@@ -27,6 +27,7 @@
         <module>spring-boot-custom-starter-test</module>
         <module>spring-boot-dm</module>
         <module>spring-boot-docker</module>
+        <module>spring-boot-doris</module>
         <module>spring-boot-elasticsearch</module>
         <module>spring-boot-flaw</module>
         <module>spring-boot-flowable</module>
@@ -49,6 +50,7 @@
         <module>spring-boot-kafka-producer</module>
         <module>spring-boot-kafka-streams</module>
         <module>spring-boot-knife4j</module>
+        <module>spring-boot-kubernetes</module>
         <module>spring-boot-log</module>
         <module>spring-boot-mongo</module>
         <module>spring-boot-multi-datasource-transaction</module>
