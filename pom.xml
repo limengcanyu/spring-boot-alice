@@ -25,7 +25,6 @@
         <module>spring-boot-configuration-processor</module>
         <module>spring-boot-custom-starter</module>
         <module>spring-boot-custom-starter-test</module>
-        <module>spring-boot-dm</module>
         <module>spring-boot-docker</module>
         <module>spring-boot-doris</module>
         <module>spring-boot-elasticsearch</module>
@@ -101,18 +100,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <java.version>1.8</java.version>
-
-        <spring.boot.dependencies.version>2.5.1</spring.boot.dependencies.version>
-
-        <lombok.version>1.18.20</lombok.version>
-        <fastjson.version>1.2.76</fastjson.version>
-        <guava.version>30.1.1-jre</guava.version>
-
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
-        <spring.boot.maven.plugin.version>2.5.1</spring.boot.maven.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -122,7 +110,7 @@
                 <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.dependencies.version}</version>
+                <version>2.5.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -134,7 +122,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <version>1.18.20</version>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -143,14 +131,14 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
+            <version>1.2.75</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <version>30.1.1-jre</version>
         </dependency>
 
         <dependency>
@@ -186,10 +174,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
+                <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 
@@ -197,7 +185,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.plugin.version}</version>
+                <version>2.22.2</version>
                 <configuration>
                     <!-- Skipping Tests -->
                     <skipTests>true</skipTests>
@@ -208,7 +196,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.maven.plugin.version}</version>
                 <configuration>
                     <excludes>
                         <exclude>
