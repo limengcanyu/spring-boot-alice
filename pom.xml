@@ -25,7 +25,6 @@
         <module>spring-boot-configuration-processor</module>
         <module>spring-boot-custom-starter</module>
         <module>spring-boot-custom-starter-test</module>
-        <module>spring-boot-dm</module>
         <module>spring-boot-docker</module>
         <module>spring-boot-doris</module>
         <module>spring-boot-elasticsearch</module>
